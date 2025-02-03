@@ -1,0 +1,196 @@
+/* General Layout and Typography */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+  }
+  
+  h1, h3 {
+    color: #004085; /* Toastmasters Blue */
+  }
+  
+  /* Header Section */
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #003366;
+    color: white;
+    padding: 10px;
+  }
+  
+  header .logo img {
+    width: 150px;
+  }
+  
+  header .top-nav ul {
+    list-style: none;
+    display: flex;
+  }
+  
+  header .top-nav li {
+    margin: 0 15px;
+  }
+  
+  header .top-nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+  }
+  
+  header .profile {
+    display: flex;
+    align-items: center;
+  }
+  
+  header .profile .profile-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  header .dropdown .dropdown-btn {
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  header .search-bar {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  /* Side Panel */
+  .side-panel {
+    width: 250px;
+    background-color: #004085;
+    color: white;
+    padding: 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+  }
+  
+  .side-panel ul {
+    list-style: none;
+  }
+  
+  .side-panel li {
+    margin: 10px 0;
+  }
+  
+  .side-panel a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+  }
+  
+  /* Main Dashboard */
+  .dashboard {
+    margin-left: 270px;
+    padding: 20px;
+  }
+  
+  .dashboard-overview {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .status {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  
+  .status-label {
+    font-weight: bold;
+  }
+  
+  .status-value.active {
+    color: green;
+  }
+  
+  .next-meeting {
+    margin-top: 20px;
+  }
+  
+  .quick-actions button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+  
+  .quick-actions button:hover {
+    background-color: #0056b3;
+  }
+  
+  .meeting-schedule ul {
+    list-style: none;
+    margin-top: 20px;
+  }
+  
+  .meeting-schedule li {
+    background-color: #e7f4ff;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+  }
+  
+  .notifications .alert {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+  }
+  
+  .payment-history ul {
+    list-style: none;
+  }
+  
+  .payment-history li {
+    background-color: #e7f4ff;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+  }
+  
+  footer {
+    background-color: #003366;
+    color: white;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  footer ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+  }
+  
+  footer li {
+    margin: 0 15px;
+  }
+  
+  footer a {
+    color: white;
+    text-decoration: none;
+  }
+  
