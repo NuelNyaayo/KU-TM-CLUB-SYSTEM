@@ -1,0 +1,163 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    font-family:"Roboto", sans-serif ;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1.2rem;
+    min-height: 100vh;
+}
+
+nav {
+    padding-top: 1rem;
+    height: 10vh;
+    display: flex;
+    justify-content: space-between;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+}
+nav li, button {
+    margin: 0 1rem;
+}
+
+nav a {
+    color: blue;
+    text-decoration: none; 
+}
+button {
+    font-size: inherit;
+    padding: 0.2rem 1rem;
+    border-radius: 1rem;
+}
+
+.continue_btn {
+    border-radius: 1rem;
+    width: 70%;
+    padding: 0.2rem 1rem;
+    margin: 2rem;
+}
+
+
+h1, p {
+    text-align: center;
+}
+
+section {
+    display: flex;
+}
+
+.sidebar {
+    width:15%;
+    margin-top: 6rem;
+    margin-right: 1rem;
+    margin-left: 1rem;
+    margin-bottom: 2rem;
+    
+}
+.sidebar-contact ul, .sidebar-social ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar-contact ul li,  .sidebar-social ul li {
+    padding: 1.2rem;
+}
+
+.sidebar-contact i, .sidebar-social i {
+    color: #004085; 
+    margin-right: 1rem;
+    
+}
+
+.main_area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+    
+    height: 80vh;
+}
+
+.main_content {
+    display: flex;
+    justify-content: center;
+    gap: 22rem;
+    width: 80%;
+    margin-top: 2em;
+    min-height: 60vh;
+    
+}
+
+.member_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
+    border: 2px solid #333;
+    max-width: 32%;
+    border-radius: 15px;
+    margin-bottom: 1rem;
+}
+
+.sub-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: -1;
+    background-color: aqua;
+    width: 100%;
+}
+.leader_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
+    border: 2px solid #333;
+    max-width: 32%;
+    border-radius: 15px;
+    margin-bottom: 1rem;
+}
+footer {
+    display: flex;
+}
+
+.footer_sidebar {
+    width: 15%;
+    margin-right: 1rem;
+    margin-left: 1rem;
+}
+
+.tm_info {
+    display: flex;
+}
+
+.tm_info ul {
+    list-style: none;
+    display: flex;
+    gap: 6rem;
+    justify-content: center;
+    
+}
+
+.tm_info ul li {
+    
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.tm_info ul li:first-child {
+    margin-left: 10rem;
+}
+
+.tm_info i {
+    color: #004085; /* Icon color (e.g., blue) */
+    font-size: 1.7rem;
+}
