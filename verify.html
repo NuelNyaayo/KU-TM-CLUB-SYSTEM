@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="icon" href="KU_TM_FavIcon_Logo.png" type="image/png">
+    <link rel="stylesheet" href="CSS/verify.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    
+    <main>
+        <div class="logo">
+            <img src="KU_TM_FavIcon_Logo.png" alt="KU Toastmasters Logo"width="120" height="120">
+        </div>
+        <article id="contact" class="main__article contact">
+            <p>Verify Your Email Address</p>
+            <h2 class="contact__h2">Email Verification</h2>
+            <p>We've Sent a 6-digit verification code to your email. <span>5119.2021@ku.ac.ke</span> .Please Enter the code below to verify your account.</p>
+            <div class="code-inputs">
+                <input type="text" maxlength="1">
+                <input type="text" maxlength="1">
+                <input type="text" maxlength="1">
+                <input type="text" maxlength="1">
+                <input type="text" maxlength="1">
+                <input type="text" maxlength="1">
+            </div>
+            <button class="btn" id="verifyBtn" disabled>Verify Code</button>
+
+            <div class="forgot-register">
+
+                <p class="resend disabled" id="resendCode">Resend Code in <span id="timer">30</span>s</p>
+            
+                <p>Did'nt receive the code?Check your Spam folder or Click Resend Code.</p>
+            
+                <a href="#">Update Email Address?<span>Update Here</span></a>
+            </div>
+        </article>
+        
+    </main>
+    
+    <script>
+        const inputs = document.querySelectorAll('.code-inputs input');
+        const verifyBtn = document.getElementById('verifyBtn');
+        const resendBtn = document.getElementById('resendCode');
+        const timerElement = document.getElementById('timer');
+        
+        let timer = 30;
+        let countdown;
+    
+        // Auto-focus next input field
+        inputs.forEach((input, index) => {
+            input.addEventListener('input', (e) => {
+                if (e.target.value.length === 1 && index < inputs.length - 1) {
+                    inputs[index + 1].focus();
+                }
+                checkComplete();
+            });
+    
+            input.addEventListener('keydown', (e) => {
+                if (e.key === "Backspace" && index > 0 && !e.target.value) {
+                    inputs[index - 1].focus();
+                }
+            });
+        });
+    
+        function checkComplete() {
+            const code = Array.from(inputs).map(input => input.value).join('');
+            verifyBtn.disabled = code.length !== 6;
+        }
+    
+        // Start resend timer
+        function startTimer() {
+            resendBtn.classList.add('disabled');
+            verifyBtn.disabled = true;
+            timer = 30;
+            countdown = setInterval(() => {
+                timer--;
+                timerElement.innerText = timer;
+                if (timer === 0) {
+                    clearInterval(countdown);
+                    resendBtn.classList.remove('disabled');
+                    resendBtn.innerText = "Resend Code";
+                }
+            }, 1000);
+        }
+    
+        startTimer();
+        
+        // Resend Code Handler
+        resendBtn.addEventListener('click', () => {
+            alert("A new verification code has been sent to your email.");
+            startTimer();
+        });
+    </script>
+</body>
+</html>

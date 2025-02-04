@@ -1,0 +1,130 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    font-family:"Roboto", sans-serif ;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1.2rem;
+    height: 100vh;
+    background-color: darkblue;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+main {
+    width: 30%;
+    /* margin-top: 5rem; */
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    background-color:azure;
+    border-radius: 0.7rem;
+    padding: 2rem;
+}
+h2, .welcome {
+    text-align: center;
+    margin: 1rem;
+}
+.logo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.offscreen{
+    position: absolute;
+    left: -10000px;
+}
+
+/* || CONTACT */
+
+.contact__h2 {
+    margin: 0;
+}
+
+.contact__fieldset {
+    border: none;
+}
+
+.contact__p {
+    margin: 2em 0;
+}
+
+.contact__label {
+    display: block;
+    font-weight: bold;
+}
+
+.contact__input, 
+.contact__textarea {
+    padding: 0.5em;
+    border-radius: var(--BORDER-RADIUS);
+    border-width: 2px;
+    width: 100%;
+    font-size: inherit;
+    border-radius: 0.7rem;
+    margin-top: 0.5em;
+}
+
+.password-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.password-input {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.contact__password__input {
+    width: 100%;
+    padding: 0.5em;
+    padding-right: 40px; /* Space for the icon */
+    font-size: inherit;
+    border-radius: 0.7rem;
+    margin-top: 0.5em;
+}
+
+.toggle-password {
+    position: absolute;
+    top: 1.2em;
+    right: 0.5em;
+    cursor: pointer;
+    font-size: inherit;
+    color: #555;
+}
+
+.contact__button {
+    padding: 0.7rem;
+    border-radius: 0.7rem;
+    background-color: darkblue;
+    color: white;
+    width: 100%;
+    margin-bottom: 1rem;
+    font-size: inherit;
+}
+
+.forgot-register {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+a {
+    text-decoration: none;
+    color: darkblue;
+}
+a span {
+    font-weight: bold;
+}

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navigation with Dropdown</title>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <style>
+        ul {
+            list-style: none;
+            padding: 0;
+            width: 200px;
+            background: #f4f4f4;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        li {
+            position: relative;
+        }
+
+        li a {
+            display: block;
+            padding: 10px;
+            text-decoration: none;
+            color: black;
+        }
+
+        li:hover {
+            background: #ddd;
+        }
+
+        /* Dropdown styles */
+        .submenu {
+            display: none;
+            position: absolute;
+            left: 0;
+            top: 100%;
+            background: #fff;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            width: 150px;
+        }
+
+        .submenu li {
+            width: 100%;
+        }
+
+        .submenu a {
+            padding: 10px;
+            display: block;
+            color: black;
+        }
+
+        li:hover .submenu {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<ul>
+    <li>
+        <i class="fas fa-user"></i>
+        <a href="#">My Profile</a>
+    </li>
+    <li>
+        <i class="fas fa-cog"></i>
+        <a href="#">Settings</a>
+        <ul class="submenu">
+            <li><a href="#">Account Settings</a></li>
+            <li><a href="#">General Settings</a></li>
+        </ul>
+    </li>
+    <li>
+        <i class="fas fa-envelope"></i>
+        <a href="#">Contact Us</a>
+    </li>
+    <li>
+        <i class="fas fa-life-ring"></i>
+        <a href="#">Support</a>
+    </li>
+</ul>
+
+</body>
+</html>
