@@ -1,0 +1,305 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+  font-family:"Roboto", sans-serif ;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 1.2rem;
+  background-color: azure;
+  color: #333;
+  display: flex;
+}
+
+.main-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-left: 22rem;
+  
+}
+
+h1, h3 {
+  color: #004085; /* Toastmasters Blue */
+}
+  
+/* .nav Section */
+.top-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #003366;
+  color: white;
+  padding: 10px;
+  width: 100%; 
+}
+
+
+.top-nav ul {
+  list-style: none;
+  display: flex;
+}
+
+.top-nav li {
+  margin: 0 15px;
+}
+
+.top-nav a {
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+/* .nav .profile {
+    display: flex;
+    align-items: center;
+  }
+  
+  .nav .profile .profile-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  .nav .dropdown .dropdown-btn {
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .nav .search-bar {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  } */
+
+/* Side Panel */
+.side-panel {
+  width: 22rem;
+  background-color: darkblue;
+  color: white;
+  padding: 1.2rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  
+}
+
+details p {
+  margin-top: 0.5rem;
+  margin-left: 1rem;
+}
+
+h2, .welcome {
+  text-align: center;
+  margin: 1rem;
+}
+
+.logo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-cont {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.profile-cont i {
+  font-size: 1.7rem;
+}
+
+.user_details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.memb_no {
+  background-color: azure;
+  color: #003366;
+  border-radius: 0.2rem;
+  padding: 0.2rem;
+}
+
+
+.side-panel ul {
+  list-style: none;
+  line-height: 3rem;
+  display: flex;
+  flex-direction: column;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  }
+  
+.side-panel li {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0 1rem;
+  position: relative;
+  
+}
+
+.side-panel li:hover,
+.side-panel li:focus {
+  background: blue;
+  border-radius: 0.7rem;
+  cursor: pointer;
+}
+
+.side-panel li i {
+  font-size: 1.2rem;
+  }
+  
+.side-panel a,
+.side-panel a:visited {
+  width: 100%;
+  height: 100%;
+  display: block;
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
+  
+  }
+
+.side-panel li .submenu {
+  display: none;
+  position: absolute;
+  left: 100%;
+  top: -8px;
+  background: blue;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  border-radius: 0.7rem;
+  width: 10rem;
+}
+
+.side-panel li .submenu li {
+    width: 100%;
+    margin: 0.3rem 0;
+    
+}
+
+.side-panel li .submenu li:hover {
+    background-color: darkblue;
+}
+
+.side-panel li .submenu a {
+    display: block;
+}
+
+.side-panel li:hover .submenu {
+    display: block;
+}
+  
+summary {
+  font-weight: bold;
+  
+}
+
+details {
+  margin-top: 1rem;
+
+}
+
+.side-panel .main_panel {
+  padding-bottom: 3rem;
+  border-bottom: 2px solid #333;
+}
+
+.side-panel .logout {
+  padding-top: 0.5rem;
+}
+/* Main Dashboard */
+.dashboard {
+  padding: 20px;
+  flex-grow: 1;
+}
+
+.dashboard-overview {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.status {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.status-label {
+  font-weight: bold;
+}
+
+.status-value.active {
+  color: green;
+}
+
+.next-meeting {
+  margin-top: 20px;
+}
+
+.quick-actions button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.quick-actions button:hover {
+  background-color: #0056b3;
+}
+
+.meeting-schedule ul {
+  list-style: none;
+  margin-top: 20px;
+}
+
+.meeting-schedule li {
+  background-color: #e7f4ff;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+.notifications .alert {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 5px;
+}
+
+.payment-history ul {
+  list-style: none;
+}
+
+.payment-history li {
+  background-color: #e7f4ff;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 5px;
+}

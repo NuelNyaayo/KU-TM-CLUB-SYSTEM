@@ -1,105 +1,149 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registration Form</title>
+<div class="dashboard-overview">
+    <h1>Welcome, [Name]!</h1>
+    <div class="status">
+      <span class="status-label">Membership Status:</span>
+      <span class="status-value active">Active</span>
+    </div>
+    <div class="next-meeting">
+      <span>Next Meeting:</span>
+      <p>[Date & Time]</p>
+      <div class="roles">
+        <span>Your Role:</span>
+        <p>[Role Name]</p>
+      </div>
+      <button>Confirm Role</button>
+      <button>Request Change</button>
+    </div>
+  </div>
 
-    <!-- Include intl-tel-input CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.min.css"/>
+  <div class="quick-actions">
+    <button class="action-btn">Sign Up for Roles</button>
+    <button class="action-btn">Make a Payment</button>
+    <button class="action-btn">View Resources</button>
+  </div>
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            /* height: 100vh; */
-            background-color: #f4f4f4;
-        }
+  <div class="meeting-schedule">
+    <h3>Upcoming Meetings</h3>
+    <ul>
+      <li>[Meeting Date] - [Role: Toastmaster]</li>
+      <li>[Meeting Date] - [Role: Speaker]</li>
+      <!-- More meetings can be added here -->
+    </ul>
+  </div>
 
-        .form-container {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 350px;
-        }
+  <div class="notifications">
+    <h3>Notifications</h3>
+    <div class="alert">Reminder: Meeting on [Date]!</div>
+    <div class="alert">Your role for the next meeting: [Role]</div>
+  </div>
 
-        h2 {
-            text-align: center;
-        }
+  <div class="payment-history">
+    <h3>Payment History</h3>
+    <ul>
+      <li>[Date] - $[Amount] - Paid via [Payment Method]</li>
+      <!-- More payment history entries -->
+    </ul>
+    <button>Download Receipt</button>
+  </div>
 
-        label {
-            font-weight: bold;
-            margin-top: 10px;
-            display: block;
-        }
+  <div class="voting">
+    <h3>Vote Now!</h3>
+    <button>Vote for [Candidates]</button>
+  </div>
 
-        input {
-            width: 100%;
-            padding: 8px;
-            margin-top: 5px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
+  /* .nav .profile {
+    display: flex;
+    align-items: center;
+  }
+  
+  .nav .profile .profile-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  .nav .dropdown .dropdown-btn {
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .nav .search-bar {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  } */
 
-        .btn {
-            width: 100%;
-            padding: 10px;
-            margin-top: 15px;
-            border: none;
-            background: #007BFF;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 5px;
-        }
+  /* Main Dashboard */
+.dashboard-overview {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
 
-        .btn:hover {
-            background: #0056b3;
-        }
-    </style>
-</head>
-<body>
+.status {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
 
-<div class="form-container">
-    <h2>Registration Form</h2>
-    
-    <form>
-        <label for="first-name">First Name</label>
-        <input type="text" id="first-name" name="first-name" required>
+.status-label {
+  font-weight: bold;
+}
 
-        <label for="last-name">Last Name</label>
-        <input type="text" id="last-name" name="last-name" required>
+.status-value.active {
+  color: green;
+}
 
-        <label for="phone">Phone Number</label>
-        <input type="tel" id="phone" name="phone" required>
+.next-meeting {
+  margin-top: 20px;
+}
 
-        <label for="dob">Date of Birth</label>
-        <input type="date" id="dob" name="dob" required>
+.quick-actions button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px;
+}
 
-        <button type="submit" class="btn">Register</button>
-    </form>
-</div>
+.quick-actions button:hover {
+  background-color: #0056b3;
+}
 
-<!-- Include intl-tel-input JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
-<script>
-    const phoneInput = document.querySelector("#phone");
+.meeting-schedule ul {
+  list-style: none;
+  margin-top: 20px;
+}
 
-    // Initialize international telephone input with flags & country codes
-    const iti = window.intlTelInput(phoneInput, {
-        initialCountry: "auto",
-        geoIpLookup: function(callback) {
-            fetch('https://ipinfo.io/json?token=YOUR_IPINFO_TOKEN') // Replace with your IPInfo token
-                .then(response => response.json())
-                .then(data => callback(data.country))
-                .catch(() => callback("ke")); // Default to Kenya
-        },
-        utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js"
-    });
-</script>
+.meeting-schedule li {
+  background-color: #e7f4ff;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
 
-</body>
-</html>
+.notifications .alert {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 5px;
+}
+
+.payment-history ul {
+  list-style: none;
+}
+
+.payment-history li {
+  background-color: #e7f4ff;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 5px;
+}
