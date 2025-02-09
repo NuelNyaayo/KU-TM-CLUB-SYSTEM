@@ -197,7 +197,7 @@ details p {
   margin-left: 1rem;
 }
 
-h2, .welcome {
+h2 {
   text-align: center;
   margin: 1rem;
 }
@@ -348,29 +348,150 @@ details {
   flex-grow: 1;
 }
 
-.dashboard-overview {
+.welcome-user {
   background-color: #fff;
-  padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding-top: 0.5rem;
+  padding-bottom: 2rem;
+  margin: 1rem 0;
+}
+
+.welcome-user h2 {
+  text-align: left;
+  padding-left: 0;
+}
+
+.welcome-user p {
+  text-align: left;
+  font-weight: bold;
+  padding-left: 1rem;
+  
+}
+
+.dashboard-overview {
+  background-color: whitesmoke;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding-bottom: 1.5rem;
+  
+}
+
+.dashboard-overview h3 {
+  background-color: darkblue;
+  text-align: center;
+  color: white;
+  padding: 1rem;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 0;
+  border-bottom-right-radius: 0;;
+}
+
+.dashboard-overview .status-date {
+  display: flex;
+  justify-content: space-between;
+  /* border: 1px solid lightblue; */
+  
 }
 
 .status {
   display: flex;
-  justify-content: space-between;
-  margin-top: 10px;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem;
+  margin-top: 1rem;
+  margin-right: 1rem;
+  margin-left: 1rem;
+  background-color: #fff;
+  border-radius: 8px;
+  
 }
 
 .status-label {
   font-weight: bold;
+  margin: 1rem 1rem;
 }
 
 .status-value.active {
   color: green;
+  font-weight: bold;
+}
+
+.expiry-label {
+  font-weight: bold;
+  margin: 1rem 1rem;
+  margin-right: 5rem;
+}
+
+.expiry-date, .date-label {
+  color: darkblue;
+  font-weight: bold;
+}
+
+#datetime {
+  text-align: center;
+  font-family: inherit;
+  background: darkblue;
+  padding: 1rem;
+  padding-bottom: 1rem;
+  margin: 1rem 2rem;
+  border-radius: 8px;
+  display: inline-block;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+#date {
+    font-size: inherit;
+    font-weight: bold;
+    color: white;
+    padding-bottom: 0.5rem;
+}
+
+#time {
+    font-size:inherit;
+    font-weight: bold;
+    color: white;
+    margin-top: 5px;
+    border-top: 0.2rem solid white;
+    padding-top: 0.5rem;
+    padding-bottom: 0;
 }
 
 .next-meeting {
-  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem;
+  margin-top: 1rem;
+  margin-right: 2rem;
+  margin-left: 1rem;
+  background-color: #fff;
+  border-radius: 8px;
+}
+
+.next-meeting p {
+  
+  margin-bottom: 0.5rem;
+}
+
+.role-label {
+  color: darkblue;
+  font-weight: bold;
+  margin-left: 2rem;
+}
+
+.role-btn {
+  display: flex;
+  gap: 7rem;
+  margin-top: 1rem;
+  margin-left: 1rem;
+}
+
+.role-btn button {
+  padding: 0.5rem 1rem;
+  color: white;
+  background-color: darkblue;
+  border-radius: 0.2rem;
 }
 
 .quick-actions button {

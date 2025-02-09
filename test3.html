@@ -6,81 +6,81 @@
     <title>Navigation with Dropdown</title>
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <style>
-        ul {
-            list-style: none;
-            padding: 0;
-            width: 200px;
-            background: #f4f4f4;
-            border-radius: 5px;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-        }
+#datetime {
+text-align: center;
+font-family: Arial, sans-serif;
+background: #e7f4ff;
+padding: 15px;
+border-radius: 8px;
+display: inline-block;
+box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+}
 
-        li {
-            position: relative;
-        }
+#date {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #004085;
+}
 
-        li a {
-            display: block;
-            padding: 10px;
-            text-decoration: none;
-            color: black;
-        }
+#time {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #007bff;
+    margin-top: 5px;
+}
 
-        li:hover {
-            background: #ddd;
-        }
 
-        /* Dropdown styles */
-        .submenu {
-            display: none;
-            position: absolute;
-            left: 0;
-            top: 100%;
-            background: #fff;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-            border-radius: 5px;
-            width: 150px;
-        }
-
-        .submenu li {
-            width: 100%;
-        }
-
-        .submenu a {
-            padding: 10px;
-            display: block;
-            color: black;
-        }
-
-        li:hover .submenu {
-            display: block;
-        }
     </style>
 </head>
 <body>
 
-<ul>
-    <li>
-        <i class="fas fa-user"></i>
-        <a href="#">My Profile</a>
-    </li>
-    <li>
-        <i class="fas fa-cog"></i>
-        <a href="#">Settings</a>
-        <ul class="submenu">
-            <li><a href="#">Account Settings</a></li>
-            <li><a href="#">General Settings</a></li>
-        </ul>
-    </li>
-    <li>
-        <i class="fas fa-envelope"></i>
-        <a href="#">Contact Us</a>
-    </li>
-    <li>
-        <i class="fas fa-life-ring"></i>
-        <a href="#">Support</a>
-    </li>
-</ul>
+    <div id="datetime">
+        <div id="date"></div>
+        <div id="time"></div>
+    </div>
+    
+
+    <script>
+        function updateDateTime() {
+    const now = new Date();
+
+    // Format the date as "24th Jan 2025"
+    const day = now.getDate();
+    const month = now.toLocaleString('default', { month: 'short' }); // 'Jan', 'Feb', etc.
+    const year = now.getFullYear();
+
+    // Convert day to ordinal (e.g., 1st, 2nd, 3rd, etc.)
+    const ordinalSuffix = (day) => {
+        if (day > 3 && day < 21) return "th"; // Covers 11th, 12th, 13th, etc.
+        switch (day % 10) {
+            case 1: return "st";
+            case 2: return "nd";
+            case 3: return "rd";
+            default: return "th";
+        }
+    };
+
+    const formattedDate = `${day}${ordinalSuffix(day)} ${month} ${year}`;
+
+    // Format the time as "06:55 PM"
+    const hours = now.getHours();
+    const minutes = now.getMinutes().toString().padStart(2, "0");
+    const amPm = hours >= 12 ? "PM" : "AM";
+    const formattedTime = `${((hours + 11) % 12 + 1)}:${minutes} ${amPm}`;
+
+    // Update the divs
+    document.getElementById("date").textContent = formattedDate;
+    document.getElementById("time").textContent = formattedTime;
+}
+
+// Update every second
+setInterval(updateDateTime, 1000);
+
+// Initialize on page load
+updateDateTime();
+
+
+    </script>
 
 </body>
 </html>

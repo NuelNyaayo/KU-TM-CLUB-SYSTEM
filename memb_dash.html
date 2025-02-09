@@ -109,27 +109,43 @@
         <i class="fa-solid fa-magnifying-glass"></i>
       </div>
     </div>
-      
-      
 
     <!-- Dashboard Area -->
     <div class="dashboard">
-      <div class="dashboard-overview">
-        <h1>Welcome, [Name]!</h1>
-        <div class="status">
-          <span class="status-label">Membership Status:</span>
-          <span class="status-value active">Active</span>
+      
+        <div class="welcome-user">
+          <h2>Welcome Back, Nuel 👋</h2>
+          <p>This is a personalize KU Toastmasters Membership Dashboard specifically tailored to your needs and made for you.</p>
         </div>
-        <div class="next-meeting">
-          <span>Next Meeting:</span>
-          <p>[Date & Time]</p>
-          <div class="roles">
-            <span>Your Role:</span>
-            <p>[Role Name]</p>
+
+        <div class="dashboard-overview">
+          <h3> Dashboard Overview</h3>
+          <div class="status-date">
+            <div class="status">
+              <p><span class="status-label">Membership Status:</span>
+                <span class="status-value active">Active</span></p>
+              <p><span class="expiry-label">Expiry Date:</span>
+                <span class="expiry-date">15th April 2025</span></p>
+            </div>
+            <div id="datetime">
+              <div id="date"></div>
+              <div id="time"></div>
           </div>
-          <button>Confirm Role</button>
-          <button>Request Change</button>
-        </div>
+          </div>
+          <div class="next-meeting">
+            <p><span class="status-label">Next Meeting:</span>
+              <span class="date-label">Meeting 046</span></p>
+            <p><span class="status-label">Meeting Date:</span>
+              <span class="date-label">12th Feb 2025</span></p>
+            <p><span class="status-label">Meeting Time:</span>
+              <span class="date-label">06:30pm - 8:30pm</span></p>
+            <p><span class="status-label">Your Role:</span>
+              <span class="role-label">Toastmaster Of The Day</span></p>
+            <div class="role-btn">
+              <button class="confirm">Confirm Role</button>
+              <button>Request Change</button>
+            </div>
+          </div>
       </div>
 
       <div class="quick-actions">
@@ -181,6 +197,47 @@
         });
       });
      });
+
+    function updateDateTime() {
+    const now = new Date();
+
+    // Format the date as "24th Jan 2025"
+    const day = now.getDate();
+    const month = now.toLocaleString('default', { month: 'short' }); // 'Jan', 'Feb', etc.
+    const year = now.getFullYear();
+
+    // Convert day to ordinal (e.g., 1st, 2nd, 3rd, etc.)
+    const ordinalSuffix = (day) => {
+        if (day > 3 && day < 21) return "th"; // Covers 11th, 12th, 13th, etc.
+        switch (day % 10) {
+            case 1: return "st";
+            case 2: return "nd";
+            case 3: return "rd";
+            default: return "th";
+        }
+    };
+
+    const formattedDate = `${day}${ordinalSuffix(day)} ${month} ${year}`;
+
+    // Format the time as "06:55 PM"
+    const hours = now.getHours();
+    const minutes = now.getMinutes().toString().padStart(2, "0");
+    const amPm = hours >= 12 ? "PM" : "AM";
+    const formattedTime = `${((hours + 11) % 12 + 1)}:${minutes} ${amPm}`;
+
+    // Update the divs
+    document.getElementById("date").textContent = formattedDate;
+    document.getElementById("time").textContent = formattedTime;
+
+    document.getElementById("date2").textContent = formattedDate;
+}
+
+  // Update every second
+  setInterval(updateDateTime, 1000);
+
+  // Initialize on page load
+  updateDateTime();
+
 
   </script>
 
