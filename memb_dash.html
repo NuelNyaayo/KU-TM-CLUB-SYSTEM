@@ -19,7 +19,10 @@
       </div>
       <h2>CLUB MEMBER</h2>
       <div class="profile-cont">
-        <i class="fas fa-phone"></i>
+        <!-- <img src="profile.jpg" alt="Profile" class="profile-icon"> -->
+        <div class="profile-icon">
+          <i class="fa-solid fa-user"></i>
+        </div>
         <div class="user_details">
           <p>Nuel Nyaayo</p>
           <p class="memb_no">Member No - 001</p>
@@ -78,26 +81,36 @@
     <!-- Nav Section -->
     <div class="top-nav">
         <ul>
-          <li><a href="#">Home</a></li>
+          <li><a href="memb_dash.html"class="active">Home</a></li>
           <li><a href="#">Roles</a></li>
           <li><a href="#">Membership</a></li>
           <li><a href="#">Resources</a></li>
           <li><a href="#">Elections</a></li>
         </ul>
+        <div class="notification">
+          <i class="fa-regular fa-bell"></i>
+          <button class="notification-btn">Notifications</button>
+        </div>
+    </div>
+    
+    <!-- Breadcrumb Section -->
+    <div class="breadcrumb-nav">
+      <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+          <span>Club Member</span>
+          <i class="fa-solid fa-play"></i>
+          <li><a href="index.html">Home</a></li>
+          <!-- <li><a href="dashboard.html">Dashboard</a></li> -->
+          <li>Dashboard</li>
+        </ul>
+      </nav>
+      <div class="search-section">
+        <input type="text" placeholder="Search Here..." class="search-bar">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </div>
     </div>
       
-      <!-- <div class="profile">
-        <img src="profile.jpg" alt="Profile" class="profile-icon">
-        <div class="dropdown">
-          <button class="dropdown-btn">Account</button>
-          <div class="dropdown-content">
-            <a href="#">Settings</a>
-            <a href="#">Notifications</a>
-            <a href="#">Logout</a>
-          </div>
-        </div>
-      </div>
-      <input type="text" placeholder="Search..." class="search-bar"> -->
+      
 
     <!-- Dashboard Area -->
     <div class="dashboard">
@@ -156,6 +169,20 @@
     </div>
 
   </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+    const links = document.querySelectorAll(".top-nav a");
+
+      links.forEach(link => {
+        link.addEventListener("click", function () {
+          links.forEach(l => l.classList.remove("active")); // Remove active from all
+          this.classList.add("active"); // Add active to clicked link
+        });
+      });
+     });
+
+  </script>
 
 </body>
 </html>
