@@ -79,7 +79,7 @@ h1, h3 {
   font-size: inherit;
   background-color: azure;
   border-radius: 1.5rem;
-  padding: 0.2rem;
+  padding: 0.2rem 0.5rem;
 }
 
 .top-nav a {
@@ -359,13 +359,13 @@ details {
 
 .welcome-user h2 {
   text-align: left;
-  padding-left: 0;
+  padding-left: 1rem;
 }
 
 .welcome-user p {
   text-align: left;
   font-weight: bold;
-  padding-left: 1rem;
+  padding-left: 2rem;
   
 }
 
@@ -373,13 +373,14 @@ details {
   background-color: whitesmoke;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   padding-bottom: 1.5rem;
+  margin: 1rem 0;
   
 }
 
-.dashboard-overview h3 {
-  background-color: darkblue;
+ h3 {
+  background-color: white;
   text-align: center;
-  color: white;
+  color: darkblue;
   padding: 1rem;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
@@ -399,17 +400,23 @@ details {
   flex-direction: column;
   justify-content: center;
   padding: 2rem;
+  padding-right: 32rem;
   margin-top: 1rem;
-  margin-right: 1rem;
-  margin-left: 1rem;
+  margin-left: 2rem;
   background-color: #fff;
   border-radius: 8px;
+  
+}
+
+.status p {
+  margin-bottom: 1rem;
   
 }
 
 .status-label {
   font-weight: bold;
   margin: 1rem 1rem;
+  margin-right: 5rem;
 }
 
 .status-value.active {
@@ -420,7 +427,7 @@ details {
 .expiry-label {
   font-weight: bold;
   margin: 1rem 1rem;
-  margin-right: 5rem;
+  margin-right: 9rem;
 }
 
 .expiry-date, .date-label {
@@ -434,7 +441,8 @@ details {
   background: darkblue;
   padding: 1rem;
   padding-bottom: 1rem;
-  margin: 1rem 2rem;
+  margin: 0 2rem;
+  margin-top: 1rem;
   border-radius: 8px;
   display: inline-block;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
@@ -444,16 +452,15 @@ details {
     font-size: inherit;
     font-weight: bold;
     color: white;
-    padding-bottom: 0.5rem;
+    padding: 1rem 0;
 }
 
 #time {
     font-size:inherit;
     font-weight: bold;
     color: white;
-    margin-top: 5px;
     border-top: 0.2rem solid white;
-    padding-top: 0.5rem;
+    padding-top: 1rem;
     padding-bottom: 0;
 }
 
@@ -464,14 +471,14 @@ details {
   padding: 2rem;
   margin-top: 1rem;
   margin-right: 2rem;
-  margin-left: 1rem;
+  margin-left: 2rem;
   background-color: #fff;
   border-radius: 8px;
 }
 
 .next-meeting p {
   
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
 }
 
 .role-label {
@@ -489,52 +496,247 @@ details {
 
 .role-btn button {
   padding: 0.5rem 1rem;
+  border-radius: 0.2rem;
+}
+.role-btn .confirm {
+  padding: 0.5rem 1rem;
   color: white;
   background-color: darkblue;
   border-radius: 0.2rem;
-}
-
-.quick-actions button {
-  background-color: #007bff;
-  color: white;
-  padding: 10px 20px;
   border: none;
-  border-radius: 5px;
+}
+.role-btn .change {
+  padding: 0.5rem 1rem;
+  color: #333;
+  background-color: whitesmoke;
+  border: 2px solid whitesmoke;
+  font-weight: bold;
+}
+
+.recent-resources {
+  background-color: whitesmoke;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding-bottom: 1.5rem;
+  margin: 1rem 0;
+}
+
+.viewed-resources {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem;
+  margin-top: 1rem;
+  margin-right: 2rem;
+  margin-left: 2rem;
+  background-color: #fff;
+  border-radius: 8px;
+}
+h4 {
+  text-align: center;
+  padding-bottom: 1rem;
+}
+
+/* Table Styling */
+table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  font-family: Arial, sans-serif;
+}
+
+/* Table Header */
+thead {
+  background-color: darkblue; /* Dark blue */
+  color: white;
+}
+
+/* Table Body - Alternating Row Colors */
+tbody tr:nth-child(even) {
+  background-color: #f2f2f2; /* Light gray */
+}
+
+tbody tr:nth-child(odd) {
+  background-color: #ffffff; /* White */
+}
+
+/* Table Borders */
+th, td {
+  /* border: 1px solid #ccc; */
+  padding: 10px;
+  text-align: left;
+}
+
+.quick-links {
+  background-color: whitesmoke;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding-bottom: 1.5rem;
+  margin: 1rem 0;
+}
+
+.quick-links .action-links {
+  display: flex;
+  gap: 2rem;
+  padding: 2rem;
+  margin: 0 2rem;
+  margin-top: 1rem;
+  background-color: #fff;
+  border-radius: 8px;
+}
+
+.quick-links .action-links .action-btn {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  background-color: darkblue;
+  color: white;
+  padding: 2rem;
+  border-radius: 8px;
   cursor: pointer;
-  margin-right: 10px;
 }
 
-.quick-actions button:hover {
-  background-color: #0056b3;
+.quick-links .action-links .action-btn i {
+  font-size: 2rem;
 }
 
-.meeting-schedule ul {
-  list-style: none;
-  margin-top: 20px;
+
+.notification-summary {
+  background-color: whitesmoke;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding-bottom: 1.5rem;
+  margin: 1rem 0;
 }
 
-.meeting-schedule li {
-  background-color: #e7f4ff;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 5px;
+.notification-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem;
+  margin-top: 1rem;
+  margin-right: 2rem;
+  margin-left: 2rem;
+  background-color: #fff;
+  border-radius: 8px;
+}
+.notification-container p {
+  padding: 0.7rem;
+  color: darkblue;
+  background-color: whitesmoke;
+  border: 2px solid whitesmoke;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  
 }
 
-.notifications .alert {
-  background-color: #f8d7da;
-  color: #721c24;
-  padding: 10px;
-  margin-top: 10px;
-  border-radius: 5px;
+.notification-container p:hover {
+  
+  color: white;
+  background-color: darkblue;
+  cursor: pointer;
+  
 }
 
-.payment-history ul {
-  list-style: none;
+.vote-elections {
+  background-color: whitesmoke;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding-bottom: 1.5rem;
+  margin: 1rem 0;
+  
 }
 
-.payment-history li {
-  background-color: #e7f4ff;
-  padding: 10px;
-  margin-top: 10px;
-  border-radius: 5px;
+.election-history {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+  padding: 2rem;
+  margin-top: 1rem;
+  margin-right: 2rem;
+  margin-left: 1rem;
+  background-color: #fff;
+  border-radius: 8px;
 }
+
+.countdown-summary {
+  display: flex;
+  justify-content: space-between;
+}
+
+.election-summary {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.election-countdown {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1.8rem;
+  margin-right: 2rem;
+  margin-left: 2rem;
+  background-color: darkblue;
+  color: white;
+  border-radius: 8px;
+}
+
+.vote-date-label, .nomination-date-label {
+  color: white;
+  font-weight: bold;
+}
+
+.vote-label {
+  font-weight: bold;
+  margin: 1rem 1rem;
+  margin-right: 9rem;
+}
+
+.nomination-label {
+  font-weight: bold;
+  margin: 1rem 1rem;
+  margin-right: 5rem;
+}
+
+.election-count-label {
+  font-weight: bold;
+  margin: 1rem 1rem;
+  margin-right: 3rem;
+}
+
+.nomination-count-label {
+  font-weight: bold;
+  margin: 1rem 1rem;
+}
+
+
+.vote-btn-cont {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.vote-btn-cont .vote-btn {
+  padding: 0.7rem 10rem;
+  color: white;
+  background-color: darkblue;
+  border-radius: 0.2rem;
+  border: none;
+  font-size: inherit;
+  margin-left: 1rem;
+ 
+}
+
+.vote-btn-cont .vote-btn:hover {
+  animation: bounce 0.5s ease infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+
