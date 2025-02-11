@@ -62,7 +62,7 @@ h1, h3 {
   font-weight: bold;
 }
 
-.top-nav .notification {
+.top-nav .top-nav-notification {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -218,8 +218,8 @@ h2 {
 }
 
 .profile-cont .profile-icon {
-  width: 4rem;
-  height: 4rem;
+  width: 5rem;
+  height: 5rem;
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -230,7 +230,7 @@ h2 {
 
 .profile-cont .profile-icon {
   padding-top: 0.5rem;
-  font-size: 2.9rem;
+  font-size: 3.6rem;
   transition: transform 0.3s ease-in-out; /* Smooth transition */
 }
 
@@ -416,18 +416,19 @@ details {
 .status-label {
   font-weight: bold;
   margin: 1rem 1rem;
-  margin-right: 5rem;
+  margin-right: 4rem;
 }
 
 .status-value.active {
   color: green;
   font-weight: bold;
+  /* margin-left: 1rem; */
 }
 
 .expiry-label {
   font-weight: bold;
   margin: 1rem 1rem;
-  margin-right: 9rem;
+  margin-right: 8.2rem;
 }
 
 .expiry-date, .date-label {
@@ -484,12 +485,18 @@ details {
 .role-label {
   color: darkblue;
   font-weight: bold;
-  margin-left: 2rem;
+  margin-left: 5.2rem;
+}
+
+.meeting-label {
+  color: darkblue;
+  font-weight: bold;
+  margin-left: 3rem;
 }
 
 .role-btn {
   display: flex;
-  gap: 7rem;
+  gap: 8rem;
   margin-top: 1rem;
   margin-left: 1rem;
 }
@@ -541,7 +548,7 @@ table {
   width: 100%;
   table-layout: fixed;
   border-collapse: collapse;
-  font-family: Arial, sans-serif;
+  font: inherit;
 }
 
 /* Table Header */
@@ -618,24 +625,55 @@ th, td {
   background-color: #fff;
   border-radius: 8px;
 }
-.notification-container p {
-  padding: 0.7rem;
-  color: darkblue;
-  background-color: whitesmoke;
-  border: 2px solid whitesmoke;
-  margin-bottom: 1rem;
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.notification {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f2f2f2;
+  padding: 1rem;
   border-radius: 8px;
-  
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  font-size: inherit;
 }
 
-.notification-container p:hover {
-  
+.notification i {
+  color: darkblue;
+  font-size: 1.5rem;
+  margin-right: 1rem;
+}
+
+.message {
+  flex: 1;
+  font-size: inherit;
+  color: #333;
+}
+
+.timestamp {
+  font-size: 1rem;
+  color: gray;
+  margin: 0 1.5rem;
+}
+
+.mark-read {
+  background: darkblue;
   color: white;
-  background-color: darkblue;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
   cursor: pointer;
-  
+  font-size: 0.8rem;
 }
 
+/* .mark-read:hover {
+  background: #003366;
+}
+ */
 .vote-elections {
   background-color: whitesmoke;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -647,27 +685,36 @@ th, td {
 .election-history {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: 1rem;
-  padding: 2rem;
+  gap: 2rem;
+  padding: 1.5rem;
   margin-top: 1rem;
   margin-right: 2rem;
-  margin-left: 1rem;
+  margin-left: 2rem;
   background-color: #fff;
   border-radius: 8px;
 }
 
-.countdown-summary {
+.election-summary {
   display: flex;
-  justify-content: space-between;
+  gap: 13rem;
+  margin-top: 2rem;
+  /* border: 2px solid #333; */
 }
 
-.election-summary {
+.election-summary .election-summary-count {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 1rem;
-  margin-top: 1rem;
+  gap: 2rem;
+  margin-left: 0.8rem;
+}
+
+.countdown-summary {
+  display: flex;
+  /* justify-content: space-between; */
+  align-items: center;
+  gap: 5rem;
+  
 }
 
 .election-countdown {
@@ -676,11 +723,35 @@ th, td {
   justify-content: center;
   gap: 1rem;
   padding: 1.8rem;
-  margin-right: 2rem;
   margin-left: 2rem;
   background-color: darkblue;
   color: white;
   border-radius: 8px;
+}
+
+.countdown {
+  display: flex;
+  gap: 20px;
+}
+
+.time-box {
+  background: #3b3f4a;
+  padding: 0.8rem;
+  border-radius: 8px;
+  text-align: center;
+  min-width: 5rem;
+}
+
+.time-box span {
+  display: block;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.time-box p {
+  font-size: 1rem;
+  margin-top: 0.5rem;
+  color: #bbb;
 }
 
 .vote-date-label, .nomination-date-label {
@@ -691,13 +762,13 @@ th, td {
 .vote-label {
   font-weight: bold;
   margin: 1rem 1rem;
-  margin-right: 9rem;
+  margin-right: 6rem;
 }
 
 .nomination-label {
   font-weight: bold;
   margin: 1rem 1rem;
-  margin-right: 5rem;
+  margin-right: 2rem;
 }
 
 .election-count-label {
@@ -727,6 +798,15 @@ th, td {
   border: none;
   font-size: inherit;
   margin-left: 1rem;
+ 
+}
+
+.vote-btn-cont .vote-btn i {
+  color: white;
+  font-size: 1.5rem;
+  margin-right: 1rem;
+  /* font-size: inherit;
+  margin-left: 1rem; */
  
 }
 

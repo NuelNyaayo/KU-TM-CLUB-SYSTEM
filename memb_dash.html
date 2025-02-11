@@ -87,7 +87,7 @@
           <li><a href="#">Resources</a></li>
           <li><a href="#">Elections</a></li>
         </ul>
-        <div class="notification">
+        <div class="top-nav-notification">
           <i class="fa-regular fa-bell"></i>
           <button class="notification-btn">Notifications</button>
         </div>
@@ -115,7 +115,7 @@
       
         <div class="welcome-user">
           <h2>Welcome Back, Nuel 👋</h2>
-          <p>This is a personalize KU Toastmasters Membership Dashboard specifically tailored to your needs and made for you.</p>
+          <p>This is a personalize KU toastmasters membership dashboard specifically tailored to your needs and made for you.</p>
         </div>
 
         <div class="dashboard-overview">
@@ -134,11 +134,11 @@
           </div>
           <div class="next-meeting">
             <p><span class="status-label">Next Meeting:</span>
-              <span class="date-label">Meeting 046</span></p>
+              <span class="meeting-label">Meeting 046</span></p>
             <p><span class="status-label">Meeting Date:</span>
-              <span class="date-label">12th Feb 2025</span></p>
+              <span class="meeting-label">12th Feb 2025</span></p>
             <p><span class="status-label">Meeting Time:</span>
-              <span class="date-label">06:30pm - 8:30pm</span></p>
+              <span class="meeting-label">06:30pm - 8:30pm</span></p>
             <p><span class="status-label">Your Role:</span>
               <span class="role-label">Toastmaster Of The Day</span></p>
             <div class="role-btn">
@@ -339,7 +339,7 @@
             </div>
             <div class="action-btn">
               <i class="fa-solid fa-wallet"></i>
-              <p>Make Payment</p>
+              <p>Make a Payment</p>
             </div>
             <div class="action-btn">
               <i class="fa-solid fa-folder-open"></i>
@@ -357,20 +357,65 @@
         <div class="notification-summary">
           <h3> Notification Updates</h3>
           <div class="notification-container">
-            <h4>Recent Notifications</h4>
-            <p>A new meeting has been scheduled for <b>12th Feb 2025</b> from 6:30 pm to 8:30pm at BSSC room 255. Sign up for a role...</p>
-            <p>You have successfully made up your payment of <b>Ksh300</b> on 10th Feb 2024 at 08:09 am. Download your receipt now..</p>
-            <p>A new resource has been uploaded <b>'KU Gavel Constitution'</b> be sure to check it out in the resources tab...</p>
+            <ul id="notification-list">
+              <li class="notification">
+                  <i class="fas fa-bell"></i>
+                  <span class="message">Your membership payment is due on mid of April.</span>
+                  <span class="timestamp">2 hours ago</span>
+                  <button class="mark-read">Mark as Read</button>
+              </li>
+              <li class="notification">
+                  <i class="fas fa-user"></i>
+                  <span class="message">New resource KU gavel constitution has been uploaded.Check it out.</span>
+                  <span class="timestamp">5 hours ago</span>
+                  <button class="mark-read">Mark as Read</button>
+              </li>
+              <li class="notification">
+                  <i class="fas fa-check-circle"></i>
+                  <span class="message">Your role for the next meeting, meeting 046 has been confirmed.</span>
+                  <span class="timestamp">Yesterday</span>
+                  <button class="mark-read">Mark as Read</button>
+              </li>
+              <li class="notification">
+                  <i class="fas fa-calendar"></i>
+                  <span class="message">A new meeting has been scheduled for 12th Feb 2025.</span>
+                  <span class="timestamp">2 days ago</span>
+                  <button class="mark-read">Mark as Read</button>
+              </li>
+            </ul>
           </div>
         </div>
+
 
         <div class="notification-summary">
           <h3> Payment History</h3>
           <div class="notification-container">
-            <h4>Recent Payments</h4>
-            <p>You made a payment of <b>Ksh300</b> on 10th Feb 2025 at 8:09am <b>via M-PESA</b>.Click here to download the receipt for this payment..</p>
-            <p>You made a payment of <b>Ksh150</b> on 18th Nov 2024 at 11:23am <b>via M-PESA</b>.Click here to download the receipt for this payment..</p>
-            <p>You made a payment of <b>Ksh300</b> on 13th March 2024 at 6:35pm <b>via M-PESA</b>.Click here to download the receipt for this payment..</p>
+            <ul id="notification-list">
+              <li class="notification">
+                  <i class="fa-solid fa-wallet"></i>
+                  <span class="message">Your membership payment of ksh. 300 was made on 10th Feb 2025 at 8:09am.</span>
+                  <span class="timestamp">2 days ago</span>
+                  <button class="mark-read">Download Receipt</button>
+              </li>
+              <li class="notification">
+                  <i class="fa-solid fa-wallet"></i>
+                  <span class="message">You made a payment of Ksh. 150 for funday on 18th Nov 2024 at 11:23am</span>
+                  <span class="timestamp">4 months ago</span>
+                  <button class="mark-read">Download Receipt</button>
+              </li>
+              <li class="notification">
+                  <i class="fa-solid fa-wallet"></i>
+                  <span class="message">You paid Ksh300 for membership fee on 13th March 2024 at 6:35pm.</span>
+                  <span class="timestamp">10 months ago</span>
+                  <button class="mark-read">Download Receipt</button>
+              </li>
+              <li class="notification">
+                  <i class="fa-solid fa-wallet"></i>
+                  <span class="message">You made a payment of Ksh. 200 for funday on 26th Nov 2023 at 01:12pm</span>
+                  <span class="timestamp">1 year ago</span>
+                  <button class="mark-read">Download Receipt</button>
+              </li>
+            </ul>
           </div>
         </div>
 
@@ -378,22 +423,60 @@
           <h3> Voting & Elections</h3>
           <div class="election-history">
             <div class="countdown-summary">
-              <div class="election-summary">
+              <div class="election-countdown">
+                <h3>Election Countdown</h3>
+                <div class="countdown">
+                  <div class="time-box">
+                      <span id="days">00</span>
+                      <p>Days</p>
+                  </div>
+                  <div class="time-box">
+                      <span id="hours">00</span>
+                      <p>Hours</p>
+                  </div>
+                  <div class="time-box">
+                      <span id="minutes">00</span>
+                      <p>Minutes</p>
+                  </div>
+                  <div class="time-box">
+                      <span id="seconds">00</span>
+                      <p>Seconds</p>
+                  </div>
+                </div>
+              </div>
+              <div class="election-countdown">
+                <h3>Nomination Countdown</h3>
+                <div class="countdown">
+                  <div class="time-box">
+                      <span id="days">00</span>
+                      <p>Days</p>
+                  </div>
+                  <div class="time-box">
+                      <span id="hours">00</span>
+                      <p>Hours</p>
+                  </div>
+                  <div class="time-box">
+                      <span id="minutes">00</span>
+                      <p>Minutes</p>
+                  </div>
+                  <div class="time-box">
+                      <span id="seconds">00</span>
+                      <p>Seconds</p>
+                  </div>
+                </div>
+              </div>
+            </div>  
+            <div class="election-summary">
+              <div class="election-summary-count">
                 <p><span class="vote-label">Recent Vote Count:</span>
                   <span class="date-label">23 votes</span></p>
                 <p><span class="nomination-label">Recent Nomination Count:</span>
                   <span class="date-label">16 votes</span></p>
               </div>
-              <div class="election-countdown">
-                <p><span class="election-count-label">Election:</span>
-                  <span class="vote-date-label">Active</span></p>
-                <p><span class="nomination-count-label">Nomination:</span>
-                  <span class="nomination-date-label">23 Days 4 hours 6 mins 48 seconds</span></p>
 
+              <div class="vote-btn-cont">
+                <button class="vote-btn"><span><i class="fa-solid fa-check-to-slot"></i></span>Vote Now</button>
               </div>
-            </div>
-            <div class="vote-btn-cont">
-              <button class="vote-btn">Vote Now</button>
             </div>
           </div>
         </div>
@@ -451,9 +534,52 @@
   // Update every second
   setInterval(updateDateTime, 1000);
 
-  // Initialize on page load
-  updateDateTime();
+  document.addEventListener("DOMContentLoaded", function () {
+    updateDateTime();
+});
 
+  document.addEventListener("DOMContentLoaded", function () {
+              // Select all "Mark as Read" buttons
+              const buttons = document.querySelectorAll(".mark-read");
+
+              // Add event listener to each button
+              buttons.forEach(button => {
+                  button.addEventListener("click", function () {
+                      this.parentElement.remove(); // Remove the notification from the list
+                  });
+              });
+          });
+
+          // Set the target date (Change this to your event date)
+  const targetDate = new Date("March 15, 2025 00:00:00").getTime();
+
+  // Function to update the countdown
+  function updateCountdown() {
+      const now = new Date().getTime();
+      const timeLeft = targetDate - now;
+
+      if (timeLeft <= 0) {
+          document.querySelector(".countdown").innerHTML = "<h2>Event Started!</h2>";
+          clearInterval(interval);
+          return;
+      }
+
+      // Calculate time components
+      const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+      // Update the DOM
+      document.getElementById("days").textContent = days < 10 ? "0" + days : days;
+      document.getElementById("hours").textContent = hours < 10 ? "0" + hours : hours;
+      document.getElementById("minutes").textContent = minutes < 10 ? "0" + minutes : minutes;
+      document.getElementById("seconds").textContent = seconds < 10 ? "0" + seconds : seconds;
+  }
+
+  // Update the countdown every second
+  const interval = setInterval(updateCountdown, 1000);
+  updateCountdown(); // Initial call to prevent delay
 
   </script>
 

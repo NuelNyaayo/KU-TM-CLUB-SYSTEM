@@ -6,33 +6,61 @@
     <title>Navigation with Dropdown</title>
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <style>
-/* Table Styling */
-table {
-    width: 50%;
-    border-collapse: collapse;
-    font-family: Arial, sans-serif;
+/* Import Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
 }
 
-/* Table Header */
-thead {
-    background-color: #004085; /* Dark blue */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #282c36;
     color: white;
+    text-align: center;
 }
 
-/* Table Body - Alternating Row Colors */
-tbody tr:nth-child(even) {
-    background-color: #f2f2f2; /* Light gray */
+.countdown-container {
+    background: #1e2129;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
-tbody tr:nth-child(odd) {
-    background-color: #ffffff; /* White */
+h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
 }
 
-/* Table Borders */
-th, td {
-    /* border: 1px solid #ccc; */
-    padding: 10px;
-    text-align: left;
+.countdown {
+    display: flex;
+    gap: 20px;
+}
+
+.time-box {
+    background: #3b3f4a;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    min-width: 80px;
+}
+
+.time-box span {
+    display: block;
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.time-box p {
+    font-size: 14px;
+    margin-top: 5px;
+    color: #bbb;
 }
 
 
@@ -41,38 +69,61 @@ th, td {
 </head>
 <body>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Age</th>
-                <th>Country</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Alice</td>
-                <td>25</td>
-                <td>USA</td>
-            </tr>
-            <tr>
-                <td>Bob</td>
-                <td>30</td>
-                <td>UK</td>
-            </tr>
-            <tr>
-                <td>Charlie</td>
-                <td>28</td>
-                <td>Canada</td>
-            </tr>
-            <tr>
-                <td>David</td>
-                <td>35</td>
-                <td>Germany</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="countdown-container">
+        <h1>Event Countdown</h1>
+        <div class="countdown">
+            <div class="time-box">
+                <span id="days">00</span>
+                <p>Days</p>
+            </div>
+            <div class="time-box">
+                <span id="hours">00</span>
+                <p>Hours</p>
+            </div>
+            <div class="time-box">
+                <span id="minutes">00</span>
+                <p>Minutes</p>
+            </div>
+            <div class="time-box">
+                <span id="seconds">00</span>
+                <p>Seconds</p>
+            </div>
+        </div>
+    </div>
     
+    <script>
+        // Set the target date (Change this to your event date)
+const targetDate = new Date("March 15, 2025 00:00:00").getTime();
+
+// Function to update the countdown
+function updateCountdown() {
+    const now = new Date().getTime();
+    const timeLeft = targetDate - now;
+
+    if (timeLeft <= 0) {
+        document.querySelector(".countdown").innerHTML = "<h2>Event Started!</h2>";
+        clearInterval(interval);
+        return;
+    }
+
+    // Calculate time components
+    const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+    // Update the DOM
+    document.getElementById("days").textContent = days < 10 ? "0" + days : days;
+    document.getElementById("hours").textContent = hours < 10 ? "0" + hours : hours;
+    document.getElementById("minutes").textContent = minutes < 10 ? "0" + minutes : minutes;
+    document.getElementById("seconds").textContent = seconds < 10 ? "0" + seconds : seconds;
+}
+
+// Update the countdown every second
+const interval = setInterval(updateCountdown, 1000);
+updateCountdown(); // Initial call to prevent delay
+
+    </script>
 
 </body>
 </html>
