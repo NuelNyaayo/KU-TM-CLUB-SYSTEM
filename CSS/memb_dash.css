@@ -261,7 +261,7 @@ h2 {
   flex-direction: column;
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
-  font-size: inherit;
+  
   }
   
 .side-panel li {
@@ -270,6 +270,7 @@ h2 {
   gap: 1.5rem;
   padding: 0 1rem;
   position: relative;
+  
   
 }
 
@@ -281,7 +282,7 @@ h2 {
 }
 
 .side-panel li i {
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   }
   
 .side-panel a,
@@ -291,7 +292,7 @@ h2 {
   display: block;
   color: white;
   text-decoration: none;
-  font-size: 1rem;
+  font-size: inherit;
   
   }
 
@@ -303,7 +304,7 @@ h2 {
   background: blue;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   border-radius: 0.7rem;
-  width: 10rem;
+  width: 12rem;
 }
 
 .side-panel li .submenu li {

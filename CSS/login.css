@@ -66,7 +66,6 @@ h2, .welcome {
 .contact__input, 
 .contact__textarea {
     padding: 0.5em;
-    border-radius: var(--BORDER-RADIUS);
     border-width: 2px;
     width: 100%;
     font-size: inherit;

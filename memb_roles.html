@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Member Roles</title>
+  <link rel="icon" href="KU_TM_FavIcon_Logo.png" type="image/png">
+  <link rel="stylesheet" href="memb_roles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+  <!-- Side Panel (Collapsible on Mobile) -->
+  <div class="side-panel">
+    <div class="main_panel">
+      <div class="logo">
+        <img src="KU_TM_FavIcon_Logo.png" alt="KU Toastmasters Logo"width="120" height="120">
+      </div>
+      <h2>CLUB MEMBER</h2>
+      <div class="profile-cont">
+        <!-- <img src="profile.jpg" alt="Profile" class="profile-icon"> -->
+        <div class="profile-icon">
+          <i class="fa-solid fa-user"></i>
+        </div>
+        <div class="user_details">
+          <p>Nuel Nyaayo</p>
+          <p class="memb_no">Member No - 001</p>
+        </div>
+      </div>
+
+      <ul>
+        <li>
+          <i class="fas fa-envelope"></i>
+          <a href="#">My Profile</a>
+        </li>
+        <li>
+          <i class="fas fa-envelope"></i>
+          <a href="#">Settings</a>
+          <ul class="submenu">
+            <li><a href="#">Account Settings</a></li>
+            <li><a href="#">General Settings</a></li>
+          </ul>
+        </li>
+        <li>
+          <i class="fas fa-envelope"></i>
+          <a href="#">Contact Us</a>
+        </li>
+        <li>
+          <i class="fas fa-envelope"></i>
+          <a href="#">Support</a>
+          <ul class="submenu">
+            <li><a href="#">Help</a></li>
+            <li><a href="#">About Us</a></li>
+          </ul>
+        </li>
+      </ul>
+      <details>
+        <summary>
+          KU Toastmasters Version 1.1.0
+        </summary>
+        <p>
+          Inc. Toastmasters International, <br>
+          &copy; 2025
+        </p>
+      </details>
+    </div>
+    <div class="logout">
+      <ul>
+        <li>
+          <i class="fas fa-envelope"></i>
+          <a href="#">Log Out</a>
+        </li>
+      </ul>
+
+    </div>
+      
+  </div>
+
+  <div class="main-content">
+    <!-- Nav Section -->
+    <div class="top-nav">
+        <ul>
+          <li><a href="memb_dash.html"class="active">Home</a></li>
+          <li><a href="memb_roles.html">Roles</a></li>
+          <li><a href="#">Membership</a></li>
+          <li><a href="#">Resources</a></li>
+          <li><a href="#">Elections</a></li>
+        </ul>
+        <div class="top-nav-notification">
+          <i class="fa-regular fa-bell"></i>
+          <button class="notification-btn">Notifications</button>
+        </div>
+    </div>
+    
+    <!-- Breadcrumb Section -->
+    <div class="breadcrumb-nav">
+      <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+          <span>Club Member</span>
+          <i class="fa-solid fa-play"></i>
+          <li><a href="index.html">Home</a></li>
+          <!-- <li><a href="dashboard.html">Dashboard</a></li> -->
+          <li>Dashboard</li>
+        </ul>
+      </nav>
+      <div class="search-section">
+        <input type="text" placeholder="Search Here..." class="search-bar">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </div>
+    </div>
+
+    <!-- Dashboard Area -->
+    <div class="dashboard">
+      
+        <div class="dashboard-overview">
+          <h3> Sign Up for Toastmasters Role</h3>
+          <div class="next-meeting">
+            <form id="role-signup-form">
+            
+                <!-- Select Meeting Number -->
+                <label for="meeting-number">Select Meeting Number:</label>
+                <select id="meeting-number" name="meeting-number" required>
+                    <option value="">-- Select Meeting --</option>
+                    <option value="046" data-date="12th Feb 2025">Meeting 046</option>
+                    <option value="047" data-date="19th Feb 2025">Meeting 047</option>
+                    <option value="048" data-date="26th Feb 2025">Meeting 048</option>
+                </select>
+    
+                <!-- Meeting Date (Auto-Filled) -->
+                <p><strong>Meeting Date:</strong> <span id="meeting-date">Select a meeting</span></p>
+    
+                <!-- Confirm Availability -->
+                <label>Confirm Availability:</label>
+                <label>
+                    <input type="radio" name="availability" value="yes" id="available"> I will be available
+                </label>
+                <label>
+                    <input type="radio" name="availability" value="no" id="not-available"> I won't be available
+                </label>
+    
+                <!-- Role Selection (Hidden by Default) -->
+                <div id="role-selection" class="hidden">
+                    <label for="role">Select Your Role:</label>
+                    <select id="role" name="role">
+                        <option value="">-- Select Role --</option>
+                        <option value="tmod">Toastmaster of the Day (Tmod)</option>
+                        <option value="grammarian">Grammarian</option>
+                        <option value="speech-presenter">Speech Presenter</option>
+                        <option value="speech-evaluator">Speech Evaluator</option>
+                        <option value="general-evaluator">General Evaluator</option>
+                        <option value="ah-counter">Ah Counter</option>
+                        <option value="hackmaster">Hackmaster</option>
+                        <option value="timer">Timer</option>
+                        <option value="table-topics-master">Table Topics Master</option>
+                        <option value="jokemaster">Jokemaster</option>
+                        <option value="attendee">Attendee</option>
+                    </select>
+                </div>
+    
+                <!-- Additional Fields (Hidden by Default) -->
+                <div id="additional-fields">
+    
+                    <!-- Meeting Attire (Tmod) -->
+                    <div id="attire-field" class="optional-field">
+                        <label for="meeting-attire">Meeting Attire (Optional):</label>
+                        <input type="text" id="meeting-attire" name="meeting-attire" placeholder="e.g., Formal, Casual">
+                    </div>
+    
+                    <!-- Word of the Day (Grammarian) -->
+                    <div id="word-of-day-field" class="optional-field">
+                        <label for="word-of-day">Word of the Day (Optional):</label>
+                        <input type="text" id="word-of-day" name="word-of-day" placeholder="Enter Word of the Day">
+                    </div>
+    
+                    <!-- Speech Title & Project (Speech Presenter) -->
+                    <div id="speech-details-field" class="optional-field">
+                        <label for="speech-project">Select Speech Project:</label>
+                        <select id="speech-project" name="speech-project">
+                            <option value="">-- Select Project --</option>
+                            <option value="icebreaker">Icebreaker</option>
+                            <option value="persuasive-speech">Persuasive Speech</option>
+                            <option value="storytelling">Storytelling</option>
+                        </select>
+    
+                        <label for="speech-title">Enter Speech Title:</label>
+                        <input type="text" id="speech-title" name="speech-title" placeholder="Enter Speech Title">
+                    </div>
+    
+                    <!-- Speech Evaluation (Speech Evaluator) -->
+                    <div id="evaluation-field" class="optional-field">
+                        <label for="evaluation-project">Select Speech Project to Evaluate:</label>
+                        <select id="evaluation-project" name="evaluation-project">
+                            <option value="">-- Select Project --</option>
+                            <option value="icebreaker">Icebreaker</option>
+                            <option value="persuasive-speech">Persuasive Speech</option>
+                            <option value="storytelling">Storytelling</option>
+                        </select>
+                    </div>
+    
+                    <!-- General Evaluator Point of Focus -->
+                    <div id="focus-field" class="optional-field">
+                        <label for="focus-point">Point of Focus (Optional):</label>
+                        <input type="text" id="focus-point" name="focus-point" placeholder="e.g., Timing, Filler Words">
+                    </div>
+    
+                </div>
+    
+                <!-- Submit Button (Initially Hidden) -->
+                <button type="submit" id="submit-btn" >Submit</button>
+            </form>
+          </div>
+        </div>
+
+
+    </div>
+
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+    const links = document.querySelectorAll(".top-nav a");
+
+      links.forEach(link => {
+        link.addEventListener("click", function () {
+          links.forEach(l => l.classList.remove("active")); // Remove active from all
+          this.classList.add("active"); // Add active to clicked link
+        });
+      });
+     });
+
+     document.addEventListener("DOMContentLoaded", function () {
+    const meetingSelect = document.getElementById("meeting-number");
+    const meetingDateDisplay = document.getElementById("meeting-date");
+    const availableRadio = document.getElementById("available");
+    const notAvailableRadio = document.getElementById("not-available");
+    const roleSelection = document.getElementById("role-selection");
+    const roleSelect = document.getElementById("role");
+    const additionalFields = document.getElementById("additional-fields");
+    const submitBtn = document.getElementById("submit-btn");
+
+    // Role-based fields mapping
+    const fields = {
+        "tmod": "attire-field",
+        "grammarian": "word-of-day-field",
+        "speech-presenter": "speech-details-field",
+        "speech-evaluator": "evaluation-field",
+        "general-evaluator": "focus-field"
+    };
+
+    // Initially disable options
+    availableRadio.disabled = true;
+    notAvailableRadio.disabled = true;
+    roleSelect.disabled = true;
+    submitBtn.disabled = true;
+
+    // Enable availability options when meeting is selected
+    meetingSelect.addEventListener("change", function () {
+        const selectedOption = this.options[this.selectedIndex];
+        if (selectedOption.value) {
+            meetingDateDisplay.textContent = selectedOption.getAttribute("data-date") || "Select a meeting";
+            availableRadio.disabled = false;
+            notAvailableRadio.disabled = false;
+        } else {
+            meetingDateDisplay.textContent = "Select a meeting";
+            availableRadio.disabled = true;
+            notAvailableRadio.disabled = true;
+            roleSelect.disabled = true;
+            submitBtn.disabled = true;
+            roleSelection.classList.remove("show"); // Hide role selection
+        }
+    });
+
+    // Handle Availability Selection
+    function handleAvailabilityChange() {
+        submitBtn.disabled = false; // Enable submit button when availability is selected
+
+        if (availableRadio.checked) {
+            roleSelection.classList.add("show"); // Show role selection
+            roleSelect.disabled = false;
+        } else {
+            roleSelection.classList.remove("show"); // Hide role selection
+            roleSelect.disabled = true;
+
+            // Hide all optional fields when "Not Available" is selected
+            additionalFields.querySelectorAll(".optional-field").forEach(field => field.classList.remove("show"));
+
+            // Reset role selection
+            roleSelect.value = "";
+        }
+    }
+
+    availableRadio.addEventListener("change", handleAvailabilityChange);
+    notAvailableRadio.addEventListener("change", handleAvailabilityChange);
+
+    // Handle Role Selection
+    roleSelect.addEventListener("change", function () {
+        // Hide all optional fields first
+        additionalFields.querySelectorAll(".optional-field").forEach(field => field.classList.remove("show"));
+
+        let selectedRole = roleSelect.value;
+        if (fields[selectedRole]) {
+            document.getElementById(fields[selectedRole]).classList.add("show");
+        }
+    });
+});
+
+
+
+
+
+  </script>
+
+</body>
+</html>
