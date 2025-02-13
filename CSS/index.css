@@ -10,6 +10,7 @@ body{
     font-style: normal;
     font-size: 1.2rem;
     min-height: 100vh;
+    background-color: darkblue;
 }
 
 nav {
@@ -17,6 +18,28 @@ nav {
     height: 10vh;
     display: flex;
     justify-content: space-between;
+}
+
+nav .logo {
+    margin-left: 1rem;
+}
+
+nav figure {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+nav figure img {
+    display: block;
+}
+
+nav figure figcaption {
+    color: white;
+    font-weight: bold;
+    font-size: 0.8rem;
+    margin-left: 0.5rem;
 }
 
 nav ul {
@@ -28,7 +51,7 @@ nav li, button {
 }
 
 nav a {
-    color: blue;
+    color: white;
     text-decoration: none; 
 }
 button {
@@ -47,6 +70,7 @@ button {
 
 h1, p {
     text-align: center;
+    color: white;
 }
 
 section {
@@ -54,12 +78,22 @@ section {
 }
 
 .sidebar {
-    width:15%;
-    margin-top: 6rem;
+    width:20%;
+    margin-top: 7rem;
     margin-right: 1rem;
     margin-left: 1rem;
     margin-bottom: 2rem;
+    /* background-color: blue; */
     
+}
+
+.sidebar h3 {
+    color: white;
+    margin-bottom: 0.2rem;
+}
+
+.sidebar-contact {
+    margin-bottom: 1rem;
 }
 .sidebar-contact ul, .sidebar-social ul {
     list-style: none;
@@ -67,12 +101,20 @@ section {
 }
 
 .sidebar-contact ul li,  .sidebar-social ul li {
-    padding: 1.2rem;
+    padding: 1rem;
+    padding-left: 0.2rem;
+    margin-bottom: 0.2rem;
 }
 
 .sidebar-contact i, .sidebar-social i {
-    color: #004085; 
+    color: white;
     margin-right: 1rem;
+    font-size: 1.2rem;
+}
+
+.sidebar-contact a, .sidebar-social a {
+    color: white;
+text-decoration: none;
     
 }
 
@@ -80,7 +122,7 @@ section {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 80%;
+    width: 75%;
     
     height: 80vh;
 }
@@ -100,19 +142,26 @@ section {
     flex-direction: column;
     align-items: center;
     gap: 1em;
-    border: 2px solid #333;
+    border: none;
     max-width: 32%;
     border-radius: 15px;
     margin-bottom: 1rem;
+    background-color: whitesmoke;
+}
+
+.member_container p {
+    color: black;
 }
 
 .sub-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    z-index: -1;
-    background-color: aqua;
+    z-index:    1;
+    background-color: darkblue;
     width: 100%;
+    border: 2px solid whitesmoke;
+    border-radius: 15px;
 }
 .leader_container {
     display: flex;

@@ -3,29 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Recently Viewed Resources</title>
     <link rel="stylesheet" href="test.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
 </head>
 <body>
-    <nav aria-label="breadcrumb">
-        <ul class="breadcrumb">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="dashboard.html">Dashboard</a></li>
-          <li>Profile</li>
-        </ul>
-    </nav>
-    <div class="profile">
-        <img src="profile.jpg" alt="Profile" class="profile-icon">
-        <div class="dropdown">
-          <button class="dropdown-btn">Account</button>
-          <div class="dropdown-content">
-            <a href="#">Settings</a>
-            <a href="#">Notifications</a>
-            <a href="#">Logout</a>
-          </div>
-        </div>
+
+    <div class="container">
+        <h2>Recently Viewed Resources</h2>
+        <div id="recent-resources" class="resource-grid"></div>
     </div>
-    <input type="text" placeholder="Search..." class="search-bar">
-      
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+    const recentResources = document.getElementById("recent-resources");
+
+    // Dummy data (replace this with database/API data)
+    const resources = [
+        { name: "Speech Guidelines", type: "document", action: "View", icon: "fa-file-alt" },
+        { name: "Public Speaking Tips", type: "video", action: "Watch", icon: "fa-video" },
+        { name: "Toastmasters Website", type: "link", action: "Open", icon: "fa-link" },
+        { name: "CC1 Speech Audio", type: "audio", action: "Listen", icon: "fa-headphones" }
+    ];
+
+    // Function to render resources
+    function renderResources() {
+        recentResources.innerHTML = "";
+        resources.forEach(resource => {
+            let card = document.createElement("div");
+            card.classList.add("resource-card");
+            card.setAttribute("data-type", resource.type);
+            card.innerHTML = `
+                <i class="fa ${resource.icon}"></i>
+                <p>${resource.name}</p>
+                <button>${resource.action}</button>
+            `;
+            recentResources.appendChild(card);
+        });
+    }
+
+    // Load resources
+    renderResources();
+});
+
+    </script>
+
 </body>
 </html>

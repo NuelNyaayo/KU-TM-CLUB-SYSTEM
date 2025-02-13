@@ -1,54 +1,150 @@
-.breadcrumb {
-    list-style: none;
+/* Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f6f9;
+    margin: 0;
+    padding: 20px;
     display: flex;
-    font-size: 1rem;
-    padding: 10px;
-    background-color: #f8f9fa;
+    justify-content: center;
+}
+
+.payment-history {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 800px;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Controls */
+.controls {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.controls input, .controls select {
+    padding: 8px;
+    border: 1px solid #ddd;
     border-radius: 5px;
-  }
-  
-  .breadcrumb li {
+    font-size: 14px;
+    width: 48%;
+}
+
+/* Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f6f9;
+    margin: 0;
+    padding: 20px;
     display: flex;
-    align-items: center;
-  }
-  
-  .breadcrumb li:not(:last-child)::after {
-    content: "›"; /* Separator */
-    margin: 0 10px;
-    color: #6c757d;
-  }
-  
-  .breadcrumb a {
-    text-decoration: none;
+    justify-content: center;
+}
+
+.container {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 800px;
+    text-align: center;
+}
+
+h2 {
+    margin-bottom: 15px;
+}
+
+/* Resource Grid */
+.resource-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+    margin-top: 10px;
+}
+
+/* Resource Card */
+.resource-card {
+    background: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.resource-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Resource Icon */
+.resource-card i {
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+/* Icons for different types */
+.resource-card[data-type="audio"] i {
+    color: #ff5722;
+}
+
+.resource-card[data-type="video"] i {
     color: #007bff;
-  }
-  
-  .breadcrumb a:hover {
-    text-decoration: underline;
-  }
-  
-   .profile {
-    display: flex;
-    align-items: center;
-  }
-  
-   .profile .profile-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 10px;
-  }
-  
-   .dropdown .dropdown-btn {
-    background-color: transparent;
+}
+
+.resource-card[data-type="document"] i {
+    color: #4caf50;
+}
+
+.resource-card[data-type="link"] i {
+    color: #ff9800;
+}
+
+/* Resource Name */
+.resource-card p {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+/* Action Button */
+.resource-card button {
+    padding: 6px 10px;
+    font-size: 12px;
     border: none;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-  }
-  
-   .search-bar {
-    padding: 5px;
     border-radius: 5px;
-    border: 1px solid #ccc;
-  }
+    cursor: pointer;
+    transition: 0.3s;
+    color: white;
+}
+
+.resource-card[data-type="audio"] button {
+    background: #ff5722;
+}
+
+.resource-card[data-type="video"] button {
+    background: #007bff;
+}
+
+.resource-card[data-type="document"] button {
+    background: #4caf50;
+}
+
+.resource-card[data-type="link"] button {
+    background: #ff9800;
+}
+
+.resource-card button:hover {
+    opacity: 0.8;
+}
+

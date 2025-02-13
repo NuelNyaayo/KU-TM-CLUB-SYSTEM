@@ -14,13 +14,14 @@
   <div class="side-panel">
     <div class="main_panel">
       <div class="logo">
-        <img src="KU_TM_FavIcon_Logo.png" alt="KU Toastmasters Logo"width="120" height="120">
+        <img src="KU_TM_FavIcon_Logo.png" alt="KU Toastmasters Logo" width="120" height="120">
       </div>
       <h2>CLUB MEMBER</h2>
       <div class="profile-cont">
-        <!-- <img src="profile.jpg" alt="Profile" class="profile-icon"> -->
+        
         <div class="profile-icon">
-          <i class="fa-solid fa-user"></i>
+          <img src="pexels-vietfotos-10928778.jpg" alt="Profile" class="profile-icon">
+          <!-- <i class="fa-solid fa-user"></i> -->
         </div>
         <div class="user_details">
           <p>Nuel Nyaayo</p>
@@ -30,11 +31,11 @@
 
       <ul>
         <li>
-          <i class="fas fa-envelope"></i>
+          <i class="fa-solid fa-user"></i>
           <a href="#">My Profile</a>
         </li>
         <li>
-          <i class="fas fa-envelope"></i>
+          <i class="fa-solid fa-gear"></i>
           <a href="#">Settings</a>
           <ul class="submenu">
             <li><a href="#">Account Settings</a></li>
@@ -42,11 +43,11 @@
           </ul>
         </li>
         <li>
-          <i class="fas fa-envelope"></i>
+          <i class="fa-solid fa-envelope"></i>
           <a href="#">Contact Us</a>
         </li>
         <li>
-          <i class="fas fa-envelope"></i>
+          <i class="fa-solid fa-circle-question"></i>
           <a href="#">Support</a>
           <ul class="submenu">
             <li><a href="#">Help</a></li>
@@ -59,7 +60,7 @@
           KU Toastmasters Version 1.1.0
         </summary>
         <p>
-          Inc. Toastmasters International, <br>
+          Inc. Toastmasters Int.
           &copy; 2025
         </p>
       </details>
@@ -67,7 +68,7 @@
     <div class="logout">
       <ul>
         <li>
-          <i class="fas fa-envelope"></i>
+          <i class="fa-solid fa-arrow-right-from-bracket"></i>
           <a href="#">Log Out</a>
         </li>
       </ul>
@@ -219,14 +220,29 @@
   <script>
     document.addEventListener("DOMContentLoaded", function () {
     const links = document.querySelectorAll(".top-nav a");
+    const currentPage = window.location.pathname.split("/").pop(); // Get current page filename
 
-      links.forEach(link => {
+    // Remove active from all, then set active based on localStorage or current page
+    links.forEach(link => {
+        link.classList.remove("active");
+
+        // Check if the href matches the current page URL
+        if (link.getAttribute("href") === currentPage) {
+            link.classList.add("active");
+        }
+
+        // Click event to update localStorage and navigate
         link.addEventListener("click", function () {
-          links.forEach(l => l.classList.remove("active")); // Remove active from all
-          this.classList.add("active"); // Add active to clicked link
+            localStorage.setItem("activeTab", this.getAttribute("href"));
         });
-      });
-     });
+    });
+
+    // If no link is active, set "memb_dash.html" as default
+    if (!document.querySelector(".top-nav a.active")) {
+        document.querySelector(".top-nav a[href='memb_dash.html']").classList.add("active");
+    }
+});
+
 
      document.addEventListener("DOMContentLoaded", function () {
     const meetingSelect = document.getElementById("meeting-number");

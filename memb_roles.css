@@ -214,28 +214,32 @@ h2 {
   justify-content: center;
   align-items: center;
   gap: 1.5rem;
-  margin: 2rem 0;
+  margin: 1.5rem 0;
 }
 
 .profile-cont .profile-icon {
-  width: 5rem;
-  height: 5rem;
+  width: 6rem;
+  height: 6rem;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  /* margin-right: 10px; */
-  border: 0.3rem solid white;
-}
-
-.profile-cont .profile-icon {
-  padding-top: 0.5rem;
-  font-size: 3.6rem;
+  overflow: hidden;
+  box-sizing: border-box;
+  border: 0.2rem solid #003366;
+  /* font-size: 3.6rem; */
   transition: transform 0.3s ease-in-out; /* Smooth transition */
 }
 
 .profile-cont .profile-icon:hover {
   transform: scale(1.3); /* Increase size by 30% */
+}
+
+.profile-cont .profile-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
 }
 
 .user_details {
@@ -401,7 +405,7 @@ label {
     font-weight: bold;
 }
 
-select, input, button {
+form select, form input, form button {
     width: 100%;
     padding: 8px;
     margin: 5px auto;
@@ -424,18 +428,6 @@ label input[type="radio"] {
     margin-right: 2rem;
     width: auto; /* Prevent radio buttons from being stretched */
     vertical-align: middle; /* Align with text */
-}
-
-button {
-    background-color: #007bff;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    margin-top: 15px;
-}
-
-button:hover {
-    background-color: #0056b3;
 }
 
 /* Ensure they are properly spaced when revealed */

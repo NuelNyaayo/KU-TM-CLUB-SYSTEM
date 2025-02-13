@@ -214,28 +214,32 @@ h2 {
   justify-content: center;
   align-items: center;
   gap: 1.5rem;
-  margin: 2rem 0;
+  margin: 1.5rem 0;
 }
 
 .profile-cont .profile-icon {
-  width: 5rem;
-  height: 5rem;
+  width: 6rem;
+  height: 6rem;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  /* margin-right: 10px; */
-  border: 0.3rem solid white;
-}
-
-.profile-cont .profile-icon {
-  padding-top: 0.5rem;
-  font-size: 3.6rem;
+  overflow: hidden;
+  box-sizing: border-box;
+  border: 0.2rem solid #003366;
+  /* font-size: 3.6rem; */
   transition: transform 0.3s ease-in-out; /* Smooth transition */
 }
 
 .profile-cont .profile-icon:hover {
   transform: scale(1.3); /* Increase size by 30% */
+}
+
+.profile-cont .profile-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
 }
 
 .user_details {
@@ -497,7 +501,7 @@ details {
 
 .role-btn {
   display: flex;
-  gap: 8rem;
+  gap: 7rem;
   margin-top: 1rem;
   margin-left: 1rem;
 }
@@ -505,6 +509,7 @@ details {
 .role-btn button {
   padding: 0.5rem 1rem;
   border-radius: 0.2rem;
+  font-size: 1rem;
 }
 .role-btn .confirm {
   padding: 0.5rem 1rem;
@@ -536,9 +541,112 @@ details {
   margin-top: 1rem;
   margin-right: 2rem;
   margin-left: 2rem;
+  background-color: whitesmoke;
+  border-radius: 8px;
+}
+
+/* Resource Grid */
+.resource-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 5rem;
+  margin-top: 1rem;
+}
+
+/* Resource Card */
+.resource-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.resource-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Resource Icon */
+.resource-card i {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+/* Icons for different types */
+.resource-card[data-type="audio"] i {
+  color: darkblue;
+}
+
+.resource-card[data-type="video"] i {
+  color: darkblue;
+}
+
+.resource-card[data-type="document"] i {
+  color: darkblue;
+}
+
+.resource-card[data-type="link"] i {
+  color: darkblue;
+}
+
+/* Resource Name */
+.resource-card p {
+  font-size: inherit;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+/* Action Button */
+.resource-card button {
+  padding: 6px 10px;
+  font-size: inherit;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+  color: white;
+}
+
+.resource-card[data-type="audio"] button {
+  background: darkblue;
+}
+
+.resource-card[data-type="video"] button {
+  background: darkblue;
+}
+
+.resource-card[data-type="document"] button {
+  background: darkblue;
+}
+
+.resource-card[data-type="link"] button {
+  background: darkblue;
+}
+
+.resource-card button:hover {
+  opacity: 0.8;
+}
+
+.meetings-summary {
+  background-color: whitesmoke;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding-bottom: 1.5rem;
+  margin: 1rem 0;
+}
+
+.meetings-tables {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem;
+  margin-top: 1rem;
+  margin-right: 2rem;
+  margin-left: 2rem;
   background-color: #fff;
   border-radius: 8px;
 }
+
 h4 {
   text-align: center;
   padding-bottom: 1rem;
@@ -569,7 +677,7 @@ tbody tr:nth-child(odd) {
 
 /* Table Borders */
 th, td {
-  /* border: 1px solid #ccc; */
+  border: 1px solid #ccc;
   padding: 10px;
   text-align: left;
 }
@@ -675,6 +783,92 @@ ul {
   background: #003366;
 }
  */
+
+.payment-summary {
+  background-color: whitesmoke;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding-bottom: 1.5rem;
+  margin: 1rem 0;
+}
+
+.payment-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem;
+  margin-top: 1rem;
+  margin-right: 2rem;
+  margin-left: 2rem;
+  background-color: #fff;
+  border-radius: 8px;
+}
+
+/* Table */
+.payment-container table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.payment-container th, .payment-container td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.payment-container th {
+  background: darkblue;
+  color: white;
+  font-weight: 600;
+}
+
+/* .payment-container tr:hover {
+  background-color: blue;
+  color: white;
+} */
+
+/* Status Labels */
+/* .payment-container .status {
+  font-weight: 600;
+  text-align: center;
+} */
+
+.payment-container .paid {
+  background: #28a745;
+  font-weight: bold;
+  font-size: 1rem;
+  text-align: center;
+  color: white;
+  padding: 0.5rem;
+  margin-right: 2rem;
+  margin-bottom: 1rem;
+  
+}
+
+
+/* Buttons */
+.payment-container .download-btn {
+  background: darkblue;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: 0.3s;
+}
+
+.payment-container .download-btn i {
+  margin-right: 1rem;
+}
+
+.payment-container .download-btn:hover {
+  background: #003366;
+}
+
+
 .vote-elections {
   background-color: whitesmoke;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);

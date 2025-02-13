@@ -14,13 +14,14 @@
   <div class="side-panel">
     <div class="main_panel">
       <div class="logo">
-        <img src="KU_TM_FavIcon_Logo.png" alt="KU Toastmasters Logo"width="120" height="120">
+        <img src="KU_TM_FavIcon_Logo.png" alt="KU Toastmasters Logo" width="120" height="120">
       </div>
       <h2>CLUB MEMBER</h2>
       <div class="profile-cont">
-        <!-- <img src="profile.jpg" alt="Profile" class="profile-icon"> -->
+        
         <div class="profile-icon">
-          <i class="fa-solid fa-user"></i>
+          <img src="pexels-vietfotos-10928778.jpg" alt="Profile" class="profile-icon">
+          <!-- <i class="fa-solid fa-user"></i> -->
         </div>
         <div class="user_details">
           <p>Nuel Nyaayo</p>
@@ -30,11 +31,11 @@
 
       <ul>
         <li>
-          <i class="fas fa-envelope"></i>
+          <i class="fa-solid fa-user"></i>
           <a href="#">My Profile</a>
         </li>
         <li>
-          <i class="fas fa-envelope"></i>
+          <i class="fa-solid fa-gear"></i>
           <a href="#">Settings</a>
           <ul class="submenu">
             <li><a href="#">Account Settings</a></li>
@@ -42,11 +43,11 @@
           </ul>
         </li>
         <li>
-          <i class="fas fa-envelope"></i>
+          <i class="fa-solid fa-envelope"></i>
           <a href="#">Contact Us</a>
         </li>
         <li>
-          <i class="fas fa-envelope"></i>
+          <i class="fa-solid fa-circle-question"></i>
           <a href="#">Support</a>
           <ul class="submenu">
             <li><a href="#">Help</a></li>
@@ -59,7 +60,7 @@
           KU Toastmasters Version 1.1.0
         </summary>
         <p>
-          Inc. Toastmasters International, <br>
+          Inc. Toastmasters Int.
           &copy; 2025
         </p>
       </details>
@@ -67,7 +68,7 @@
     <div class="logout">
       <ul>
         <li>
-          <i class="fas fa-envelope"></i>
+          <i class="fa-solid fa-arrow-right-from-bracket"></i>
           <a href="#">Log Out</a>
         </li>
       </ul>
@@ -150,52 +151,23 @@
         <div class="recent-resources">
           <h3> Recently Viewed Resources</h3>
           <div class="viewed-resources">
-            <table>
-              <thead>
-                  <tr>
-                      <th>Resource Name</th>
-                      <th>Category</th>
-                      <th>Action</th>
-                  </tr>
-              </thead>
-              <tbody>
-                  <tr>
-                      <td>Club Constitution</td>
-                      <td>Document</td>
-                      <td>View</td>
-                  </tr>
-                  <tr>
-                      <td>CC1 Speech</td>
-                      <td>Audio</td>
-                      <td>Listen</td>
-                  </tr>
-                  <tr>
-                      <td>TMOD Role</td>
-                      <td>Video</td>
-                      <td>Watch</td>
-                  </tr>
-                  <tr>
-                      <td>TM Website</td>
-                      <td>Link</td>
-                      <td>Open</td>
-                  </tr>
-              </tbody>
-            </table>
+
+            <div id="recent-resources" class="resource-grid"></div>
             
           </div>
         </div>
 
-        <div class="recent-resources">
+        <div class="meetings-summary">
           <h3> Meetings Summary</h3>
-          <div class="viewed-resources">
+          <div class="meetings-tables">
             <h4> Upcoming Meetings</h4>
             <table>
               <thead>
                   <tr>
                       <th>Meeting No</th>
                       <th>Theme</th>
+                      <th>Your Role</th>
                       <th>Venue</th>
-                      <th>Time</th>
                       <th>Date</th>
                   </tr>
               </thead>
@@ -203,37 +175,40 @@
                   <tr>
                       <td>046</td>
                       <td>Love</td>
+                      <td>TMOD</td>
                       <td>EF 09</td>
-                      <td>6:30pm - 8:15pm</td>
-                      <td>23rd Jan 2024</td>
+                      
+                      <td>23rd Jan 2025</td>
                   </tr>
                   <tr>
-                      <td>047</td>
-                      <td>Self Awareness</td>
-                      <td>EF 09</td>
-                      <td>6:30pm - 8:15pm</td>
-                      <td>27rd Jan 2024</td>
+                    <td>047</td>
+                    <td>Self Awareness</td>
+                    <td>Cc3 speaker</td>
+                    <td>Bssc Rm-255</td>
+                    
+                    <td>27rd Jan 2025</td>
                   </tr>
                   <tr>
                       <td>048</td>
                       <td>Happiness</td>
-                      <td>EF 09</td>
-                      <td>6:30pm - 8:15pm</td>
-                      <td>3rd Feb 2024</td>
+                      <td>Grammarian</td>
+                      <td>Bssc Rm-255</td>
+                      
+                      <td>3rd Feb 2025</td>
                   </tr>
               </tbody>
             </table>
             
           </div>
-          <div class="viewed-resources">
+          <div class="meetings-tables">
             <h4> Recent Meetings</h4>
             <table>
               <thead>
                   <tr>
                       <th>Meeting No</th>
                       <th>Theme</th>
+                      <th>Your Role</th>
                       <th>Venue</th>
-                      <th>Time</th>
                       <th>Date</th>
                   </tr>
               </thead>
@@ -241,87 +216,26 @@
                   <tr>
                       <td>045</td>
                       <td>Reignite Momentum</td>
+                      <td>Attendee</td>
                       <td>EF 09</td>
-                      <td>6:30pm - 8:15pm</td>
-                      <td>16th Jan 2024</td>
+                      
+                      <td>16th Jan 2025</td>
                   </tr>
                   <tr>
                       <td>044</td>
                       <td>Achieving Greatness</td>
+                      <td>Table Topics Master</td>
                       <td>EF 09</td>
-                      <td>6:30pm - 8:15pm</td>
-                      <td>9th Jan 2024</td>
+                      
+                      <td>9th Jan 2025</td>
                   </tr>
                   <tr>
                       <td>043</td>
                       <td>Change</td>
-                      <td>EF 09</td>
-                      <td>6:30pm - 8:15pm</td>
-                      <td>2nd Jan 2024</td>
-                  </tr>
-              </tbody>
-            </table>
-            
-          </div>
-        </div>
-
-        <div class="recent-resources">
-          <h3>Your Roles Summary</h3>
-          <div class="viewed-resources">
-            <h4> Upcoming Roles</h4>
-            <table>
-              <thead>
-                  <tr>
-                      <th>Meeting No</th>
-                      <th>Role</th>
-                      <th>Description</th>
-                  </tr>
-              </thead>
-              <tbody>
-                  <tr>
-                      <td>046</td>
-                      <td>TMOD</td>
-                      <td>MC of the Meeting</td>
-                  </tr>
-                  <tr>
-                      <td>047</td>
-                      <td>Speech Presenter</td>
-                      <td>CC3 speaker</td>
-                  </tr>
-                  <tr>
-                      <td>048</td>
-                      <td>Grammarian</td>
-                      <td>Present Word of the Day</td>
-                  </tr>
-              </tbody>
-            </table>
-            
-          </div>
-          <div class="viewed-resources">
-            <h4> Recent Roles</h4>
-            <table>
-              <thead>
-                  <tr>
-                      <th>Meeting No</th>
-                      <th>Role</th>
-                      <th>Description</th>
-                  </tr>
-              </thead>
-              <tbody>
-                  <tr>
-                      <td>045</td>
-                      <td>Ah Counter</td>
-                      <td>Check on Filler Words</td>
-                  </tr>
-                  <tr>
-                      <td>044</td>
                       <td>Timer</td>
-                      <td>Time Meeting Events</td>
-                  </tr>
-                  <tr>
-                      <td>043</td>
-                      <td>Table Topics Master</td>
-                      <td>Conducts Table Topics Sessions</td>
+                      <td>EF 09</td>
+                      
+                      <td>2nd Jan 2025</td>
                   </tr>
               </tbody>
             </table>
@@ -386,35 +300,55 @@
         </div>
 
 
-        <div class="notification-summary">
+        <div class="payment-summary">
           <h3> Payment History</h3>
-          <div class="notification-container">
-            <ul id="notification-list">
-              <li class="notification">
-                  <i class="fa-solid fa-wallet"></i>
-                  <span class="message">Your membership payment of ksh. 300 was made on 10th Feb 2025 at 8:09am.</span>
-                  <span class="timestamp">2 days ago</span>
-                  <button class="mark-read">Download Receipt</button>
-              </li>
-              <li class="notification">
-                  <i class="fa-solid fa-wallet"></i>
-                  <span class="message">You made a payment of Ksh. 150 for funday on 18th Nov 2024 at 11:23am</span>
-                  <span class="timestamp">4 months ago</span>
-                  <button class="mark-read">Download Receipt</button>
-              </li>
-              <li class="notification">
-                  <i class="fa-solid fa-wallet"></i>
-                  <span class="message">You paid Ksh300 for membership fee on 13th March 2024 at 6:35pm.</span>
-                  <span class="timestamp">10 months ago</span>
-                  <button class="mark-read">Download Receipt</button>
-              </li>
-              <li class="notification">
-                  <i class="fa-solid fa-wallet"></i>
-                  <span class="message">You made a payment of Ksh. 200 for funday on 26th Nov 2023 at 01:12pm</span>
-                  <span class="timestamp">1 year ago</span>
-                  <button class="mark-read">Download Receipt</button>
-              </li>
-            </ul>
+          <div class="payment-container">
+            <table>
+              <thead>
+                  <tr>
+                      <th>Transaction ID</th>
+                      <th>Date</th>
+                      <th>Time</th>
+                      <th>Amount</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+                  </tr>
+              </thead>
+              <tbody id="payment-table">
+                  <tr data-status="paid">
+                      <td>#TXN12345</td>
+                      <td>Feb 10, 2025</td>
+                      <td>8:09 am</td>
+                      <td><b>Ksh 300</b></td>
+                      <td class="status paid">Paid</td>
+                      <td><button class="download-btn"><i class="fa-solid fa-download"></i>Receipt</button></td>
+                  </tr>
+                  <tr data-status="paid">
+                      <td>#TXN12345</td>
+                      <td>Nov 18, 2024</td>
+                      <td>11:23 am</td>
+                      <td><b>Ksh 150</b></td>
+                      <td class="status paid">Paid</td>
+                      <td><button class="download-btn"><i class="fa-solid fa-download"></i>Receipt</button></td>
+                  </tr>
+                  <tr data-status="pending">
+                      <td>#TXN12346</td>
+                      <td>Mar 13th, 2024</td>
+                      <td>6:35 pm</td>
+                      <td><b>Ksh 300</b></td>
+                      <td class="status paid">Paid</td>
+                      <td><button class="download-btn"><i class="fa-solid fa-download"></i>Receipt</button></td>
+                  </tr>
+                  <tr data-status="failed">
+                      <td>#TXN12347</td>
+                      <td>Nov 26, 2023</td>
+                      <td>1:12 pm</td>
+                      <td><b>Ksh 200</b></td>
+                      <td class="status paid">Paid</td>
+                      <td><button class="download-btn"><i class="fa-solid fa-download"></i>Receipt</button></td>
+                  </tr>
+              </tbody>
+          </table>
           </div>
         </div>
 
@@ -487,14 +421,29 @@
   <script>
     document.addEventListener("DOMContentLoaded", function () {
     const links = document.querySelectorAll(".top-nav a");
+    const currentPage = window.location.pathname.split("/").pop(); // Get current page filename
 
-      links.forEach(link => {
+    // Remove active from all, then set active based on localStorage or current page
+    links.forEach(link => {
+        link.classList.remove("active");
+
+        // Check if the href matches the current page URL
+        if (link.getAttribute("href") === currentPage) {
+            link.classList.add("active");
+        }
+
+        // Click event to update localStorage and navigate
         link.addEventListener("click", function () {
-          links.forEach(l => l.classList.remove("active")); // Remove active from all
-          this.classList.add("active"); // Add active to clicked link
+            localStorage.setItem("activeTab", this.getAttribute("href"));
         });
-      });
-     });
+    });
+
+    // If no link is active, set "memb_dash.html" as default
+    if (!document.querySelector(".top-nav a.active")) {
+        document.querySelector(".top-nav a[href='memb_dash.html']").classList.add("active");
+    }
+});
+
 
     function updateDateTime() {
     const now = new Date();
@@ -535,6 +484,37 @@
 
   document.addEventListener("DOMContentLoaded", function () {
     updateDateTime();
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    const recentResources = document.getElementById("recent-resources");
+
+    // Dummy data (replace this with database/API data)
+    const resources = [
+        { name: "Speech Guidelines", type: "document", action: "View", icon: "fa-file-alt" },
+        { name: "Public Speaking Tips", type: "video", action: "Watch", icon: "fa-video" },
+        { name: "Toastmasters Website", type: "link", action: "Open", icon: "fa-link" },
+        { name: "CC1 Speech Audio", type: "audio", action: "Listen", icon: "fa-headphones" }
+    ];
+
+    // Function to render resources
+    function renderResources() {
+        recentResources.innerHTML = "";
+        resources.forEach(resource => {
+            let card = document.createElement("div");
+            card.classList.add("resource-card");
+            card.setAttribute("data-type", resource.type);
+            card.innerHTML = `
+                <i class="fa ${resource.icon}"></i>
+                <p>${resource.name}</p>
+                <button>${resource.action}</button>
+            `;
+            recentResources.appendChild(card);
+        });
+    }
+
+    // Load resources
+    renderResources();
 });
 
   document.addEventListener("DOMContentLoaded", function () {
@@ -579,6 +559,8 @@
   // Update the countdown every second
   const interval = setInterval(updateCountdown, 1000);
   updateCountdown(); // Initial call to prevent delay
+
+  
 
   </script>
 
