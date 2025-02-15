@@ -1,11 +1,12 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Member Dashboard</title>
-  <link rel="icon" href="KU_TM_FavIcon_Logo.png" type="image/png">
-  <link rel="stylesheet" href="CSS/memb_dash.css">
+  <link rel="icon" href="{% static 'assets/images/KU_TM_FavIcon_Logo.png' %}" type="image/png">
+  <link rel="stylesheet" href="{% static 'assets/css/memb_dash.css' %}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
@@ -14,13 +15,13 @@
   <div class="side-panel">
     <div class="main_panel">
       <div class="logo">
-        <img src="KU_TM_FavIcon_Logo.png" alt="KU Toastmasters Logo" width="120" height="120">
+        <img src="{% static 'assets/images/KU_TM_FavIcon_Logo.png' %}" alt="KU Toastmasters Logo" width="120" height="120">
       </div>
       <h2>CLUB MEMBER</h2>
       <div class="profile-cont">
         
         <div class="profile-icon">
-          <img src="pexels-vietfotos-10928778.jpg" alt="Profile" class="profile-icon">
+          <img src="{% static 'assets/images/pexels-vietfotos-10928778.jpg' %}" alt="Profile" class="profile-icon">
           <!-- <i class="fa-solid fa-user"></i> -->
         </div>
         <div class="user_details">
@@ -81,8 +82,8 @@
     <!-- Nav Section -->
     <div class="top-nav">
         <ul>
-          <li><a href="memb_dash.html">Home</a></li>
-          <li><a href="memb_roles.html">Roles</a></li>
+          <li><a href="memb_dash">Home</a></li>
+          <li><a href="memb_roles">Roles</a></li>
           <li><a href="#">Membership</a></li>
           <li><a href="#">Resources</a></li>
           <li><a href="#">Elections</a></li>

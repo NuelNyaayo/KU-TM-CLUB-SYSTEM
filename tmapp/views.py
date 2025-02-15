@@ -86,3 +86,14 @@ def logout(request):
 
     return redirect('/')
 
+def verify(request): 
+
+    return render(request, 'verify.html')
+
+def memb_dash(request): 
+
+    return render(request, 'memb_dash.html')
+def memb_roles(request): 
+
+    return render(request, 'memb_roles.html')
+
