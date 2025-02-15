@@ -33,6 +33,11 @@ h2, .welcome {
     text-align: center;
     margin: 1rem;
 }
+
+.message-style h5 {
+    background-color: gold !important; 
+    color: white !important;
+}
 .logo {
     display: flex;
     flex-direction: column;

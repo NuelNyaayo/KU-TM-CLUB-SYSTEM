@@ -1,11 +1,13 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Landing Page</title>
-    <link rel="icon" href="KU_TM_FavIcon_Logo.png" type="image/png">
-    <link rel="stylesheet" href="CSS/index.css">
+    <link rel="icon" href="{% static 'assets/images/KU_TM_FavIcon_Logo.png' %}" type="image/png">
+    <link rel="stylesheet" href="{% static 'assets/css/index.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
@@ -13,7 +15,7 @@
         <nav>
             <div class="logo">
                 <figure >
-                    <img src="KU_TM_FavIcon_Logo.png" alt="KU Toastmasters Logo"width="80" height="80">
+                    <img src="{% static 'assets/images/KU_TM_FavIcon_Logo.png' %}" alt="KU Toastmasters Logo"width="80" height="80">
                     <figcaption>KU Toastmasters</figcaption>
                 </figure>
                 
@@ -80,13 +82,13 @@
                         <div class="sub-container">
                             <h2>CLUB MEMBER</h2>
                             <!-- <img src="KU_TM_FavIcon_Logo.png" alt="club member" width="200" height="200"> -->
-                             <div class="icon"><i class="fa-solid fa-user"></i></div>
-                            
+                            <div class="icon"><i class="fa-solid fa-user"></i></div>
                         </div>
                         <h2>Club Member</h2>
-                        <p>Access meeting Schedules, Sign up for Roles and more...</p>
-                        <button class="continue_btn">Continue</button>
+                        <p>Access meeting schedules, sign up for roles, and more...</p>
+                        <button class="continue_btn" id="continueBtn">Continue</button>
                     </div>
+                    
                     <div class="leader_container">
                         <div class="sub-container">
                             <h2>CLUB LEADER</h2>
@@ -95,7 +97,7 @@
                         </div>
                         <h2>Club Leader</h2>
                         <p>Access attendance reports, View Voting Results and more...</p>
-                        <button class="continue_btn">Continue</button>
+                        <button class="continue_btn"id="continueBtn2">Continue</button>
                     </div>
                 </div>
             </div>
@@ -107,15 +109,15 @@
         <div class="tm_info">
             <ul>
                 <li>
-                    <i class="fas fa-envelope"></i>
+                    <i class="fa-solid fa-info"></i>
                     <button>Learn more...</button>
                 </li>
                 <li>
-                    <i class="fas fa-phone"></i>
+                    <i class="fa-solid fa-file-lines"></i>
                     <button>Terms of Service</button>
                 </li>
                 <li>
-                    <i class="fas fa-phone"></i>
+                    <i class="fa-solid fa-lock"></i>
                     <button>Privacy Policy</button>
                 </li>
             </ul>
@@ -123,6 +125,22 @@
         </div>
 
     </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+    const continueBtn = document.getElementById("continueBtn");
+    const continueBtn2 = document.getElementById("continueBtn2");
+
+    continueBtn.addEventListener("click", function () {
+        window.location.href = "login"; // Change "login.html" to the actual page URL
+    });
+
+    continueBtn2.addEventListener("click", function () {
+        window.location.href = "login"; // Change "login.html" to the actual page URL
+    });
+});
+
+    </script>
     
 </body>
 </html>

@@ -55,10 +55,25 @@ nav a {
     color: white;
     text-decoration: none; 
 }
+
+nav a:hover {
+    color: gold;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid white;
+    text-decoration: none; 
+}
+
+
 button {
     font-size: inherit;
     padding: 0.2rem 1rem;
     border-radius: 1rem;
+}
+
+button:hover {
+    background-color: gold;
+    color: black;
+
 }
 
 .continue_btn {
@@ -105,7 +120,7 @@ section {
 
 .sidebar-contact ul li,  .sidebar-social ul li {
     padding: 1rem;
-    padding-left: 0.5rem;
+    padding-left: 1rem;
     margin-bottom: 0.2rem;
 }
 
@@ -138,7 +153,7 @@ text-decoration: none;
 .main_content {
     display: flex;
     justify-content: center;
-    gap: 22rem;
+    gap: 20rem;
     width: 80%;
     margin-top: 2em;
     min-height: 60vh;
@@ -154,7 +169,7 @@ text-decoration: none;
     max-width: 32%;
     border-radius: 15px;
     margin-bottom: 1rem;
-    background-color: rgb(192, 189, 189);
+    background-color: whitesmoke;
     border: 3px solid whitesmoke;
 }
 
@@ -212,7 +227,7 @@ text-decoration: none;
     max-width: 32%;
     border-radius: 15px;
     margin-bottom: 1rem;
-    background-color: rgb(192, 189, 189);
+    background-color: whitesmoke;
     border: 2px solid whitesmoke;
 }
 
@@ -244,7 +259,7 @@ footer {
 .tm_info ul {
     list-style: none;
     display: flex;
-    gap: 6rem;
+    gap: 9rem;
     justify-content: center;
     
 }
@@ -254,13 +269,14 @@ footer {
     display: flex;
     gap: 1rem;
     justify-content: center;
+    align-items: center;
 }
 
 .tm_info ul li:first-child {
-    margin-left: 10rem;
+    margin-left: 11rem;
 }
 
 .tm_info i {
-    color: #004085; /* Icon color (e.g., blue) */
-    font-size: 1.7rem;
+    color: white; /* Icon color (e.g., blue) */
+    font-size: 1.5rem;
 }

@@ -1,30 +1,46 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Member Registration</title>
-    <link rel="icon" href="KU_TM_FavIcon_Logo.png" type="image/png">
-    <link rel="stylesheet" href="CSS/registration.css">
+    <link rel="icon" href="{% static 'assets/images/KU_TM_FavIcon_Logo.png' %}" type="image/png">
+    <link rel="stylesheet" href="{% static 'assets/css/registration.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        h5 {
+            background-color: gold; 
+            color: black;
+            padding: 1rem;
+            border-radius: 8px;
+        }
+    </style>
 </head>
 <body>
     
     <main>
         <div class="logo">
-            <img src="KU_TM_FavIcon_Logo.png" alt="KU Toastmasters Logo"width="120" height="120">
+            <img src="{% static 'assets/images/KU_TM_FavIcon_Logo.png' %}" alt="KU Toastmasters Logo"width="120" height="120">
         </div>
         <article id="contact" class="main__article contact">
             <p class="welcome">Enter Your Details to Create Account with Us</p>
             <h2 class="contact__h2">Register</h2>
-            <form action="https://httpbin.org/get" method="get" class="contact__form">
+            <div class="message-style">
+                {% for message in messages %}
+                    <h5>{{ message }}</h5>
+                {% endfor %}
+            </div>
+            
+            <form action="registration" method="POST" class="contact__form">
+              {% csrf_token %}
               <fieldset class="contact__fieldset">
                 <legend class="offscreen">Send Us A Message</legend>
                 <p class="contact__p">
-                    <label class="contact__label"for="first-name">First Name:</label>
+                    <label class="contact__label"for="username">First Name:</label>
                     <input class="contact__input"
                     type="text"
-                    name="first-name"
+                    name="username"
                     id="first-name"
                     placeholder="your first name"
                     autocomplete="on"
@@ -33,10 +49,10 @@
                     >
                 </p>
                 <p class="contact__p">
-                    <label class="contact__label"for="last-name">Last Name:</label>
+                    <label class="contact__label"for="last_name">Last Name:</label>
                     <input class="contact__input"
                     type="text"
-                    name="last-name"
+                    name="last_name"
                     id="last-name"
                     placeholder="your last name"
                     autocomplete="on"
@@ -45,10 +61,10 @@
                     >
                 </p>
                 <p class="contact__p">
-                    <label class="contact__label"for="name">Corporate Email:</label>
+                    <label class="contact__label"for="corporate_email">Corporate Email:</label>
                     <input class="contact__input"
                     type="email"
-                    name="email"
+                    name="corporate_email"
                     id="email"
                     placeholder="your student email"
                     autocomplete="on"
@@ -57,10 +73,10 @@
                     >
                 </p>
                 <p class="contact__p">
-                    <label class="contact__label"for="phone">Phone Number:</label>
+                    <label class="contact__label"for="phone_number">Phone Number:</label>
                     <input class="contact__input"
                     type="tel"
-                    name="phone"
+                    name="phone_number"
                     id="phone"
                     placeholder="your phone number"
                     autocomplete="on"
@@ -69,10 +85,10 @@
                     >
                 </p>
                 <p class="contact__p">
-                    <label class="contact__label"for="registration-number">Registration Number:</label>
+                    <label class="contact__label"for="registration_number">Registration Number:</label>
                     <input class="contact__input"
                     type="text"
-                    name="registration-number"
+                    name="registration_number"
                     id="registration-number"
                     placeholder="your registration number"
                     autocomplete="on"
