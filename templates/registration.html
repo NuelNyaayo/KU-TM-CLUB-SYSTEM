@@ -26,24 +26,22 @@
         <article id="contact" class="main__article contact">
             <p class="welcome">Enter Your Details to Create Account with Us</p>
             <h2 class="contact__h2">Register</h2>
-            <div class="message-style">
-                {% for message in messages %}
-                    <h5>{{ message }}</h5>
-                {% endfor %}
-            </div>
+            {% for message in messages %}
+                <h5>{{ message }}</h5>
+            {% endfor %}
             
-            <form action="registration" method="POST" class="contact__form">
+            
+            <form action="{% url 'registration' %}" method="POST" class="contact__form">
               {% csrf_token %}
               <fieldset class="contact__fieldset">
                 <legend class="offscreen">Send Us A Message</legend>
                 <p class="contact__p">
-                    <label class="contact__label"for="username">First Name:</label>
+                    <label class="contact__label"for="first_name">First Name:</label>
                     <input class="contact__input"
                     type="text"
-                    name="username"
+                    name="first_name"
                     id="first-name"
                     placeholder="your first name"
-                    autocomplete="on"
                     required
                     autofocus
                     >
@@ -55,7 +53,6 @@
                     name="last_name"
                     id="last-name"
                     placeholder="your last name"
-                    autocomplete="on"
                     required
                     autofocus
                     >
@@ -67,7 +64,6 @@
                     name="corporate_email"
                     id="email"
                     placeholder="your student email"
-                    autocomplete="on"
                     required
                     autofocus
                     >
@@ -79,7 +75,6 @@
                     name="phone_number"
                     id="phone"
                     placeholder="your phone number"
-                    autocomplete="on"
                     required
                     autofocus
                     >
@@ -91,7 +86,6 @@
                     name="registration_number"
                     id="registration-number"
                     placeholder="your registration number"
-                    autocomplete="on"
                     required
                     autofocus
                     >

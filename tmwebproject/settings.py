@@ -38,7 +38,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'tmapp'
+    'tmapp',
+]
+
+# Custom User Model
+AUTH_USER_MODEL = 'tmapp.CustomUser'
+
+# Authentication Backends
+AUTHENTICATION_BACKENDS = [
+    'tmapp.authentication.EmailAuthBackend',  # Use the correct path to your custom authentication backend
+    'django.contrib.auth.backends.ModelBackend',  # Default Django authentication backend
 ]
 
 MIDDLEWARE = [
@@ -78,7 +87,7 @@ WSGI_APPLICATION = 'tmwebproject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME':  'myproject2',
+        'NAME':  'toastmasters',
         'USER':  'postgres',
         'PASSWORD':  '@kalimats1',
         'HOST':  'localhost',

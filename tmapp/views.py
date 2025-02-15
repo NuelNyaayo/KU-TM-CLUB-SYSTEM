@@ -2,89 +2,80 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
-# from .models import Feature
+from django.contrib.auth import get_user_model
+from django.contrib.auth import authenticate, login
+
+
 
 def index(request): 
 
     return render(request, 'index.html')
 
-def login(request): 
+def login_view(request):  # Renamed from `login` to `login_view`
+    if request.method == 'POST':
+        email = request.POST.get('email', '').strip()
+        password = request.POST.get('password', '')
+
+        user = authenticate(request, email=email, password=password)  # Use email instead of username
+
+        if user is not None:
+            login(request, user)  # Use Django's login function correctly
+            return redirect('memb_dash')  # Redirect to homepage
+        else:
+            messages.error(request, 'Invalid email or password')
+            return redirect('login')
 
     return render(request, 'login.html')
 
 def registration(request): 
     if request.method == 'POST':
-        username = request.POST['username']
-        last_name = request.POST['last_name']
-        email = request.POST['corporate_email']
-        phone_number = request.POST['phone_number']
-        registration_number = request.POST['registration_number']
-        dob = request.POST['dob']
-        password = request.POST['password']
-        password2 = request.POST['password2']
-        remember = request.POST['remember']
+        first_name = request.POST.get('first_name', '').strip()
+        last_name = request.POST.get('last_name', '').strip()
+        corporate_email = request.POST.get('corporate_email', '').strip()
+        phone_number = request.POST.get('phone_number', '').strip()
+        registration_number = request.POST.get('registration_number', '').strip()
+        dob = request.POST.get('dob', '').strip()
+        password = request.POST.get('password', '')
+        password2 = request.POST.get('password2', '')
+        remember = request.POST.get('remember', 'off')  # Default to 'off' if not checked
 
-        if password == password2:
-            if User.objects.filter(email = email).exists():
-                messages.info(request, 'Email Already Used')
-                return redirect('registration')
-            # elif User.objects.filter(registration_number = registration_number).exists():
-            #     messages.info(request, 'Registration Number Already Used')
-            #     return redirect('registration') 
-            else:
-                user = User.objects.create_user(username=username, last_name=last_name, corporate_email=email, phone_number=phone_number, registration_number=registration_number, dob=dob, password=password, remember= remember)
-                user.save();
-                return redirect('login')
-        else:
-            messages.info(request, 'Password Not The Same')
-            return redirect('registration') 
-    else:
-        return render(request, 'registration.html')
+        User = get_user_model()
+
+        if password != password2:
+            messages.error(request, 'Passwords do not match')
+            return redirect('registration')
+
+        if User.objects.filter(email=corporate_email).exists():  # Use `email` instead of `corporate_email`
+            messages.error(request, 'Corporate Email is already registered')
+            return redirect('registration')
+
+        if User.objects.filter(registration_number=registration_number).exists():
+            messages.error(request, 'Registration Number is already registered')
+            return redirect('registration')
+
+        # Create new user
+        user = User.objects.create_user(
+            first_name=first_name,
+            last_name=last_name,
+            email=corporate_email,  # Use `email` instead of `corporate_email`
+            phone_number=phone_number,
+            registration_number=registration_number,
+            dob=dob,
+            password=password
+        )
+
+        user.save()
+
+        messages.success(request, 'Registration successful! Please log in.')
+        return redirect('login')
+
+    return render(request, 'registration.html')
 
     
-# def register(request): 
-#     if request.method == 'POST':
-#         username = request.POST['username']
-#         email = request.POST['email']
-#         password = request.POST['password']
-#         password2 = request.POST['password2']
+# def logout(request):
+#     auth.logout(request) 
 
-#         if password == password2:
-#             if User.objects.filter(email = email).exists():
-#                 messages.info(request, 'Email Already Used')
-#                 return redirect('register')
-#             elif User.objects.filter(username = username).exists():
-#                 messages.info(request, 'Username Already Used')
-#                 return redirect('register') 
-#             else:
-#                 user = User.objects.create_user(username=username, email=email, password=password)
-#                 user.save();
-#                 return redirect('login')
-#         else:
-#             messages.info(request, 'Password Not The Same')
-#             return redirect('register') 
-#     else:
-#         return render(request, 'register.html')
-    
-# def login(request):
-#     if request.method == 'POST':
-#         username = request.POST['username']
-#         password = request.POST['password'] 
-#         user =auth.authenticate(username=username, password=password)
-
-#         if user is not None:
-#             auth.login(request, user)
-#             return redirect('/') #homepage
-#         else:
-#             messages.info(request, 'Credentials Invalid')
-#             return redirect('login')
-#     else:
-#         return render(request, 'login.html')
-    
-def logout(request):
-    auth.logout(request) 
-
-    return redirect('/')
+#     return redirect('/')
 
 def verify(request): 
 

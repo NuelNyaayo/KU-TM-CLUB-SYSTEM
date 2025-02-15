@@ -9,6 +9,14 @@
     <link rel="icon" href="{% static 'assets/images/KU_TM_FavIcon_Logo.png' %}" type="image/png">
     <link rel="stylesheet" href="{% static 'assets/css/login.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        h5 {
+            background-color: gold; 
+            color: black;
+            padding: 1rem;
+            border-radius: 8px;
+        }
+    </style>
 </head>
 <body>
     
@@ -19,7 +27,11 @@
         <article id="contact" class="main__article contact">
             <p class="welcome">Welcome Back to KU Toastmasters</p>
             <h2 class="contact__h2">Login</h2>
-            <form action="https://httpbin.org/get" method="get" class="contact__form">
+            {% for message in messages %}
+                    <h5>{{ message }}</h5>
+                {% endfor %}
+            <form action="{% url 'login' %}" method="POST" class="contact__form">
+                {% csrf_token %}
               <fieldset class="contact__fieldset">
                 <legend class="offscreen">Send Us A Message</legend>
                 <p class="contact__p">
@@ -36,7 +48,7 @@
                 </p>
                 <p class="contact__p">
                     <div class="password-container">
-                        <label class="contact__label" for="email">Password:</label>
+                        <label class="contact__label" for="password">Password:</label>
                         <div class="password-input">
                             <input class="contact__password__input" type="password" name="password" id="password" placeholder="Your password" required>
                             <i class="fas fa-eye toggle-password" id="togglePassword"></i>
