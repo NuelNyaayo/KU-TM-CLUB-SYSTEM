@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
-
+from django.views.decorators.cache import never_cache
 
 
 def index(request): 
@@ -75,15 +75,20 @@ def registration(request):
     
 def logout_view(request):
     logout(request)
-    return redirect('login')  # Redirect to the login page after logout
+    return redirect('/')  # Redirect to the login page after logout
 
 def verify(request): 
 
     return render(request, 'verify.html')
 
-def memb_dash(request): 
+# @never_cache
+def memb_dash(request):
+    # if not request.user.is_authenticated:
+    #     return redirect('login')  # Redirect to login if not authenticated 
 
     return render(request, 'memb_dash.html')
+
+
 def memb_roles(request): 
 
     return render(request, 'memb_roles.html')

@@ -59,13 +59,24 @@ form select, form input, form button {
     font-size: 1rem;
 }
 
+form p {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
 #submit-btn {
     padding: 0.7rem;
     background-color: darkblue;
     color: white;
     margin-bottom: 1rem;
+    margin-top: 1rem;
     font-size: inherit;
     width: 101%;
+}
+
+#submit-btn:hover {
+    background-color: gold;
+    color: black;
 }
 
 label input[type="radio"] {

@@ -122,6 +122,11 @@ h5 {
     font-size: inherit;
 }
 
+.contact__button:hover {
+    background-color: gold;
+    color: black;
+}
+
 .forgot-register {
     display: flex;
     flex-direction: column;

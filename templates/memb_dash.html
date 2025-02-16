@@ -1,4 +1,5 @@
 {% load static %}
+{% load custom_filters %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,8 +36,9 @@
         </div> -->
         <div class="user_details">
           <p class="user_name">{{ user.first_name }} {{ user.last_name }}</p>
-          <p class="memb_no">Member No - {{ user.id }}</p>
-        </div>
+          <p class="memb_no">Member No - {{ user.id|leading_zeros }}</p>
+      </div>
+      
       </div>
 
       <ul>
@@ -100,9 +102,9 @@
       <ul>
           <li><a href="{% url 'memb_dash' %}">Home</a></li>
           <li><a href="{% url 'memb_roles' %}">Roles</a></li>
-          <li><a href="#">Membership</a></li>
-          <li><a href="#">Resources</a></li>
-          <li><a href="#">Elections</a></li>
+          <li><a href="{% url 'memb_membership' %}">Membership</a></li>
+          <li><a href="{% url 'memb_roles' %}">Resources</a></li>
+          <li><a href="{% url 'memb_roles' %}">Elections</a></li>
       </ul>
       <div class="top-nav-notification">
           <i class="fa-regular fa-bell"></i>
@@ -441,12 +443,6 @@
 
   {% block extra_js %}
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        if (performance.navigation.type === 2) {
-            // Page was accessed via back or forward button
-            window.location.reload();
-        }
-    });
 
     function updateDateTime() {
     const now = new Date();

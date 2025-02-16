@@ -62,7 +62,7 @@ MIDDLEWARE = [
     "django_browser_reload.middleware.BrowserReloadMiddleware",
 
     # Your custom middleware
-    'tmapp.middleware.CacheControlMiddleware',
+    'tmapp.middleware.LoginRequiredMiddleware',  
 ]
 
 ROOT_URLCONF = 'tmwebproject.urls'

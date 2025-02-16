@@ -3,196 +3,100 @@
 {% load static %}
 
 
-{% block title %}Member Roles{% endblock %}
+{% block title %}Member Membership{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'assets/css/memb_roles.css' %}">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 {% endblock %}
 
 
 {% block content %}
 <div class="dashboard-overview">
-    <h3> Sign Up for Toastmasters Role</h3>
+    <h3> Membership Payment Form</h3>
     <div class="next-meeting">
-      <form id="role-signup-form">
-      
-          <!-- Select Meeting Number -->
-          <label for="meeting-number">Select Meeting Number:</label>
-          <select id="meeting-number" name="meeting-number" required>
-              <option value="">-- Select Meeting --</option>
-              <option value="046" data-date="12th Feb 2025">Meeting 046</option>
-              <option value="047" data-date="19th Feb 2025">Meeting 047</option>
-              <option value="048" data-date="26th Feb 2025">Meeting 048</option>
-          </select>
+        
+      <form id="role-signup-form" method="post" >
+        <!-- {% csrf_token %} -->
 
-          <!-- Meeting Date (Auto-Filled) -->
-          <p><strong>Meeting Date:</strong> <span id="meeting-date">Select a meeting</span></p>
+        <!-- Payment Plan Selection -->
+        <label for="payment_plan">Select Payment Plan:</label>
+        <select id="payment_plan" name="payment_plan" required>
+            <option value="">-- Choose Plan --</option>
+            <option value="semester">Semester (KES 300)</option>
+            <option value="academic_year">Academic Year (KES 550)</option>
+        </select>
 
-          <!-- Confirm Availability -->
-          <label>Confirm Availability:</label>
-          <label>
-              <input type="radio" name="availability" value="yes" id="available"> I will be available
-          </label>
-          <label>
-              <input type="radio" name="availability" value="no" id="not-available"> I won't be available
-          </label>
 
-          <!-- Role Selection (Hidden by Default) -->
-          <div id="role-selection" class="hidden">
-              <label for="role">Select Your Role:</label>
-              <select id="role" name="role">
-                  <option value="">-- Select Role --</option>
-                  <option value="tmod">Toastmaster of the Day (Tmod)</option>
-                  <option value="grammarian">Grammarian</option>
-                  <option value="speech-presenter">Speech Presenter</option>
-                  <option value="speech-evaluator">Speech Evaluator</option>
-                  <option value="general-evaluator">General Evaluator</option>
-                  <option value="ah-counter">Ah Counter</option>
-                  <option value="hackmaster">Hackmaster</option>
-                  <option value="timer">Timer</option>
-                  <option value="table-topics-master">Table Topics Master</option>
-                  <option value="jokemaster">Jokemaster</option>
-                  <option value="attendee">Attendee</option>
-              </select>
-          </div>
+        <!-- Expiry Date Display -->
+        <p><strong>Membership Expiry Date:</strong> <span id="expiry_date_display">Select a Plan</span></p>
 
-          <!-- Additional Fields (Hidden by Default) -->
-          <div id="additional-fields">
+        <!-- Payment Method Selection -->
+        <label for="payment_method">Select Payment Method:</label>
+        <select id="payment_method" name="payment_method" required>
+            <option value="">-- Choose Method --</option>
+            <option value="mpesa" data-date="12th Feb 2025">M-Pesa</option>
+            <option value="card" data-date="19th Feb 2025">Credit/Debit Card</option>
+        </select>
 
-              <!-- Meeting Attire (Tmod) -->
-              <div id="attire-field" class="optional-field">
-                  <label for="meeting-attire">Meeting Attire (Optional):</label>
-                  <input type="text" id="meeting-attire" name="meeting-attire" placeholder="e.g., Formal, Casual">
-              </div>
+        <!-- Phone Number (Auto-filled for M-Pesa) -->
+        <label for="phone_number">Phone Number:</label>
+        <input type="text" id="phone_number" name="phone_number" class="form-control" value="{{ user.phone_number }}">
 
-              <!-- Word of the Day (Grammarian) -->
-              <div id="word-of-day-field" class="optional-field">
-                  <label for="word-of-day">Word of the Day (Optional):</label>
-                  <input type="text" id="word-of-day" name="word-of-day" placeholder="Enter Word of the Day">
-              </div>
+        <!-- Amount (Auto-filled based on selection) -->
+        <label for="amount">Amount (KES):</label>
+        <input type="text" id="amount" name="amount" class="form-control" readonly>
 
-              <!-- Speech Title & Project (Speech Presenter) -->
-              <div id="speech-details-field" class="optional-field">
-                  <label for="speech-project">Select Speech Project:</label>
-                  <select id="speech-project" name="speech-project">
-                      <option value="">-- Select Project --</option>
-                      <option value="icebreaker">Icebreaker</option>
-                      <option value="persuasive-speech">Persuasive Speech</option>
-                      <option value="storytelling">Storytelling</option>
-                  </select>
 
-                  <label for="speech-title">Enter Speech Title:</label>
-                  <input type="text" id="speech-title" name="speech-title" placeholder="Enter Speech Title">
-              </div>
-
-              <!-- Speech Evaluation (Speech Evaluator) -->
-              <div id="evaluation-field" class="optional-field">
-                  <label for="evaluation-project">Select Speech Project to Evaluate:</label>
-                  <select id="evaluation-project" name="evaluation-project">
-                      <option value="">-- Select Project --</option>
-                      <option value="icebreaker">Icebreaker</option>
-                      <option value="persuasive-speech">Persuasive Speech</option>
-                      <option value="storytelling">Storytelling</option>
-                  </select>
-              </div>
-
-              <!-- General Evaluator Point of Focus -->
-              <div id="focus-field" class="optional-field">
-                  <label for="focus-point">Point of Focus (Optional):</label>
-                  <input type="text" id="focus-point" name="focus-point" placeholder="e.g., Timing, Filler Words">
-              </div>
-
-          </div>
-
-          <!-- Submit Button (Initially Hidden) -->
-          <button type="submit" id="submit-btn" >Submit</button>
-      </form>
+        <!-- Submit Button -->
+        <button type="submit" id="submit-btn" class="btn btn-success w-100" >Make Payment</button>
+    </form>
     </div>
   </div>
 {% endblock %}
 
 {% block extra_js %}
 <script>
+    $(document).ready(function() {
+    function formatDate(date) {
+        const day = date.getDate();
+        const month = date.toLocaleString('en-GB', { month: 'short' });
+        const year = date.getFullYear();
 
-    document.addEventListener("DOMContentLoaded", function () {
-    const meetingSelect = document.getElementById("meeting-number");
-    const meetingDateDisplay = document.getElementById("meeting-date");
-    const availableRadio = document.getElementById("available");
-    const notAvailableRadio = document.getElementById("not-available");
-    const roleSelection = document.getElementById("role-selection");
-    const roleSelect = document.getElementById("role");
-    const additionalFields = document.getElementById("additional-fields");
-    const submitBtn = document.getElementById("submit-btn");
+        // Add ordinal suffix to the day
+        const suffix = (day === 1 || day === 21 || day === 31) ? 'st' :
+                       (day === 2 || day === 22) ? 'nd' :
+                       (day === 3 || day === 23) ? 'rd' : 'th';
 
-    // Role-based fields mapping
-    const fields = {
-        "tmod": "attire-field",
-        "grammarian": "word-of-day-field",
-        "speech-presenter": "speech-details-field",
-        "speech-evaluator": "evaluation-field",
-        "general-evaluator": "focus-field"
-    };
-
-    // Initially disable options
-    availableRadio.disabled = true;
-    notAvailableRadio.disabled = true;
-    roleSelect.disabled = true;
-    submitBtn.disabled = true;
-
-    // Enable availability options when meeting is selected
-    meetingSelect.addEventListener("change", function () {
-        const selectedOption = this.options[this.selectedIndex];
-        if (selectedOption.value) {
-            meetingDateDisplay.textContent = selectedOption.getAttribute("data-date") || "Select a meeting";
-            availableRadio.disabled = false;
-            notAvailableRadio.disabled = false;
-        } else {
-            meetingDateDisplay.textContent = "Select a meeting";
-            availableRadio.disabled = true;
-            notAvailableRadio.disabled = true;
-            roleSelect.disabled = true;
-            submitBtn.disabled = true;
-            roleSelection.classList.remove("show"); // Hide role selection
-        }
-    });
-
-    // Handle Availability Selection
-    function handleAvailabilityChange() {
-        submitBtn.disabled = false; // Enable submit button when availability is selected
-
-        if (availableRadio.checked) {
-            roleSelection.classList.add("show"); // Show role selection
-            roleSelect.disabled = false;
-        } else {
-            roleSelection.classList.remove("show"); // Hide role selection
-            roleSelect.disabled = true;
-
-            // Hide all optional fields when "Not Available" is selected
-            additionalFields.querySelectorAll(".optional-field").forEach(field => field.classList.remove("show"));
-
-            // Reset role selection
-            roleSelect.value = "";
-        }
+        return `${day}${suffix} ${month} ${year}`;
     }
 
-    availableRadio.addEventListener("change", handleAvailabilityChange);
-    notAvailableRadio.addEventListener("change", handleAvailabilityChange);
+    $("#payment_plan").change(function() {
+        let selectedPlan = $(this).val();
+        let today = new Date();
+        let expiryDate = "";
 
-    // Handle Role Selection
-    roleSelect.addEventListener("change", function () {
-        // Hide all optional fields first
-        additionalFields.querySelectorAll(".optional-field").forEach(field => field.classList.remove("show"));
+        if (selectedPlan === "semester") {
+            today.setMonth(today.getMonth() + 6); // Semester (6 months)
+            $("#amount").val("300");
+        } else if (selectedPlan === "academic_year") {
+            today.setFullYear(today.getFullYear() + 1); // Academic Year (1 year)
+            $("#amount").val("550");
+        }
 
-        let selectedRole = roleSelect.value;
-        if (fields[selectedRole]) {
-            document.getElementById(fields[selectedRole]).classList.add("show");
+        expiryDate = formatDate(today);
+        $("#expiry_date_display").text(expiryDate);
+    });
+
+    // Ensure phone number is correctly set based on user's data
+    $("#payment_method").change(function() {
+        if ($(this).val() === "mpesa") {
+            $("#phone_number").val("{{ user.phone_number }}"); // Ensure it's set from Django
+        } else {
+            $("#phone_number").val(""); // Clear phone number for other methods
         }
     });
 });
-
-
-
-
 
   </script>
 {% endblock %}
