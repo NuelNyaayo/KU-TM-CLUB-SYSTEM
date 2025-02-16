@@ -33,6 +33,15 @@ h2, .welcome {
     text-align: center;
     margin: 1rem;
 }
+
+h5 {
+    background-color: #333; 
+    color: gold;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-top: 1rem;
+}
+
 .logo {
     display: flex;
     flex-direction: column;

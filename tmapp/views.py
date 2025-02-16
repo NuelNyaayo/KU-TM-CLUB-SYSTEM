@@ -4,6 +4,7 @@ from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth import authenticate, login
+from django.contrib.auth import logout
 
 
 
@@ -72,10 +73,9 @@ def registration(request):
     return render(request, 'registration.html')
 
     
-# def logout(request):
-#     auth.logout(request) 
-
-#     return redirect('/')
+def logout_view(request):
+    logout(request)
+    return redirect('login')  # Redirect to the login page after logout
 
 def verify(request): 
 
@@ -87,4 +87,8 @@ def memb_dash(request):
 def memb_roles(request): 
 
     return render(request, 'memb_roles.html')
+
+def memb_membership(request): 
+
+    return render(request, 'memb_membership.html')
 

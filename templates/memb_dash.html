@@ -4,10 +4,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Member Dashboard</title>
+  <title>{% block title %}Member Dashboard{% endblock %}</title>
   <link rel="icon" href="{% static 'assets/images/KU_TM_FavIcon_Logo.png' %}" type="image/png">
+  <link rel="stylesheet" href="{% static 'assets/css/styles.css' %}">
+  {% block extra_css %}
   <link rel="stylesheet" href="{% static 'assets/css/memb_dash.css' %}">
+  {% endblock %}
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  {% load django_browser_reload %}
+  {% django_browser_reload_script %}
 </head>
 <body>
 
@@ -24,38 +29,47 @@
           <img src="{% static 'assets/images/pexels-vietfotos-10928778.jpg' %}" alt="Profile" class="profile-icon">
           <!-- <i class="fa-solid fa-user"></i> -->
         </div>
-        <div class="user_details">
+        <!-- <div class="user_details">
           <p>Nuel Nyaayo</p>
           <p class="memb_no">Member No - 001</p>
+        </div> -->
+        <div class="user_details">
+          <p class="user_name">{{ user.first_name }} {{ user.last_name }}</p>
+          <p class="memb_no">Member No - {{ user.id }}</p>
         </div>
       </div>
 
       <ul>
         <li>
-          <i class="fa-solid fa-user"></i>
-          <a href="#">My Profile</a>
+            <a href="#">
+                <i class="fa-solid fa-user"></i> My Profile
+            </a>
         </li>
         <li>
-          <i class="fa-solid fa-gear"></i>
-          <a href="#">Settings</a>
-          <ul class="submenu">
-            <li><a href="#">Account Settings</a></li>
-            <li><a href="#">General Settings</a></li>
-          </ul>
+            <a href="#">
+                <i class="fa-solid fa-gear"></i> Settings
+            </a>
+            <ul class="submenu">
+                <li><a href="#">Account Settings</a></li>
+                <li><a href="#">General Settings</a></li>
+            </ul>
         </li>
         <li>
-          <i class="fa-solid fa-envelope"></i>
-          <a href="#">Contact Us</a>
+            <a href="#">
+                <i class="fa-solid fa-envelope"></i> Contact Us
+            </a>
         </li>
         <li>
-          <i class="fa-solid fa-circle-question"></i>
-          <a href="#">Support</a>
-          <ul class="submenu">
-            <li><a href="#">Help</a></li>
-            <li><a href="#">About Us</a></li>
-          </ul>
+            <a href="#">
+                <i class="fa-solid fa-circle-question"></i> Support
+            </a>
+            <ul class="submenu">
+                <li><a href="#">Help</a></li>
+                <li><a href="#">About Us</a></li>
+            </ul>
         </li>
-      </ul>
+    </ul>
+    
       <details>
         <summary>
           KU Toastmasters Version 1.1.0
@@ -68,31 +82,34 @@
     </div>
     <div class="logout">
       <ul>
-        <li>
-          <i class="fa-solid fa-arrow-right-from-bracket"></i>
-          <a href="#">Log Out</a>
-        </li>
+          <li>
+              <a href="{% url 'logout' %}" onclick="return confirm('Are you sure you want to log out?');">
+                  <i class="fa-solid fa-arrow-right-from-bracket"></i> Log Out
+              </a>
+          </li>
       </ul>
-
     </div>
+  
+  
       
   </div>
 
   <div class="main-content">
     <!-- Nav Section -->
     <div class="top-nav">
-        <ul>
-          <li><a href="memb_dash">Home</a></li>
-          <li><a href="memb_roles">Roles</a></li>
+      <ul>
+          <li><a href="{% url 'memb_dash' %}">Home</a></li>
+          <li><a href="{% url 'memb_roles' %}">Roles</a></li>
           <li><a href="#">Membership</a></li>
           <li><a href="#">Resources</a></li>
           <li><a href="#">Elections</a></li>
-        </ul>
-        <div class="top-nav-notification">
+      </ul>
+      <div class="top-nav-notification">
           <i class="fa-regular fa-bell"></i>
           <button class="notification-btn">Notifications</button>
-        </div>
+      </div>
     </div>
+  
     
     <!-- Breadcrumb Section -->
     <div class="breadcrumb-nav">
@@ -100,7 +117,7 @@
         <ul class="breadcrumb">
           <span>Club Member</span>
           <i class="fa-solid fa-play"></i>
-          <li><a href="index.html">Home</a></li>
+          <li><a href="{% url 'memb_dash' %}">Home</a></li>
           <!-- <li><a href="dashboard.html">Dashboard</a></li> -->
           <li>Dashboard</li>
         </ul>
@@ -113,9 +130,9 @@
 
     <!-- Dashboard Area -->
     <div class="dashboard">
-      
+      {% block content %}
         <div class="welcome-user">
-          <h2>Welcome Back, Nuel 👋</h2>
+          <h2>Welcome Back, {{ user.first_name }} 👋</h2>
           <p>This is a personalize KU toastmasters membership dashboard specifically tailored to your needs and made for you.</p>
         </div>
 
@@ -414,37 +431,22 @@
             </div>
           </div>
         </div>
+      {% endblock %}
 
     </div>
 
   </div>
 
+  <script src="{% static 'assets/js/main.js' %}"></script>
+
+  {% block extra_js %}
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
-    const links = document.querySelectorAll(".top-nav a");
-    const currentPage = window.location.pathname.split("/").pop(); // Get current page filename
-
-    // Remove active from all, then set active based on localStorage or current page
-    links.forEach(link => {
-        link.classList.remove("active");
-
-        // Check if the href matches the current page URL
-        if (link.getAttribute("href") === currentPage) {
-            link.classList.add("active");
+    document.addEventListener('DOMContentLoaded', function() {
+        if (performance.navigation.type === 2) {
+            // Page was accessed via back or forward button
+            window.location.reload();
         }
-
-        // Click event to update localStorage and navigate
-        link.addEventListener("click", function () {
-            localStorage.setItem("activeTab", this.getAttribute("href"));
-        });
     });
-
-    // If no link is active, set "memb_dash.html" as default
-    if (!document.querySelector(".top-nav a.active")) {
-        document.querySelector(".top-nav a[href='memb_dash.html']").classList.add("active");
-    }
-});
-
 
     function updateDateTime() {
     const now = new Date();
@@ -564,6 +566,9 @@ document.addEventListener("DOMContentLoaded", function () {
   
 
   </script>
+  {% endblock %}
+
+  
 
 </body>
 </html>

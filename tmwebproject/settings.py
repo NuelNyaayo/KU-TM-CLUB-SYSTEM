@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'tmapp',
+    "django_browser_reload",
 ]
 
 # Custom User Model
@@ -58,6 +59,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django_browser_reload.middleware.BrowserReloadMiddleware",
+
+    # Your custom middleware
+    'tmapp.middleware.CacheControlMiddleware',
 ]
 
 ROOT_URLCONF = 'tmwebproject.urls'
