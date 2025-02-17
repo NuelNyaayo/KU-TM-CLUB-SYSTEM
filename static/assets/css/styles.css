@@ -82,6 +82,12 @@ h1, h3 {
   padding: 0.2rem 0.5rem;
 }
 
+.top-nav .notification-btn:hover {
+  background-color: gold;
+  color: black;
+
+}
+
 .top-nav a {
   color: white;
   text-decoration: none;

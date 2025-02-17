@@ -103,7 +103,7 @@
           <li><a href="{% url 'memb_dash' %}">Home</a></li>
           <li><a href="{% url 'memb_roles' %}">Roles</a></li>
           <li><a href="{% url 'memb_membership' %}">Membership</a></li>
-          <li><a href="{% url 'memb_roles' %}">Resources</a></li>
+          <li><a href="{% url 'memb_resources' %}">Resources</a></li>
           <li><a href="{% url 'memb_roles' %}">Elections</a></li>
       </ul>
       <div class="top-nav-notification">
@@ -172,7 +172,34 @@
           <h3> Recently Viewed Resources</h3>
           <div class="viewed-resources">
 
-            <div id="recent-resources" class="resource-grid"></div>
+            <div class="resource-cont">
+              <div id="resource-grid" class="resource-grid">
+                <div  class="resource-card" data-type="document">
+                  <img src="{% static 'assets/images/pexels-vietfotos-10928778.jpg' %}" alt="Speech Guidelines">
+                    <h3>Speech Guidelines</h3>
+                    <p>Essential rules for structuring your speech.</p>
+                    <button>View <i class="fa fa-file-alt"></i></button>
+                </div>
+                <div  class="resource-card" data-type="video">
+                  <img src="{% static 'assets/images/pexels-vietfotos-10928778.jpg' %}" alt="Public Speaking Tips">
+                    <h3>Public Speaking Tips</h3>
+                    <p>Learn to master stage presence.</p>
+                    <button>Watch <i class="fa fa-video"></i></button>
+                </div>
+                <div  class="resource-card" data-type="link">
+                  <img src="{% static 'assets/images/pexels-vietfotos-10928778.jpg' %}" alt="Toastmasters Website">
+                    <h3>Toastmasters Website</h3>
+                    <p>Explore official resources.</p>
+                    <button>Open <i class="fa fa-link"></i></button>
+                </div>
+                <!-- <div  class="resource-card" data-type="audio">
+                  <img src="{% static 'assets/images/pexels-vietfotos-10928778.jpg' %}" alt="CC1 Speech Audio">
+                    <h3>CC1 Speech Audio</h3>
+                    <p>Listen to sample speeches.</p>
+                    <button>Listen <i class="fa fa-headphones"></i></button>
+                </div> -->
+              </div>
+            </div>
             
           </div>
         </div>
@@ -483,37 +510,6 @@
 
   document.addEventListener("DOMContentLoaded", function () {
     updateDateTime();
-});
-
-document.addEventListener("DOMContentLoaded", function () {
-    const recentResources = document.getElementById("recent-resources");
-
-    // Dummy data (replace this with database/API data)
-    const resources = [
-        { name: "Speech Guidelines", type: "document", action: "View", icon: "fa-file-alt" },
-        { name: "Public Speaking Tips", type: "video", action: "Watch", icon: "fa-video" },
-        { name: "Toastmasters Website", type: "link", action: "Open", icon: "fa-link" },
-        { name: "CC1 Speech Audio", type: "audio", action: "Listen", icon: "fa-headphones" }
-    ];
-
-    // Function to render resources
-    function renderResources() {
-        recentResources.innerHTML = "";
-        resources.forEach(resource => {
-            let card = document.createElement("div");
-            card.classList.add("resource-card");
-            card.setAttribute("data-type", resource.type);
-            card.innerHTML = `
-                <i class="fa ${resource.icon}"></i>
-                <p>${resource.name}</p>
-                <button>${resource.action}</button>
-            `;
-            recentResources.appendChild(card);
-        });
-    }
-
-    // Load resources
-    renderResources();
 });
 
   document.addEventListener("DOMContentLoaded", function () {

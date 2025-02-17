@@ -97,3 +97,7 @@ def memb_membership(request):
 
     return render(request, 'memb_membership.html')
 
+def memb_resources(request): 
+
+    return render(request, 'memb_resources.html')
+

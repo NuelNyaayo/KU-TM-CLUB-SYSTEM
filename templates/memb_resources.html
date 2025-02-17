@@ -1,0 +1,145 @@
+{% extends 'memb_dash.html' %}
+
+{% load static %}
+
+
+{% block title %}Member Resources{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'assets/css/memb_resources.css' %}">
+{% endblock %}
+
+
+{% block content %}
+<div class="dashboard-overview">
+    <h3> 📚 &nbsp; Toastmasters Resources</h3>
+    <div class="resource-cont">
+      <div id="resource-grid" class="resource-grid">
+        <div  class="resource-card" data-type="document">
+          <img src="{% static 'assets/images/pexels-vietfotos-10928778.jpg' %}" alt="Speech Guidelines">
+            <h3>Speech Guidelines</h3>
+            <p>Essential rules for structuring your speech.</p>
+            <button>View <i class="fa fa-file-alt"></i></button>
+        </div>
+        <div  class="resource-card" data-type="video">
+          <img src="{% static 'assets/images/pexels-vietfotos-10928778.jpg' %}" alt="Public Speaking Tips">
+            <h3>Public Speaking Tips</h3>
+            <p>Learn to master stage presence.</p>
+            <button>Watch <i class="fa fa-video"></i></button>
+        </div>
+        <div  class="resource-card" data-type="link">
+          <img src="{% static 'assets/images/pexels-vietfotos-10928778.jpg' %}" alt="Toastmasters Website">
+            <h3>Toastmasters Website</h3>
+            <p>Explore official resources.</p>
+            <button>Open <i class="fa fa-link"></i></button>
+        </div>
+        <div  class="resource-card" data-type="audio">
+          <img src="{% static 'assets/images/pexels-vietfotos-10928778.jpg' %}" alt="CC1 Speech Audio">
+            <h3>CC1 Speech Audio</h3>
+            <p>Listen to sample speeches.</p>
+            <button>Listen <i class="fa fa-headphones"></i></button>
+        </div>
+        <div  class="resource-card" data-type="document">
+          <img src="{% static 'assets/images/pexels-vietfotos-10928778.jpg' %}" alt="Speech Guidelines">
+          <h3>Speech Guidelines</h3>
+          <p>Essential rules for structuring your speech.</p>
+          <button>View <i class="fa fa-file-alt"></i></button>
+        </div>
+        <div  class="resource-card" data-type="video">
+          <img src="{% static 'assets/images/pexels-vietfotos-10928778.jpg' %}" alt="Public Speaking Tips">
+          <h3>Public Speaking Tips</h3>
+          <p>Learn to master stage presence.</p>
+          <button>Watch <i class="fa fa-video"></i></button>
+        </div>
+        <div  class="resource-card" data-type="link">
+          <img src="{% static 'assets/images/pexels-vietfotos-10928778.jpg' %}" alt="Toastmasters Website">
+          <h3>Toastmasters Website</h3>
+          <p>Explore official resources.</p>
+          <button>Open <i class="fa fa-link"></i></button>
+        </div>
+        <div  class="resource-card" data-type="audio">
+          <img src="{% static 'assets/images/pexels-vietfotos-10928778.jpg' %}" alt="CC1 Speech Audio">
+          <h3>CC1 Speech Audio</h3>
+          <p>Listen to sample speeches.</p>
+          <button>Listen <i class="fa fa-headphones"></i></button>
+        </div>
+        <div class="resource-card" data-type="document">
+          <img src="{% static 'assets/images/pexels-vietfotos-10928778.jpg' %}" alt="Speech Guidelines">
+          <h3>Speech Guidelines</h3>
+          <p>Essential rules for structuring your speech.</p>
+          <button>View <i class="fa fa-file-alt"></i></button>
+        </div>
+        <div  class="resource-card" data-type="video">
+          <img src="{% static 'assets/images/pexels-vietfotos-10928778.jpg' %}" alt="Public Speaking Tips">
+          <h3>Public Speaking Tips</h3>
+          <p>Learn to master stage presence.</p>
+          <button>Watch <i class="fa fa-video"></i></button>
+        </div>
+        <div class="resource-card" data-type="link">
+          <img src="{% static 'assets/images/pexels-vietfotos-10928778.jpg' %}" alt="Toastmasters Website">
+          <h3>Toastmasters Website</h3>
+          <p>Explore official resources.</p>
+          <button>Open <i class="fa fa-link"></i></button>
+        </div>
+        <div  class="resource-card" data-type="audio">
+          <img src="{% static 'assets/images/pexels-vietfotos-10928778.jpg' %}" alt="CC1 Speech Audio">
+          <h3>CC1 Speech Audio</h3>
+          <p>Listen to sample speeches.</p>
+          <button>Listen <i class="fa fa-headphones"></i></button>
+        </div>
+      </div>
+      <!-- Pagination -->
+      <div class="pagination">
+        <button id="prevPage">« Previous</button>
+        <span id="pageNumbers"></span>
+        <button id="nextPage">Next »</button>
+      </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+const resourceCards = document.querySelectorAll(".resource-card");
+const itemsPerPage = 6; // Change this for different pagination sizes
+let currentPage = 1;
+
+function showPage(page) {
+    const start = (page - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+
+    resourceCards.forEach((card, index) => {
+        card.style.display = index >= start && index < end ? "block" : "none";
+    });
+
+    updatePagination(page);
+}
+
+function updatePagination(page) {
+    const totalPages = Math.ceil(resourceCards.length / itemsPerPage);
+    document.getElementById("pageNumbers").textContent = `Page ${page} of ${totalPages}`;
+    
+    document.getElementById("prevPage").disabled = page === 1;
+    document.getElementById("nextPage").disabled = page === totalPages;
+}
+
+document.getElementById("prevPage").addEventListener("click", function () {
+    if (currentPage > 1) {
+        currentPage--;
+        showPage(currentPage);
+    }
+});
+
+document.getElementById("nextPage").addEventListener("click", function () {
+    if (currentPage < Math.ceil(resourceCards.length / itemsPerPage)) {
+        currentPage++;
+        showPage(currentPage);
+    }
+});
+
+showPage(currentPage);
+});
+
+</script>
+{% endblock %}
