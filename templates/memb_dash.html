@@ -108,7 +108,7 @@
       </ul>
       <div class="top-nav-notification">
           <i class="fa-regular fa-bell"></i>
-          <button class="notification-btn">Notifications</button>
+          <button id="navNotificationBtn" class="notification-btn">Notifications</button>
       </div>
     </div>
   
@@ -470,6 +470,15 @@
 
   {% block extra_js %}
   <script>
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const navNotificationBtn = document.getElementById("navNotificationBtn");
+    
+    navNotificationBtn.addEventListener("click", function () {
+        window.location.href = "{% url 'memb_notifications' %}"; 
+    });
+
+});
 
     function updateDateTime() {
     const now = new Date();

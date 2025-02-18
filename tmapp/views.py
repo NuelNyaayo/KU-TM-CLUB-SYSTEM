@@ -101,3 +101,7 @@ def memb_resources(request):
 
     return render(request, 'memb_resources.html')
 
+def memb_notifications(request): 
+
+    return render(request, 'memb_notifications.html')
+

@@ -1,0 +1,126 @@
+.dashboard-overview {
+    background-color: whitesmoke;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding-bottom: 1.5rem;
+    margin: 1rem 0;
+    
+  }
+  
+  
+   h3 {
+    background-color: white;
+    text-align: center;
+    color: darkblue;
+    padding: 1rem;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  
+  .notification-wrapper {
+    background-color: #fff;
+    padding: 2rem;
+    margin-top: 2rem;
+    /* margin-right: 2rem;
+    margin-left: 2rem; */
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    
+  }
+  
+  /* Notification Controls */
+  .notification-controls {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+  }
+  
+  .notification-controls button {
+    background: darkblue;
+    color: white;
+    border: none;
+    padding: 0.7rem 1.2rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 1rem;
+  }
+  
+  .notification-controls button:hover {
+    background: #005bb5;
+  }
+  
+  /* Notifications List */
+  .notification-container {
+    /* max-height: 400px; */
+    overflow-y: auto;
+  }
+  
+  /* Notification Card */
+  .notification {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f2f2f2;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: 0.3s;
+  }
+  
+  /* Unread Notification */
+  .notification.unread {
+    background: #dde8ff;
+    font-weight: bold;
+  }
+  
+  /* Notification Icons */
+  .notification i {
+    color: darkblue;
+    font-size: 1.5rem;
+    margin-right: 1rem;
+  }
+  
+  /* Message Styling */
+  .message {
+    flex: 1;
+    color: #333;
+  }
+  
+  /* Timestamp */
+  .timestamp {
+    font-size: 0.9rem;
+    color: gray;
+    margin-left: 1rem;
+  }
+  
+  /* Mark Read Button */
+  .mark-read {
+    background: darkblue;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: 0.3s;
+    margin-left: 1rem;
+  }
+  
+  .mark-read:hover {
+    background: #005bb5;
+  }
+  
+  /* Scrollbar for Notifications */
+  .notification-container::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  .notification-container::-webkit-scrollbar-thumb {
+    background-color: darkblue;
+    border-radius: 10px;
+  }

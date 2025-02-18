@@ -1,0 +1,98 @@
+{% extends 'memb_dash.html' %}
+
+{% load static %}
+
+
+{% block title %}Member Notifications{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'assets/css/memb_notifications.css' %}">
+{% endblock %}
+
+
+{% block content %}
+<div class="dashboard-overview">
+    <h3> 🔔&nbsp; Member Notifications</h3>
+    <div class="notification-wrapper">
+        
+        <div class="notification-controls">
+            <button id="mark-all-read">Mark All as Read</button>
+            <button id="clear-all">Clear All</button>
+        </div>
+
+        <div class="notification-container">
+            <ul id="notification-list">
+                <li class="notification unread">
+                    <i class="fas fa-bell"></i>
+                    <span class="message">Your membership payment is due mid-April.</span>
+                    <span class="timestamp">2 hours ago</span>
+                    <button class="mark-read">Mark as Read</button>
+                </li>
+                <li class="notification unread">
+                    <i class="fas fa-user"></i>
+                    <span class="message">New resource "KU Gavel Constitution" uploaded. Check it out.</span>
+                    <span class="timestamp">5 hours ago</span>
+                    <button class="mark-read">Mark as Read</button>
+                </li>
+                <li class="notification">
+                    <i class="fas fa-check-circle"></i>
+                    <span class="message">Your role for Meeting 046 is confirmed.</span>
+                    <span class="timestamp">Yesterday</span>
+                </li>
+                <li class="notification">
+                    <i class="fas fa-calendar"></i>
+                    <span class="message">New meeting scheduled for 12th Feb 2025.</span>
+                    <span class="timestamp">2 days ago</span>
+                </li>
+                <li class="notification">
+                    <i class="fas fa-check-circle"></i>
+                    <span class="message">Your role for Meeting 046 is confirmed.</span>
+                    <span class="timestamp">Yesterday</span>
+                </li>
+                <li class="notification">
+                    <i class="fas fa-calendar"></i>
+                    <span class="message">New meeting scheduled for 12th Feb 2025.</span>
+                    <span class="timestamp">2 days ago</span>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+const markReadButtons = document.querySelectorAll(".mark-read");
+const markAllReadButton = document.getElementById("mark-all-read");
+const clearAllButton = document.getElementById("clear-all");
+const notificationList = document.getElementById("notification-list");
+
+// Mark a single notification as read
+markReadButtons.forEach(button => {
+    button.addEventListener("click", function () {
+        const notification = this.closest(".notification");
+        notification.classList.remove("unread");
+        this.remove(); // Remove the button after marking as read
+    });
+});
+
+// Mark all as read
+markAllReadButton.addEventListener("click", function () {
+    document.querySelectorAll(".notification.unread").forEach(notification => {
+        notification.classList.remove("unread");
+        const button = notification.querySelector(".mark-read");
+        if (button) button.remove();
+    });
+});
+
+// Clear all notifications
+clearAllButton.addEventListener("click", function () {
+    notificationList.innerHTML = "<p>No notifications</p>";
+});
+});
+
+  </script>
+{% endblock %}

@@ -11,5 +11,6 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),  # Logout route   
     path('memb_membership/', views.memb_membership, name='memb_membership'),   
     path('memb_resources/', views.memb_resources, name='memb_resources'),   
+    path('memb_notifications/', views.memb_notifications, name='memb_notifications'),   
     # path('post/<str:pk>', views.post, name ='post'),   
 ]
