@@ -107,23 +107,29 @@
           <li><a href="{% url 'memb_roles' %}">Elections</a></li>
       </ul>
       <div class="top-nav-notification">
-          <i class="fa-regular fa-bell"></i>
-          <button id="navNotificationBtn" class="notification-btn">Notifications</button>
+        <i class="fa-solid fa-bell"></i>
+        <span id="notification-badge" class="notification-badge">2</span> 
+        <button id="navNotificationBtn" class="notification-btn" 
+                data-url="{% url 'memb_notifications' %}">Notifications</button>
       </div>
+    
+    
     </div>
+  
   
     
     <!-- Breadcrumb Section -->
     <div class="breadcrumb-nav">
       <nav aria-label="breadcrumb">
         <ul class="breadcrumb">
-          <span>Club Member</span>
-          <i class="fa-solid fa-play"></i>
-          <li><a href="{% url 'memb_dash' %}">Home</a></li>
-          <!-- <li><a href="dashboard.html">Dashboard</a></li> -->
-          <li>Dashboard</li>
+            <span>Club Member</span>
+            <i class="fa-solid fa-play"></i>
+            <li><a href="{% url 'memb_dash' %}">Home</a></li>
+            <!-- <li><a href="dashboard.html">Dashboard</a></li> -->
+            <li>{{ current_page }}</li> 
         </ul>
       </nav>
+    
       <div class="search-section">
         <input type="text" placeholder="Search Here..." class="search-bar">
         <i class="fa-solid fa-magnifying-glass"></i>
@@ -317,7 +323,7 @@
         <div class="notification-summary">
           <h3> Notification Updates</h3>
           <div class="notification-container">
-            <ul id="notification-list">
+            <!-- <ul id="notification-list">
               <li class="notification">
                   <i class="fas fa-bell"></i>
                   <span class="message">Your membership payment is due on mid of April.</span>
@@ -342,6 +348,33 @@
                   <span class="timestamp">2 days ago</span>
                   <button class="mark-read">Mark as Read</button>
               </li>
+            </ul> -->
+            <ul id="notification-list">
+              <li class="notification unread">
+                  <i class="fas fa-bell"></i>
+                  <span class="message">Your membership payment is due mid-April.</span>
+                  <span class="timestamp">2 hours ago</span>
+                  <button class="mark-read">Mark as Read</button>
+              </li>
+              <li class="notification unread">
+                  <i class="fas fa-user"></i>
+                  <span class="message">New resource "KU Gavel Constitution" uploaded. Check it out.</span>
+                  <span class="timestamp">5 hours ago</span>
+                  <button class="mark-read">Mark as Read</button>
+              </li>
+              <li class="notification unread">
+                  <i class="fas fa-bell"></i>
+                  <span class="message">Your membership payment is due mid-April.</span>
+                  <span class="timestamp">2 hours ago</span>
+                  <button class="mark-read">Mark as Read</button>
+              </li>
+              <li class="notification unread">
+                  <i class="fas fa-user"></i>
+                  <span class="message">New resource "KU Gavel Constitution" uploaded. Check it out.</span>
+                  <span class="timestamp">5 hours ago</span>
+                  <button class="mark-read">Mark as Read</button>
+              </li>
+              
             </ul>
           </div>
         </div>
@@ -471,15 +504,6 @@
   {% block extra_js %}
   <script>
 
-  document.addEventListener("DOMContentLoaded", function () {
-    const navNotificationBtn = document.getElementById("navNotificationBtn");
-    
-    navNotificationBtn.addEventListener("click", function () {
-        window.location.href = "{% url 'memb_notifications' %}"; 
-    });
-
-});
-
     function updateDateTime() {
     const now = new Date();
 
@@ -520,18 +544,6 @@
   document.addEventListener("DOMContentLoaded", function () {
     updateDateTime();
 });
-
-  document.addEventListener("DOMContentLoaded", function () {
-              // Select all "Mark as Read" buttons
-              const buttons = document.querySelectorAll(".mark-read");
-
-              // Add event listener to each button
-              buttons.forEach(button => {
-                  button.addEventListener("click", function () {
-                      this.parentElement.remove(); // Remove the notification from the list
-                  });
-              });
-          });
 
           // Set the target date (Change this to your event date)
   const targetDate = new Date("March 15, 2025 00:00:00").getTime();

@@ -86,22 +86,22 @@ def memb_dash(request):
     # if not request.user.is_authenticated:
     #     return redirect('login')  # Redirect to login if not authenticated 
 
-    return render(request, 'memb_dash.html')
+    return render(request, 'memb_dash.html', {"current_page": "Dashboard"})
 
 
 def memb_roles(request): 
 
-    return render(request, 'memb_roles.html')
+    return render(request, 'memb_roles.html', {"current_page": "Roles"})
 
 def memb_membership(request): 
 
-    return render(request, 'memb_membership.html')
+    return render(request, 'memb_membership.html', {"current_page": "Membership"})
 
 def memb_resources(request): 
 
-    return render(request, 'memb_resources.html')
+    return render(request, 'memb_resources.html', {"current_page": "Resources"})
 
 def memb_notifications(request): 
 
-    return render(request, 'memb_notifications.html')
+    return render(request, 'memb_notifications.html', {"current_page": "Notifications"})
 

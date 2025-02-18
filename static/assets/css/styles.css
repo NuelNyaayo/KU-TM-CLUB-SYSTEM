@@ -67,11 +67,33 @@ h1, h3 {
   justify-content: center;
   align-items: center;
   gap: 0.8rem;
+  position: relative;
 }
 
-.top-nav .notification i {
+.notification-badge {
+  position: absolute;
+  top: -5px;
+  right: 130px;
+  background: black;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.top-nav .top-nav-notification i {
   color: white; 
-  font-size: 1.5rem;
+  font-size: 1.6rem;
+}
+
+.top-nav .top-nav-notification i:hover {
+  color: gold; 
 }
 
 .top-nav .notification-btn {

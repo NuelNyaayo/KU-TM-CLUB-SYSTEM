@@ -190,17 +190,6 @@
   border-radius: 8px;
 }
 
-/* .resource-cont {
-  background-color: whitesmoke;
-  margin: 30px auto;
-  padding: 20px;
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  
-} */
-
-
 /* Ensure the grid displays cards in a row */
 .resource-grid {
   flex-grow: 1;
@@ -381,42 +370,49 @@ th, td {
   margin-left: 2rem;
   background-color: #fff;
   border-radius: 8px;
+  overflow-y: auto;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
+  
+/* Notification Card */
 .notification {
   display: flex;
   align-items: center;
   justify-content: space-between;
   background: #f2f2f2;
-  padding: 1rem;
+  padding: 1rem 2rem;
   border-radius: 8px;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  font-size: inherit;
+  transition: 0.3s;
 }
 
+/* Unread Notification */
+.notification.unread {
+  background: #dde8ff;
+  font-weight: bold;
+}
+
+/* Notification Icons */
 .notification i {
   color: darkblue;
   font-size: 1.5rem;
   margin-right: 1rem;
 }
 
+/* Message Styling */
 .message {
   flex: 1;
-  font-size: inherit;
   color: #333;
 }
 
+/* Timestamp */
 .timestamp {
-  font-size: 1rem;
+  font-size: 0.9rem;
   color: gray;
-  margin: 0 1.5rem;
+  margin-left: 1rem;
 }
 
+/* Mark Read Button */
 .mark-read {
   background: darkblue;
   color: white;
@@ -425,12 +421,24 @@ ul {
   border-radius: 8px;
   cursor: pointer;
   font-size: 0.8rem;
+  transition: 0.3s;
+  margin-left: 1rem;
 }
 
-/* .mark-read:hover {
-  background: #003366;
+.mark-read:hover {
+  background: #005bb5;
 }
- */
+
+/* Scrollbar for Notifications */
+.notification-container::-webkit-scrollbar {
+  width: 5px;
+}
+
+.notification-container::-webkit-scrollbar-thumb {
+  background-color: darkblue;
+  border-radius: 10px;
+}
+
 
 .payment-summary {
   background-color: whitesmoke;
