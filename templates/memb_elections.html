@@ -1,0 +1,81 @@
+{% extends 'memb_dash.html' %}
+
+{% load static %}
+
+
+{% block title %}Member Elections{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'assets/css/memb_elections.css' %}">
+{% endblock %}
+
+
+{% block content %}
+<div class="dashboard-overview">
+    <h3> 🗳️&nbsp; Toastmasters Club Elections</h3>
+    <div class="next-meeting">
+      <form id="votingForm">
+      
+        <fieldset>
+          <label>President:</label>
+          <label><input type="radio" name="president" value="Candidate A" required> Candidate A</label>
+          <label><input type="radio" name="president" value="Candidate B"> Candidate B</label>
+          <label><input type="radio" name="president" value="Candidate C"> Candidate C</label>
+        </fieldset>
+          
+        <fieldset>
+          <label>Vice President Education</label>
+          <label><input type="radio" name="vp_education" value="Candidate X" required> Candidate X</label>
+          <label><input type="radio" name="vp_education" value="Candidate Y"> Candidate Y</label>
+        </fieldset>
+        
+        <fieldset>
+          <label>Vice President Membership</label>
+          <label><input type="radio" name="vp_membership" value="Candidate M" required> Candidate M</label>
+          <label><input type="radio" name="vp_membership" value="Candidate N"> Candidate N</label>
+          <label><input type="radio" name="vp_membership" value="Candidate O"> Candidate O</label>
+        </fieldset>
+        
+        <fieldset>
+          <label>Vice President Public Relations</label>
+          <label><input type="radio" name="vp_pr" value="Candidate R" required> Candidate R</label>
+          <label><input type="radio" name="vp_pr" value="Candidate S"> Candidate S</label>
+        </fieldset>
+        
+
+        <fieldset>
+          <label>Secretary</label>
+          <label><input type="radio" name="secretary" value="Candidate D" required> Candidate D</label>
+          <label><input type="radio" name="secretary" value="Candidate E"> Candidate E</label>
+        </fieldset>
+
+        <fieldset>
+          <label>Sergeant at Arms</label>
+          <label><input type="radio" name="sergeant" value="Candidate F" required> Candidate F</label>
+          <label><input type="radio" name="sergeant" value="Candidate G"> Candidate G</label>
+        </fieldset>
+
+        <fieldset>
+          <label>Treasurer</label>
+          <label><input type="radio" name="treasurer" value="Candidate H" required> Candidate H</label>
+          <label><input type="radio" name="treasurer" value="Candidate I"> Candidate I</label>
+        </fieldset>
+
+          <!-- Submit Button (Initially Hidden) -->
+          <button type="submit" id="submit-btn" >Submit</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+
+document.getElementById('votingForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    alert('Your vote has been submitted successfully!');
+    this.reset();
+});
+
+  </script>
+{% endblock %}

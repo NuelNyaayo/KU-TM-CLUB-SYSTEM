@@ -43,7 +43,7 @@
 
       <ul>
         <li>
-            <a href="#">
+            <a href="{% url 'memb_profile' %}">
                 <i class="fa-solid fa-user"></i> My Profile
             </a>
         </li>
@@ -52,7 +52,7 @@
                 <i class="fa-solid fa-gear"></i> Settings
             </a>
             <ul class="submenu">
-                <li><a href="#">Account Settings</a></li>
+                <li><a href="{% url 'memb_account' %}">Account Settings</a></li>
                 <li><a href="#">General Settings</a></li>
             </ul>
         </li>
@@ -70,7 +70,7 @@
                 <li><a href="#">About Us</a></li>
             </ul>
         </li>
-    </ul>
+      </ul>
     
       <details>
         <summary>
@@ -104,7 +104,7 @@
           <li><a href="{% url 'memb_roles' %}">Roles</a></li>
           <li><a href="{% url 'memb_membership' %}">Membership</a></li>
           <li><a href="{% url 'memb_resources' %}">Resources</a></li>
-          <li><a href="{% url 'memb_roles' %}">Elections</a></li>
+          <li><a href="{% url 'memb_elections' %}">Elections</a></li>
       </ul>
       <div class="top-nav-notification">
         <i class="fa-solid fa-bell"></i>
@@ -323,32 +323,6 @@
         <div class="notification-summary">
           <h3> Notification Updates</h3>
           <div class="notification-container">
-            <!-- <ul id="notification-list">
-              <li class="notification">
-                  <i class="fas fa-bell"></i>
-                  <span class="message">Your membership payment is due on mid of April.</span>
-                  <span class="timestamp">2 hours ago</span>
-                  <button class="mark-read">Mark as Read</button>
-              </li>
-              <li class="notification">
-                  <i class="fas fa-user"></i>
-                  <span class="message">New resource KU gavel constitution has been uploaded.Check it out.</span>
-                  <span class="timestamp">5 hours ago</span>
-                  <button class="mark-read">Mark as Read</button>
-              </li>
-              <li class="notification">
-                  <i class="fas fa-check-circle"></i>
-                  <span class="message">Your role for the next meeting, meeting 046 has been confirmed.</span>
-                  <span class="timestamp">Yesterday</span>
-                  <button class="mark-read">Mark as Read</button>
-              </li>
-              <li class="notification">
-                  <i class="fas fa-calendar"></i>
-                  <span class="message">A new meeting has been scheduled for 12th Feb 2025.</span>
-                  <span class="timestamp">2 days ago</span>
-                  <button class="mark-read">Mark as Read</button>
-              </li>
-            </ul> -->
             <ul id="notification-list">
               <li class="notification unread">
                   <i class="fas fa-bell"></i>
@@ -488,7 +462,7 @@
               </div>
 
               <div class="vote-btn-cont">
-                <button class="vote-btn"><span><i class="fa-solid fa-check-to-slot"></i></span>Vote Now</button>
+                <button id="voteBtn" class="vote-btn" data-url="{% url 'memb_elections' %}"><span><i class="fa-solid fa-check-to-slot"></i></span>Vote Now</button>
               </div>
             </div>
           </div>
@@ -575,6 +549,15 @@
   // Update the countdown every second
   const interval = setInterval(updateCountdown, 1000);
   updateCountdown(); // Initial call to prevent delay
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const voteBtn = document.getElementById("voteBtn");
+
+    voteBtn.addEventListener("click", function () {
+      const votingUrl = this.getAttribute("data-url");  // Get URL from button
+      window.location.href = votingUrl; 
+    });
+});
 
   
 

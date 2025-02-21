@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const links = document.querySelectorAll(".top-nav a");
+    const links = document.querySelectorAll(".top-nav a, ul a"); // Select all nav and sidebar links
     const notificationBtn = document.getElementById("navNotificationBtn");
-    const bellIcon = document.querySelector(".top-nav-notification i"); // Select the bell icon
+    const bellIcon = document.querySelector(".top-nav-notification i"); // Bell icon
     const notificationBadge = document.getElementById("notification-badge"); // Notification count badge
     const currentPath = window.location.pathname; // Get current page path
     let activeLinkFound = false; // Flag to check if any link is active
@@ -9,48 +9,45 @@ document.addEventListener("DOMContentLoaded", function () {
     // Get the notification page URL from the button's data-url attribute
     const notificationPageUrl = notificationBtn.getAttribute("data-url");
 
-    // Remove active class from all links
-    links.forEach(link => link.classList.remove("active"));
+    // Remove active class from all links and parent list items
+    links.forEach(link => {
+        link.classList.remove("active");
+        link.parentElement.classList.remove("active"); // Remove active from parent <li>
+    });
 
     // Highlight active link
     links.forEach(link => {
         if (link.getAttribute("href") === currentPath) {
             link.classList.add("active");
-            activeLinkFound = true; // Set flag to true when an active link is found
+            link.parentElement.classList.add("active"); // Add active class to <li>
+            activeLinkFound = true;
         }
     });
 
     // Check if we are on the notifications page
     if (currentPath === notificationPageUrl) {
-        // Remove active class from all links to prevent "Home" from being selected
         links.forEach(link => link.classList.remove("active"));
 
-        // Apply special styling to the notification button
         notificationBtn.style.backgroundColor = "gold";
         notificationBtn.style.color = "black";
 
-        // Change bell icon color to gold
         if (bellIcon) {
             bellIcon.style.color = "gold";
         }
 
-        // Hide notification badge when on the notifications page
         if (notificationBadge) {
             notificationBadge.style.display = "none";
         }
 
-        activeLinkFound = true; // Set flag since notifications button is active
+        activeLinkFound = true;
     } else {
-        // Reset styles when navigating away
         notificationBtn.style.backgroundColor = "";
         notificationBtn.style.color = "";
 
-        // Reset bell icon color
         if (bellIcon) {
             bellIcon.style.color = "";
         }
 
-        // Show notification badge if there are unread notifications
         if (notificationBadge && notificationBadge.innerText !== "0") {
             notificationBadge.style.display = "block";
         }
@@ -61,6 +58,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const homeLink = document.querySelector(".top-nav a[href='/memb_dash/']");
         if (homeLink) {
             homeLink.classList.add("active");
+            homeLink.parentElement.classList.add("active"); // Also apply to parent <li>
         }
     }
 
@@ -78,6 +76,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
+
 
 
 

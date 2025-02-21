@@ -1,0 +1,110 @@
+.dashboard-overview {
+    background-color: whitesmoke;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding-bottom: 1.5rem;
+    margin: 1rem 0;
+  }
+  
+  h2 {
+    color: darkblue;
+  }
+   h3 {
+    background-color: white;
+    text-align: center;
+    color: darkblue;
+    padding: 1rem;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 0;
+    border-bottom-right-radius: 0;;
+  }
+  
+  
+  
+  .next-meeting {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 0;
+    padding-top: 3rem;
+    margin-top: 30px;
+    margin-right: 2rem;
+    margin-left: 2rem;
+    background-color: #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    color: black;
+    border-radius: 10px;
+    /* width: 50%; */
+      
+  }
+  
+  /* Profile Header */
+  .profile-header {
+    text-align: center;
+    margin-bottom: 20px;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+  
+  .profile-pic {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 0.3rem solid #003366;
+    object-fit: cover;
+  }
+  
+  
+  /* Profile Details */
+  .profile-details {
+    text-align: left;
+    margin: 0 auto;
+    width: 80%;
+  }
+  
+  .detail {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .label {
+    font-weight: bold;
+    margin: 0.8rem 0;
+  }
+  
+  .value {
+    color: #333;
+    margin: 0.8rem 0;
+  }
+  
+  .active {
+    color: green;
+    font-weight: bold;
+  }
+  
+  /* Logout Button */
+  .logout-button {
+    background: darkblue;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 2rem;
+    width: 10rem;
+    font-size: inherit;
+  }
+  
+  .logout-button i {
+    margin-right: 1rem;
+  }
+  
+  .logout-button:hover {
+    background: blue;
+  }
+  
+  
+  

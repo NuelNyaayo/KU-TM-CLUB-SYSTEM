@@ -1,0 +1,117 @@
+.dashboard-overview {
+    background-color: whitesmoke;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding-bottom: 1.5rem;
+    margin: 1rem 0;
+  }
+  
+  h2 {
+    color: darkblue;
+  }
+   h3 {
+    background-color: white;
+    text-align: center;
+    color: darkblue;
+    padding: 1rem;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 0;
+    border-bottom-right-radius: 0;;
+  }
+  
+  .next-meeting {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* align-items: center; */
+    padding: 2rem 8rem;
+    padding-top: 3rem;
+    margin-top: 30px;
+    margin-right: 2rem;
+    margin-left: 2rem;
+    background-color: #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    color: black;
+    border-radius: 10px;
+    /* width: 50%; */
+      
+  }
+  
+  /* Profile Header */
+  .profile-header {
+    text-align: center;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+  
+  .profile-pic {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 0.3rem solid #003366;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .profile-pic:hover {
+    transform: scale(1.2);
+  }
+  
+  
+  
+  .edit-icon {
+    position: relative;
+    top: -30px;
+    left: 40px;
+    font-size: 16px;
+    cursor: pointer;
+    color: #007BFF;
+    background: white;
+    padding: 5px;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+  }
+  .form-group {
+    margin-bottom: 15px;
+  }
+  label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 0.5rem;
+    margin-top: 1rem;
+  }
+  input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    margin: 5px auto;
+    margin-bottom: 1.5rem;
+  }
+  .btn-container {
+    display: flex;
+    justify-content: space-between;
+  }
+  .btn {
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    width: 10rem;
+    font-size: inherit;
+  }
+  .save-btn {
+    background: darkblue;
+    color: white;
+  }
+  
+  .save-btn:hover {
+    background: blue;
+  }
+  
+  .cancel-btn {
+    background: #ccc;
+    color: black;
+  }

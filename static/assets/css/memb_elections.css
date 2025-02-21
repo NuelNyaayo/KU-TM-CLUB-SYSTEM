@@ -1,0 +1,86 @@
+.dashboard-overview {
+    background-color: whitesmoke;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding-bottom: 1.5rem;
+    margin: 1rem 0;
+    
+  }
+  
+   h3 {
+    background-color: white;
+    text-align: center;
+    color: darkblue;
+    padding: 1rem;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 0;
+    border-bottom-right-radius: 0;;
+  }
+  
+  
+  
+  .next-meeting {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2rem;
+    margin-top: 30px;
+    margin-right: 2rem;
+    margin-left: 2rem;
+    background-color: #fff;
+    border-radius: 8px;
+  }
+  
+  form {
+      padding: 0 4rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1rem;
+  }
+  
+  fieldset {
+    border: none;
+    padding: 2rem 3rem;
+    margin: 1rem;
+    background: whitesmoke;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  label {
+      display: block;
+      margin-top: 1rem;
+      font-weight: bold;
+  }
+  
+  form select, form input, form button {
+      width: 100%;
+      padding: 8px;
+      margin: 5px auto;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1rem;
+  }
+  
+  #submit-btn {
+      padding: 0.7rem;
+      background-color: darkblue;
+      color: white;
+      margin-bottom: 1rem;
+      margin-top: 1rem;
+      font-size: inherit;
+      width: 98%;
+  }
+  
+  #submit-btn:hover {
+      background-color: blue;
+      color: white;
+  }
+  
+  label input[type="radio"] {
+      display: inline-block;
+      margin-right: 2rem;
+      width: auto; /* Prevent radio buttons from being stretched */
+      vertical-align: middle; /* Align with text */
+  }

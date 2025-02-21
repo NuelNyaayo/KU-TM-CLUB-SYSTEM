@@ -106,3 +106,15 @@ def memb_notifications(request):
 
     return render(request, 'memb_notifications.html', {"current_page": "Notifications"})
 
+def memb_elections(request): 
+
+    return render(request, 'memb_elections.html', {"current_page": "Elections"})
+
+def memb_profile(request): 
+
+    return render(request, 'memb_profile.html', {"current_page": "Profile"})
+
+def memb_account(request): 
+
+    return render(request, 'memb_account.html', {"current_page": "account"})
+

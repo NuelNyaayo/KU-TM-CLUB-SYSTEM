@@ -663,6 +663,7 @@ th, td {
 
 .vote-btn-cont .vote-btn:hover {
   animation: bounce 0.5s ease infinite;
+  background-color: blue;
 }
 
 @keyframes bounce {

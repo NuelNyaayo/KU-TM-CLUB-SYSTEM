@@ -320,6 +320,17 @@ h2 {
   cursor: pointer;
 }
 
+.side-panel li.active {
+  background-color: gold;
+  color: black;
+  border-radius: 0.7rem;
+  margin-bottom: 1rem;
+}
+
+.side-panel ul li.active a {
+  color: black !important;
+}
+
 .side-panel li i {
   font-size: 1.5rem;
   }
