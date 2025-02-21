@@ -22,7 +22,7 @@
             {% for message in messages %}
                     <h5>{{ message }}</h5>
                 {% endfor %}
-            <form action="{% url 'login' %}" method="POST" class="contact__form">
+            <form action="{% url 'login' %}" method="POST" class="contact__form" onsubmit="showLoading()">
                 {% csrf_token %}
               <fieldset class="contact__fieldset">
                 <legend class="offscreen">Send Us A Message</legend>
@@ -53,10 +53,10 @@
                 </p>
                 
              </fieldset>
-             <button class="contact__button" type="submit">Sign in</button>
+             <button class="contact__button" id="loginButton" type="submit">Sign in</button>
              <div class="forgot-register">
                 <a href="#">Forgot Password?<span>Click Here</span></a>
-                <a href="#">New to Toastmasters?<span>Register Here</span></a>
+                <a href="{% url 'registration' %}">New to Toastmasters?<span>Register Here</span></a>
             </div>
             </form>
         </article>
@@ -91,6 +91,13 @@
                 togglePassword.classList.add("fa-eye");
             }
         });
+
+        function showLoading() {
+        var loginButton = document.getElementById("loginButton");
+        loginButton.innerHTML = "Signing in..."; // Change button text
+        loginButton.disabled = true; // Disable button to prevent multiple clicks
+        loginButton.style.opacity = "0.7"; // Reduce opacity to indicate it's loading
+    }
     </script>
 </body>
 </html>

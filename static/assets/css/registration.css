@@ -124,6 +124,11 @@ h2, .welcome {
     font-size: inherit;
 }
 
+.contact__button:hover {
+    background-color: blue;
+    color: white;
+}
+
 .forgot-register {
     display: flex;
     flex-direction: column;
@@ -138,4 +143,8 @@ a {
 }
 a span {
     font-weight: bold;
+}
+
+.forgot-register a:hover {
+    color: blue;
 }

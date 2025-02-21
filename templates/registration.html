@@ -31,7 +31,7 @@
             {% endfor %}
             
             
-            <form action="{% url 'registration' %}" method="POST" class="contact__form">
+            <form action="{% url 'registration' %}" method="POST" class="contact__form" onsubmit="showLoading()">
               {% csrf_token %}
               <fieldset class="contact__fieldset">
                 <legend class="offscreen">Send Us A Message</legend>
@@ -124,9 +124,9 @@
                 </p>
                 
              </fieldset>
-             <button class="contact__button" type="submit">Sign Up</button>
+             <button class="contact__button" id="registerButton" type="submit">Register</button>
              <div class="forgot-register">
-                <a href="#">Already Have an Account?<span>Login Here</span></a>
+                <a href="{% url 'login' %}">Already Have an Account?<span>Login Here</span></a>
             </div>
             </form>
         </article>
@@ -162,6 +162,13 @@
                 togglePassword2.classList.add("fa-eye");
             }
         });
+
+        function showLoading() {
+        var registerButton = document.getElementById("registerButton");
+        registerButton.innerHTML = "Creating Account..."; // Change button text
+        registerButton.disabled = true; // Disable button to prevent multiple clicks
+        registerButton.style.opacity = "0.7"; // Reduce opacity to indicate it's loading
+    }
     </script>
 </body>
 </html>

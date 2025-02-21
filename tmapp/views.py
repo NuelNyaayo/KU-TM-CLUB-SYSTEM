@@ -21,6 +21,7 @@ def login_view(request):  # Renamed from `login` to `login_view`
 
         if user is not None:
             login(request, user)  # Use Django's login function correctly
+            messages.success(request, 'Login success! Welcom.')
             return redirect('memb_dash')  # Redirect to homepage
         else:
             messages.error(request, 'Invalid email or password')
@@ -67,8 +68,8 @@ def registration(request):
 
         user.save()
 
-        messages.success(request, 'Registration successful! Please log in.')
-        return redirect('login')
+        messages.success(request, 'Registration successful! Welcome.')
+        return redirect('memb_dash')
 
     return render(request, 'registration.html')
 
