@@ -15,12 +15,34 @@ document.addEventListener("DOMContentLoaded", function () {
         link.parentElement.classList.remove("active"); // Remove active from parent <li>
     });
 
-    // Highlight active link
+    // Highlight active link and apply breadcrumb format
     links.forEach(link => {
         if (link.getAttribute("href") === currentPath) {
             link.classList.add("active");
             link.parentElement.classList.add("active"); // Add active class to <li>
             activeLinkFound = true;
+
+            // const parentMenuItem = link.closest("ul.submenu"); // Check if it's in a submenu
+            // if (parentMenuItem) {
+            //     const mainMenuItem = parentMenuItem.closest("li"); // Get parent <li>
+            //     const mainMenuLink = mainMenuItem.querySelector("a"); // Get the main link text
+                
+            //     if (mainMenuLink) {
+            //         // Modify parent menu to show breadcrumb-style text but keep active class styling unchanged
+            //         mainMenuLink.innerHTML = `
+            //             <i class="fa-solid fa-gear"></i> 
+            //             <span>Settings</span> 
+            //             <i class="fa-solid fa-angle-right style="font-size: 0.3em;"></i> 
+            //             <span>Account</span>
+            //         `;
+
+            //         mainMenuItem.style.backgroundColor = "gold";
+            //         mainMenuLink.style.color = "black";
+            //         mainMenuLink.style.fontWeight = "bold";
+            //         mainMenuItem.style.borderRadius = "0.7rem";
+            //         mainMenuItem.style.margin = "0.3rem 0";
+            //     }
+            // }
         }
     });
 
@@ -76,6 +98,9 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
+
+
+
 
 
 

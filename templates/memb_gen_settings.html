@@ -6,56 +6,11 @@
 {% block title %}Member Settings{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'assets/css/memb_account.css' %}">
+<link rel="stylesheet" href="{% static 'assets/css/memb_gen_settings.css' %}">
 {% endblock %}
 
 
 {% block content %}
-<div class="dashboard-overview">
-    <h3> 🔧&nbsp; Account Settings</h3>
-    <div class="next-meeting">
-      <div class="profile-header">
-        <label for="profilePicInput" title="Click to update your profile picture">
-          <img src="{% static 'assets/images/pexels-vietfotos-10928778.jpg' %}" id="profilePic" class="profile-pic" alt="Profile Picture">
-        </label>
-        <input type="file" id="profilePicInput" accept="image/*" style="display: none">
-        <i class="fa-solid fa-pen edit-icon"></i>
-      </div>
-      
-      
-      <form id="settingsForm">
-        <div class="form-group">
-            <label>First Name:</label>
-            <input type="text" id="firstName" value="John">
-        </div>
-        <div class="form-group">
-            <label>Last Name:</label>
-            <input type="text" id="lastName" value="Doe">
-        </div>
-        <div class="form-group">
-            <label>Corporate Email:</label>
-            <input type="email" id="email" value="john.doe@example.com">
-        </div>
-        <div class="form-group">
-            <label>Registration Number:</label>
-            <input type="text" id="regNumber" value="KU123456">
-        </div>
-        <div class="form-group">
-            <label>Phone Number:</label>
-            <input type="tel" id="phone" value="+254700000000">
-        </div>
-        <div class="form-group">
-            <label>Date of Birth:</label>
-            <input type="date" id="dob" value="1995-01-01">
-        </div>
-        
-        <div class="btn-container">
-            <button type="button" class="btn save-btn" onclick="saveChanges()">Save Changes</button>
-            <button type="button" class="btn cancel-btn" onclick="cancelChanges()">Cancel</button>
-        </div>
-    </form>
-    </div>
-</div>
 <div class="dashboard-overview">
     <h3> ⚙️&nbsp; General Settings</h3>
     <div class="next-meeting">
@@ -107,28 +62,6 @@
 
 {% block extra_js %}
 <script>
-
-document.getElementById('profilePicInput').addEventListener('change', function (event) {
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                document.getElementById('profilePic').src = e.target.result;
-            };
-            reader.readAsDataURL(file);
-        }
-    });
-
-    function saveChanges() {
-        alert("Your changes have been saved successfully!");
-    }
-
-    function cancelChanges() {
-        if (confirm("Are you sure you want to discard changes?")) {
-            location.reload(); // Reload page to revert changes
-        }
-    }
-
     document.addEventListener("DOMContentLoaded", function () {
      const themeToggle = document.getElementById("theme-toggle");
  
@@ -176,6 +109,6 @@ document.getElementById('profilePicInput').addEventListener('change', function (
          modal.style.display = "none";
      });
  });
-
-  </script>
+ 
+ </script>
 {% endblock %}

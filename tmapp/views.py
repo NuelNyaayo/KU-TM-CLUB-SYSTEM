@@ -116,5 +116,9 @@ def memb_profile(request):
 
 def memb_account(request): 
 
-    return render(request, 'memb_account.html', {"current_page": "account"})
+    return render(request, 'memb_account.html', {"current_page": "Settings"})
+
+def memb_gen_settings(request): 
+
+    return render(request, 'memb_gen_settings.html', {"current_page": "Settings > General"})
 

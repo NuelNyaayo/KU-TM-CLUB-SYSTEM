@@ -119,7 +119,7 @@ h1, h3 {
   color: gold;
 }
 .top-nav a.active {
-  padding-bottom: 0.2rem;
+  padding-bottom: 0.3rem;
   border-bottom: 2px solid white;
   color: gold;
 }
@@ -324,7 +324,7 @@ h2 {
   background-color: gold;
   color: black;
   border-radius: 0.7rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .side-panel ul li.active a {
