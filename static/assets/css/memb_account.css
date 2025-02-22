@@ -15,6 +15,12 @@
     border-bottom-right-radius: 0;
     border-bottom-right-radius: 0;
   }
+
+  h4 {
+    color: darkblue;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
   
   .next-meeting {
     display: flex;
@@ -169,16 +175,16 @@
     transition: 0.4s;
   }
   
-  input:checked + .slider {
+  .setting-item input:checked + .slider {
     background-color: #4CAF50;
   }
   
-  input:checked + .slider:before {
+  .setting-item input:checked + .slider:before {
     transform: translateX(18px);
   }
   
   /* Button & Select */
-  button, select {
+  .setting-item button, select {
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -186,12 +192,14 @@
     font-size: 1rem;
   }
   
-  button {
+  .setting-item button {
     background: darkblue;
     color: #fff;
+    width: 10rem;
+    font-size: inherit;
   }
   
-  button:hover {
+.setting-item button:hover {
     background: blue;
   }
   
@@ -226,4 +234,24 @@
   .modal-content input{
     margin: 1rem 0;
     margin-left: 5rem;
+  }
+  
+  body.dark-mode .modal-content {
+    background: #444;
+    color: white;
+  }
+  
+  .close {
+    float: right;
+    cursor: pointer;
+    font-size: 1.8rem;
+  }
+  
+  #save-privacy {
+    margin-left: 9rem;
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background: darkblue;
+    color: #fff;
+    font-size: 1rem;
   }

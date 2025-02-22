@@ -12,8 +12,9 @@
 
 {% block content %}
 <div class="dashboard-overview">
-    <h3> 🔧&nbsp; Account Settings</h3>
+    <h3> ⚙️&nbsp; Settings</h3>
     <div class="next-meeting">
+        <h4> 🔧&nbsp; Account Settings</h4>
       <div class="profile-header">
         <label for="profilePicInput" title="Click to update your profile picture">
           <img src="{% static 'assets/images/pexels-vietfotos-10928778.jpg' %}" id="profilePic" class="profile-pic" alt="Profile Picture">
@@ -21,7 +22,6 @@
         <input type="file" id="profilePicInput" accept="image/*" style="display: none">
         <i class="fa-solid fa-pen edit-icon"></i>
       </div>
-      
       
       <form id="settingsForm">
         <div class="form-group">
@@ -55,10 +55,9 @@
         </div>
     </form>
     </div>
-</div>
-<div class="dashboard-overview">
-    <h3> ⚙️&nbsp; General Settings</h3>
+    
     <div class="next-meeting">
+      <h4> ⚙️&nbsp; General Settings</h4>
       <div class="setting-item">
         <label for="theme-toggle">Dark Mode</label>
         <label class="toggle-switch">
@@ -102,7 +101,8 @@
           </div>
       </div>
     </div>
-  </div>
+</div>
+
 {% endblock %}
 
 {% block extra_js %}

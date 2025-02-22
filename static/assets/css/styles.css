@@ -348,7 +348,7 @@ h2 {
   
   }
 
-.side-panel li .submenu {
+/* .side-panel li .submenu {
   display: none;
   position: absolute;
   left: 100%;
@@ -375,7 +375,7 @@ h2 {
 
 .side-panel li:hover .submenu {
     display: block;
-}
+} */
   
 summary {
   font-weight: bold;
