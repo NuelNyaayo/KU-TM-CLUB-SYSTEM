@@ -163,6 +163,10 @@
   border-radius: 0.2rem;
   border: none;
 }
+
+.role-btn .confirm:hover {
+  background-color: #04115a;
+}
 .role-btn .change {
   padding: 0.5rem 1rem;
   background: #ccc;
@@ -262,7 +266,7 @@
 }
 
 .resource-card button:hover {
-  background: #005bb5;
+  background: #04115a;
 }
 
 .meetings-summary {
@@ -426,7 +430,7 @@ th, td {
 }
 
 .mark-read:hover {
-  background: #005bb5;
+  background: #04115a;
 }
 
 /* Scrollbar for Notifications */
@@ -521,7 +525,7 @@ th, td {
 }
 
 .payment-container .download-btn:hover {
-  background: #003366;
+  background: #04115a;
 }
 
 
@@ -663,7 +667,7 @@ th, td {
 
 .vote-btn-cont .vote-btn:hover {
   animation: bounce 0.5s ease infinite;
-  background-color: blue;
+  background-color: #04115a;
 }
 
 @keyframes bounce {

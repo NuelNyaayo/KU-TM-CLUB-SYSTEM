@@ -127,7 +127,7 @@
   }
   
   .save-btn:hover {
-    background: blue;
+    background: #04115a;
   }
   
   .cancel-btn {
@@ -213,10 +213,24 @@
   }
   
 .setting-item button:hover {
-    background: blue;
+    background: #04115a;
   }
   
   /* Dark Mode Button */
+  body.dark-mode button,
+  body.dark-mode select {
+    background: #555;
+    color: white;
+    border: 1px solid #777;
+  }
+
+  body.dark-mode h4 {
+    color: white;
+  }
+
+  body.dark-mode .head {
+    background-color: white;
+  }
   body.dark-mode button,
   body.dark-mode select {
     background: #555;

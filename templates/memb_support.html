@@ -1,0 +1,82 @@
+{% extends 'memb_dash.html' %}
+
+{% load static %}
+
+
+{% block title %}Member Contact{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'assets/css/memb_support.css' %}">
+{% endblock %}
+
+
+{% block content %}
+<div class="dashboard-overview">
+    <h3> 🔍&nbsp; Support</h3>
+    <div class="next-meeting">
+        <div class="h4">
+            <h4> FAQS</h4>
+            <div class="head"></div>
+            <p class="pg">Find answers to common questions or explore our help center.</p>
+        </div>
+      
+        <div class="faq-item">
+          <button class="faq-question">How do I become a KU Toastmasters member? <span>+</span></button>
+          <div class="faq-answer">You can register on our website by filling out the membership registration form.</div>
+        </div>
+        <div class="faq-item">
+            <button class="faq-question">How do I sign up for a meeting role? <span>+</span></button>
+            <div class="faq-answer">Log in and go to the "Roles" section to sign up.</div>
+        </div>
+        <div class="faq-item">
+            <button class="faq-question">Who do I contact for membership payment issues? <span>+</span></button>
+            <div class="faq-answer">Please reach out via the contact form or email us at kutoastmasters@gmail.com.</div>
+        </div>
+
+        <section class="help-center">
+          <div class="h4">
+            <h4> Help Center </h4>
+            <div class="head"></div>
+            <p>Find detailed guides and tutorials to navigate KU Toastmasters.</p>
+            <a href="#">Visit Help Center</a>
+        </div>
+        </section>
+       <!-- Live Chat Button -->
+        <button id="live-chat-btn">💬 Live Chat</button>
+    </div>
+    
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+// FAQ Toggle
+document.querySelectorAll(".faq-question").forEach(button => {
+    button.addEventListener("click", function () {
+        const answer = this.nextElementSibling;
+        const symbol = this.querySelector("span");
+
+        if (answer.style.display === "block") {
+            answer.style.display = "none";
+            symbol.textContent = "+";
+        } else {
+            answer.style.display = "block";
+            symbol.textContent = "−";
+        }
+    });
+});
+
+
+
+// Simulated Live Chat Alert
+document.getElementById("live-chat-btn").addEventListener("click", function () {
+    alert("Live chat is currently unavailable. Please contact us via the form.");
+});
+
+});
+ 
+   </script>
+{% endblock %}

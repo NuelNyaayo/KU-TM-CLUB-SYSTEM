@@ -122,3 +122,7 @@ def memb_contact(request):
 
     return render(request, 'memb_contact.html', {"current_page": "Contact"})
 
+def memb_support(request): 
+
+    return render(request, 'memb_support.html', {"current_page": "Support"})
+

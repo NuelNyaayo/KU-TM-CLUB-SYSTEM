@@ -101,7 +101,7 @@
 }
 
 .resource-card button:hover {
-  background: #005bb5;
+  background: #04115a;
 }
 
 /* Pagination Styling */
@@ -122,7 +122,7 @@
 }
 
 .pagination button:hover {
-  background: #005bb5;
+  background: #04115a;
 }
 
 .pagination span {

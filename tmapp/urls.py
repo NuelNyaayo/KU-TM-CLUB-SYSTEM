@@ -16,5 +16,6 @@ urlpatterns = [
     path('memb_profile/', views.memb_profile, name='memb_profile'),   
     path('memb_settings/', views.memb_settings, name='memb_settings'),   
     path('memb_contact/', views.memb_contact, name='memb_contact'),   
+    path('memb_support/', views.memb_support, name='memb_support'),   
     # path('post/<str:pk>', views.post, name ='post'),   
 ]

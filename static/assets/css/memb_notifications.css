@@ -50,7 +50,7 @@
   }
   
   .notification-controls button:hover {
-    background: #005bb5;
+    background: #04115a;
   }
   
   /* Notifications List */
@@ -112,7 +112,7 @@
   }
   
   .mark-read:hover {
-    background: #005bb5;
+    background: #04115a;
   }
   
   /* Scrollbar for Notifications */
