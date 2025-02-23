@@ -10,7 +10,7 @@ class LoginRequiredMiddleware:
 
     def __call__(self, request):
         # Paths that require authentication
-        protected_paths = ['/memb_dash', '/memb_roles', '/memb_membership', '/memb_resources', '/memb_notifications', '/memb_elections', '/memb_profile', '/memb_account', '/memb_gen_settings']
+        protected_paths = ['/memb_dash', '/memb_roles', '/memb_membership', '/memb_resources', '/memb_notifications', '/memb_elections', '/memb_profile', '/memb_settings', '/memb_contact']
 
         # Paths that should NOT be protected (public access allowed)
         public_paths = ['/login', '/registration', '/verify', '/logout']

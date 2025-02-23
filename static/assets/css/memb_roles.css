@@ -57,6 +57,7 @@ form select, form input, form button {
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 1rem;
+    font-family: inherit;
 }
 
 form p {
@@ -110,6 +111,7 @@ label input[type="radio"] {
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 1rem;
+    font-family: inherit;
 }
 
 

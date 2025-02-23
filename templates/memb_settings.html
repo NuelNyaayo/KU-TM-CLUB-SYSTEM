@@ -6,7 +6,7 @@
 {% block title %}Member Settings{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'assets/css/memb_account.css' %}">
+<link rel="stylesheet" href="{% static 'assets/css/memb_settings.css' %}">
 {% endblock %}
 
 
@@ -14,7 +14,11 @@
 <div class="dashboard-overview">
     <h3> ⚙️&nbsp; Settings</h3>
     <div class="next-meeting">
-        <h4> 🔧&nbsp; Account Settings</h4>
+        <div class="h4">
+            <h4> Account Settings</h4>
+            <div class="head"></div>
+        </div>
+        
       <div class="profile-header">
         <label for="profilePicInput" title="Click to update your profile picture">
           <img src="{% static 'assets/images/pexels-vietfotos-10928778.jpg' %}" id="profilePic" class="profile-pic" alt="Profile Picture">
@@ -57,7 +61,10 @@
     </div>
     
     <div class="next-meeting">
-      <h4> ⚙️&nbsp; General Settings</h4>
+      <div class="h4">
+        <h4> General Settings</h4>
+        <div class="head"></div>
+      </div>
       <div class="setting-item">
         <label for="theme-toggle">Dark Mode</label>
         <label class="toggle-switch">

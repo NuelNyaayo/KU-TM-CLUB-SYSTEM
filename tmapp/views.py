@@ -114,11 +114,11 @@ def memb_profile(request):
 
     return render(request, 'memb_profile.html', {"current_page": "Profile"})
 
-def memb_account(request): 
+def memb_settings(request): 
 
-    return render(request, 'memb_account.html', {"current_page": "Settings"})
+    return render(request, 'memb_settings.html', {"current_page": "Settings"})
 
-def memb_gen_settings(request): 
+def memb_contact(request): 
 
-    return render(request, 'memb_gen_settings.html', {"current_page": "Settings > General"})
+    return render(request, 'memb_contact.html', {"current_page": "Contact"})
 

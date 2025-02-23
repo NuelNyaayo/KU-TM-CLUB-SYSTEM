@@ -43,8 +43,8 @@
   }
   
   .profile-pic {
-    width: 150px;
-    height: 150px;
+    width: 175px;
+    height: 175px;
     border-radius: 50%;
     border: 0.3rem solid #003366;
     object-fit: cover;
@@ -90,11 +90,11 @@
     cursor: pointer;
     margin-top: 2rem;
     width: 10rem;
-    font-size: inherit;
+    font-size: 1.2rem;
   }
   
   .logout-button i {
-    margin-right: 1rem;
+    margin-right: 0.8rem;
   }
   
   .logout-button:hover {

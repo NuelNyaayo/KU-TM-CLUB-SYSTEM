@@ -165,9 +165,9 @@
 }
 .role-btn .change {
   padding: 0.5rem 1rem;
-  color: #333;
-  background-color: whitesmoke;
-  border: 2px solid whitesmoke;
+  background: #ccc;
+    color: black;
+  border: 2px solid #ccc;
   font-weight: bold;
 }
 

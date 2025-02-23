@@ -1,0 +1,106 @@
+.dashboard-overview {
+  background-color: whitesmoke;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding-bottom: 1.5rem;
+  margin: 1rem 0;
+}
+
+ h3 {
+  background-color: white;
+  text-align: center;
+  color: darkblue;
+  padding: 1rem;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.h4 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h4 {
+  color: darkblue;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+.head {
+  width: 7.5rem;
+  height: 0.5rem;
+  border-radius: 10px;
+  background-color: darkblue;
+  /* margin-left: 2rem; */
+  margin-bottom: 2rem;
+}
+
+.next-meeting {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem 8rem;
+  padding-top: 3rem;
+  margin-top: 30px;
+  margin-right: 2rem;
+  margin-left: 2rem;
+  background-color: #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  color: black;
+  border-radius: 10px;
+}
+
+
+form label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 0.5rem;
+  margin-top: 1rem;
+}
+form input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  margin: 5px auto;
+  margin-bottom: 1.5rem;
+  font-family: inherit;
+}
+
+form textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  margin: 5px auto;
+  margin-bottom: 1.5rem;
+  font-family: inherit;
+}
+.btn-container {
+  display: flex;
+  justify-content: space-between;
+}
+.btn {
+  padding: 0.7rem;
+  background-color: darkblue;
+  color: white;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  font-size: inherit;
+  width: 101%;
+   border-radius: 5px;
+}
+
+.btn:hover {
+  background-color: #04115a;
+}
+
+.error-message {
+  color: red;
+}
+.success-message {
+  color: green;
+  font-weight: bold;
+}

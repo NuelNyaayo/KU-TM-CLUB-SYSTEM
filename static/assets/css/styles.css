@@ -324,7 +324,9 @@ h2 {
   background-color: gold;
   color: black;
   border-radius: 0.7rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.2rem;
+  margin-top: 0.2rem;
+  font-weight: bold;
 }
 
 .side-panel ul li.active a {
@@ -345,37 +347,7 @@ h2 {
   color: white;
   text-decoration: none;
   font-size: inherit;
-  
   }
-
-/* .side-panel li .submenu {
-  display: none;
-  position: absolute;
-  left: 100%;
-  top: -8px;
-  background: blue;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-  border-radius: 0.7rem;
-  width: 12rem;
-}
-
-.side-panel li .submenu li {
-    width: 100%;
-    margin: 0.3rem 0;
-    
-}
-
-.side-panel li .submenu li:hover {
-    background-color: darkblue;
-}
-
-.side-panel li .submenu a {
-    display: block;
-}
-
-.side-panel li:hover .submenu {
-    display: block;
-} */
   
 summary {
   font-weight: bold;

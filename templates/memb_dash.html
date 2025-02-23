@@ -48,43 +48,20 @@
             </a>
         </li>
         <li>
-            <a href="{% url 'memb_account' %}">
+            <a href="{% url 'memb_settings' %}">
                 <i class="fa-solid fa-gear"></i> Settings
             </a>
         </li>
         <li>
-            <a href="{% url 'memb_account' %}">
+            <a href="{% url 'memb_contact' %}">
                 <i class="fa-solid fa-envelope"></i> Contact Us
             </a>
         </li>
         <li>
-            <a href="{% url 'memb_account' %}">
+            <a href="{% url 'memb_settings' %}">
                 <i class="fa-solid fa-circle-question"></i> Support
             </a>
         </li>
-        <!-- <li>
-            <a href="#">
-                <i class="fa-solid fa-gear"></i> Settings
-            </a>
-            <ul class="submenu">
-                <li><a href="{% url 'memb_account' %}">Account Settings</a></li>
-                <li><a href="{% url 'memb_gen_settings' %}">General Settings</a></li>
-            </ul>
-        </li>
-        <li>
-            <a href="#">
-                <i class="fa-solid fa-envelope"></i> Contact Us
-            </a>
-        </li>
-        <li>
-            <a href="#">
-                <i class="fa-solid fa-circle-question"></i> Support
-            </a>
-            <ul class="submenu">
-                <li><a href="#">Help</a></li>
-                <li><a href="#">About Us</a></li>
-            </ul>
-        </li> -->
       </ul>
     
       <details>
@@ -533,6 +510,68 @@
   document.addEventListener("DOMContentLoaded", function () {
     updateDateTime();
 });
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const markReadButtons = document.querySelectorAll(".mark-read");
+    const markAllReadButton = document.getElementById("mark-all-read");
+    const clearAllButton = document.getElementById("clear-all");
+    const notificationList = document.getElementById("notification-list");
+    const notificationBadge = document.getElementById("notification-badge");
+
+    // Get the initial unread count based on existing unread notifications
+    let unreadNotifications = document.querySelectorAll(".notification.unread").length;
+
+    // Function to update the notification badge count
+    function updateNotificationBadge(count) {
+        if (count > 0) {
+            notificationBadge.textContent = count;
+            notificationBadge.style.display = "flex"; // Show the badge
+        } else {
+            notificationBadge.style.display = "none"; // Hide if no unread notifications
+        }
+    }
+
+    // Initialize badge with the correct count
+    updateNotificationBadge(unreadNotifications);
+
+    // Mark a single notification as read
+    markReadButtons.forEach(button => {
+        button.addEventListener("click", function () {
+            const notification = this.closest(".notification");
+            notification.classList.remove("unread");
+            this.remove(); // Remove the button after marking as read
+
+            // Decrease unread count and update the badge
+            unreadNotifications = Math.max(0, unreadNotifications - 1);
+            updateNotificationBadge(unreadNotifications);
+        });
+    });
+
+    // Mark all as read
+    markAllReadButton.addEventListener("click", function () {
+        document.querySelectorAll(".notification.unread").forEach(notification => {
+            notification.classList.remove("unread");
+            const button = notification.querySelector(".mark-read");
+            if (button) button.remove();
+        });
+
+        // Set unread count to zero and update the badge
+        unreadNotifications = 0;
+        updateNotificationBadge(unreadNotifications);
+    });
+
+    // Clear all notifications
+    clearAllButton.addEventListener("click", function () {
+        notificationList.innerHTML = "<p>No notifications</p>";
+
+        // Set unread count to zero and update the badge
+        unreadNotifications = 0;
+        updateNotificationBadge(unreadNotifications);
+    });
+});
+
+
 
           // Set the target date (Change this to your event date)
   const targetDate = new Date("March 15, 2025 00:00:00").getTime();

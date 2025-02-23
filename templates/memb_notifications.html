@@ -67,5 +67,64 @@
 
 {% block extra_js %}
 <script>
+    document.addEventListener("DOMContentLoaded", function () {
+    const markReadButtons = document.querySelectorAll(".mark-read");
+    const markAllReadButton = document.getElementById("mark-all-read");
+    const clearAllButton = document.getElementById("clear-all");
+    const notificationList = document.getElementById("notification-list");
+    const notificationBadge = document.getElementById("notification-badge");
+
+    // Get the initial unread count based on existing unread notifications
+    let unreadNotifications = document.querySelectorAll(".notification.unread").length;
+
+    // Function to update the notification badge count
+    function updateNotificationBadge(count) {
+        if (count > 0) {
+            notificationBadge.textContent = count;
+            notificationBadge.style.display = "flex"; // Show the badge
+        } else {
+            notificationBadge.style.display = "none"; // Hide if no unread notifications
+        }
+    }
+
+    // Initialize badge with the correct count
+    updateNotificationBadge(unreadNotifications);
+
+    // Mark a single notification as read
+    markReadButtons.forEach(button => {
+        button.addEventListener("click", function () {
+            const notification = this.closest(".notification");
+            notification.classList.remove("unread");
+            this.remove(); // Remove the button after marking as read
+
+            // Decrease unread count and update the badge
+            unreadNotifications = Math.max(0, unreadNotifications - 1);
+            updateNotificationBadge(unreadNotifications);
+        });
+    });
+
+    // Mark all as read
+    markAllReadButton.addEventListener("click", function () {
+        document.querySelectorAll(".notification.unread").forEach(notification => {
+            notification.classList.remove("unread");
+            const button = notification.querySelector(".mark-read");
+            if (button) button.remove();
+        });
+
+        // Set unread count to zero and update the badge
+        unreadNotifications = 0;
+        updateNotificationBadge(unreadNotifications);
+    });
+
+    // Clear all notifications
+    clearAllButton.addEventListener("click", function () {
+        notificationList.innerHTML = "<p>No notifications</p>";
+
+        // Set unread count to zero and update the badge
+        unreadNotifications = 0;
+        updateNotificationBadge(unreadNotifications);
+    });
+});
+
 </script>
 {% endblock %}

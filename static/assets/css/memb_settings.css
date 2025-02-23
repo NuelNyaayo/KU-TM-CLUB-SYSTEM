@@ -1,7 +1,7 @@
 .dashboard-overview {
     background-color: whitesmoke;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    padding-bottom: 2rem;
+    padding-bottom: 1.5rem;
     margin: 1rem 0;
   }
   
@@ -13,17 +13,33 @@
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
     border-bottom-right-radius: 0;
-    border-bottom-right-radius: 0;;
+    border-bottom-right-radius: 0;
   }
-  
-  
+  .h4 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  h4 {
+    color: darkblue;
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+  .head {
+    width: 9rem;
+    height: 0.5rem;
+    border-radius: 10px;
+    background-color: darkblue;
+    /* margin-left: 2rem; */
+    margin-bottom: 2rem;
+  }
   
   .next-meeting {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    /* align-items: center; */
-    padding: 2rem 8rem;
+    padding: 4rem 8rem;
     padding-top: 3rem;
     margin-top: 30px;
     margin-right: 2rem;
@@ -34,6 +50,91 @@
     border-radius: 10px;
   }
   
+  /* Profile Header */
+  .profile-header {
+    text-align: center;
+    overflow: hidden;
+    box-sizing: border-box;
+    border: none;
+    background-color: whitesmoke;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem 0;
+    margin-bottom: 1rem;
+  }
+  
+  .profile-pic {
+    width: 175px;
+    height: 175px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 0.3rem solid #003366;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .profile-pic:hover {
+    transform: scale(1.2);
+  }
+  
+  .edit-icon {
+    position: relative;
+    top: 50px;
+    left: -28px;
+    font-size: 1rem;
+    cursor: pointer;
+    color: darkblue;
+    background: white;
+    padding: 5px;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+  }
+  .form-group {
+    margin-bottom: 15px;
+  }
+  form label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 0.5rem;
+    margin-top: 1rem;
+  }
+  form input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    margin: 5px auto;
+    margin-bottom: 1.5rem;
+  }
+  .btn-container {
+    display: flex;
+    justify-content: space-between;
+  }
+  .btn {
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    width: 10rem;
+    font-size: 1.1rem;
+  }
+  .save-btn {
+    background: darkblue;
+    color: white;
+  }
+  
+  .save-btn:hover {
+    background: blue;
+  }
+  
+  .cancel-btn {
+    background: #ccc;
+    color: black;
+  }
+
   body.dark-mode .next-meeting {
     background: #333;
     color: #fff;
@@ -87,16 +188,16 @@
     transition: 0.4s;
   }
   
-  input:checked + .slider {
+  .setting-item input:checked + .slider {
     background-color: #4CAF50;
   }
   
-  input:checked + .slider:before {
+  .setting-item input:checked + .slider:before {
     transform: translateX(18px);
   }
   
   /* Button & Select */
-  button, select {
+  .setting-item button, select {
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -104,12 +205,14 @@
     font-size: 1rem;
   }
   
-  button {
+  .setting-item button {
     background: darkblue;
     color: #fff;
+    width: 10rem;
+    font-size: 1.1rem;
   }
   
-  button:hover {
+.setting-item button:hover {
     background: blue;
   }
   
@@ -161,4 +264,7 @@
     margin-left: 9rem;
     margin-top: 1rem;
     padding: 0.5rem 1rem;
+    background: darkblue;
+    color: #fff;
+    font-size: 1rem;
   }
