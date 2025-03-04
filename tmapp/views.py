@@ -21,7 +21,7 @@ def login_view(request):  # Renamed from `login` to `login_view`
 
         if user is not None:
             login(request, user)  # Use Django's login function correctly
-            messages.success(request, 'Login success! Welcom.')
+            messages.success(request, 'Login success! Welcome.')
             return redirect('memb_dash')  # Redirect to homepage
         else:
             messages.error(request, 'Invalid email or password')
