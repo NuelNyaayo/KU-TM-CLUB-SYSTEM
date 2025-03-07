@@ -6,6 +6,11 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
 from django.views.decorators.cache import never_cache
+from .mpesa.core import MpesaClient
+
+
+client = MpesaClient()
+callback_url = "https://api.darajambili.co.ke/express-payment"
 
 
 def index(request): 
@@ -95,6 +100,15 @@ def memb_roles(request):
     return render(request, 'memb_roles.html', {"current_page": "Roles"})
 
 def memb_membership(request): 
+    if request.method == 'POST':
+        amount = request.POST.get('amount', '').strip()
+        amount = int(amount)
+        phone_number = request.POST.get('phone_number', '').strip()
+        account_ref = "PAYMENT001"
+        trans_desc = "my payment...."
+
+        client.stk_push(phone_number,amount,account_ref,trans_desc,callback_url)
+        return render(request, 'memb_membership.html', {"current_page": "Membership"})
 
     return render(request, 'memb_membership.html', {"current_page": "Membership"})
 
