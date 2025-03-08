@@ -19,8 +19,8 @@
 
     <div class="next-meeting">
         
-      <form id="role-signup-form" method="post" >
-        <!-- {% csrf_token %} -->
+      <form action="{% url 'memb_membership' %}" id="role-signup-form" method="post" >
+        {% csrf_token %} 
 
         <!-- Payment Plan Selection -->
         <label for="payment_plan">Select Payment Plan:</label>
