@@ -92,9 +92,9 @@ WSGI_APPLICATION = 'tmwebproject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME':  'toastmasters',
+        'NAME':  'ku_tm_site',
         'USER':  'postgres',
-        'PASSWORD':  '@kalimats1',
+        'PASSWORD':  'tinegachris',
         'HOST':  'localhost',
     }
 }
