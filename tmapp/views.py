@@ -86,8 +86,8 @@ def memb_membership(request):
         amount = request.POST.get('amount', '').strip()
         amount = int(amount)
         phone_number = request.POST.get('phone_number', '').strip()
-        account_ref = "PAYMENT001"
-        trans_desc = "my payment...."
+        account_ref = "Toastmasters Membership"
+        trans_desc = "Toastmasters Membership Payment"
 
         client.stk_push(phone_number, amount, account_ref, trans_desc, callback_url)
         return render(request, 'memb_membership.html', {"current_page": "Membership"})
