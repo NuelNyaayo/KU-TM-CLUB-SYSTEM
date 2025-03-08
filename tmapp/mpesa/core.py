@@ -9,7 +9,7 @@ from decouple import config
 
 class MpesaClient:
 	"""
-	This is the core MPESA client. 
+	This is the core MPESA client.
 
 	The Mpesa Client will access all interactions with the MPESA Daraja API.
 	"""
@@ -20,26 +20,32 @@ class MpesaClient:
 		"""
 		The constructor for MpesaClient class
 		"""
+		self.session = requests.Session()
 
-	def access_token(self):
+	def access_token(self) -> str:
 		"""
 		Generate an OAuth access token.
 
 		Returns:
-			bool: A string containg a valid OAuth access token
+			str: A string containing a valid OAuth access token
 		"""
-		
 		return mpesa_access_token()
 
-	def parse_stk_result(self, result):
+	def parse_stk_result(self, result: str) -> dict:
 		"""
 		Parse the result of Lipa na MPESA Online Payment (STK Push)
 
+		Args:
+			result (str): The result string from the STK push
+
 		Returns:
-			The result data as an array
+			dict: The result data as a dictionary
 		"""
-		
-		payload = json.loads(result)
+		try:
+			payload = json.loads(result)
+		except json.JSONDecodeError:
+			raise MpesaInvalidParameterException('Invalid JSON response')
+
 		data = {}
 		callback = payload['Body']['stkCallback']
 		data['ResultCode'] = callback['ResultCode']
@@ -51,48 +57,43 @@ class MpesaClient:
 			metadata_items = metadata.get('Item')
 			for item in metadata_items:
 				data[item['Name']] = item.get('Value')
-		
+
 		return data
 
-	def stk_push(self, phone_number, amount, account_reference, transaction_desc, callback_url):
+	def stk_push(self, phone_number: str, amount: int, account_reference: str, transaction_desc: str, callback_url: str) -> dict:
 		"""
 		Attempt to send an STK prompt to customer phone
 
 		Args:
-			phone_number (str): -- The Mobile Number to receive the STK Pin Prompt.
-			amount (int) -- This is the Amount transacted normaly a numeric value. Money that customer pays to the Shorcode. Only whole numbers are supported.
-			account_reference (str) -- This is an Alpha-Numeric parameter that is defined by your system as an Identifier of the transaction for CustomerPayBillOnline transaction type. Along with the business name, this value is also displayed to the customer in the STK Pin Prompt message. Maximum of 12 characters.
-			transaction_desc (str) -- This is any additional information/comment that can be sent along with the request from your system. Maximum of 13 Characters.
-			call_back_url (str) -- This s a valid secure URL that is used to receive notifications from M-Pesa API. It is the endpoint to which the results will be sent by M-Pesa API.
+			phone_number (str): The Mobile Number to receive the STK Pin Prompt.
+			amount (int): The Amount transacted, normally a numeric value. Only whole numbers are supported.
+			account_reference (str): An identifier of the transaction for CustomerPayBillOnline transaction type.
+			transaction_desc (str): Additional information/comment sent along with the request.
+			callback_url (str): A valid secure URL to receive notifications from M-Pesa API.
 
 		Returns:
-			MpesaResponse: MpesaResponse object containing the details of the API response
-		
+			dict: MpesaResponse object containing the details of the API response
+
 		Raises:
 			MpesaInvalidParameterException: Invalid parameter passed
 			MpesaConnectionError: Connection error
 		"""
-
-		if str(account_reference).strip() == '':
+		if not account_reference.strip():
 			raise MpesaInvalidParameterException('Account reference cannot be blank')
-		if str(transaction_desc).strip() == '':
+		if not transaction_desc.strip():
 			raise MpesaInvalidParameterException('Transaction description cannot be blank')
 		if not isinstance(amount, int):
 			raise MpesaInvalidParameterException('Amount must be an integer')
 
-
 		phone_number = format_phone_number(phone_number)
-		url = api_base_url() + 'mpesa/stkpush/v1/processrequest'
+		url = f"{api_base_url()}mpesa/stkpush/v1/processrequest"
 		passkey = mpesa_config('MPESA_PASSKEY')
-		
+
 		mpesa_environment = mpesa_config('MPESA_ENVIRONMENT')
-		if mpesa_environment == 'sandbox':
-			business_short_code = mpesa_config('MPESA_EXPRESS_SHORTCODE')
-		else:
-			business_short_code = mpesa_config('MPESA_SHORTCODE')
+		business_short_code = mpesa_config('MPESA_EXPRESS_SHORTCODE' if mpesa_environment == 'sandbox' else 'MPESA_SHORTCODE')
 
 		timestamp = datetime.now().strftime('%Y%m%d%H%M%S')
-		password = base64.b64encode((business_short_code + passkey + timestamp).encode('ascii')).decode('utf-8') 
+		password = base64.b64encode(f"{business_short_code}{passkey}{timestamp}".encode('ascii')).decode('utf-8')
 		transaction_type = 'CustomerPayBillOnline'
 		party_a = phone_number
 		party_b = business_short_code
@@ -112,12 +113,12 @@ class MpesaClient:
 		}
 
 		headers = {
-			'Authorization': 'Bearer ' + mpesa_access_token(),
+			'Authorization': f"Bearer {mpesa_access_token()}",
 			'Content-type': 'application/json'
 		}
 
 		try:
-			r = requests.post(url, json=data, headers=headers)
+			r = self.session.post(url, json=data, headers=headers)
 			response = mpesa_response(r)
 			return response
 		except requests.exceptions.ConnectionError:
@@ -125,35 +126,34 @@ class MpesaClient:
 		except Exception as ex:
 			raise MpesaConnectionError(str(ex))
 
-	def b2c_payment(self, phone_number, amount, transaction_desc, callback_url, occassion, command_id):
+	def b2c_payment(self, phone_number: str, amount: int, transaction_desc: str, callback_url: str, occassion: str, command_id: str) -> dict:
 		"""
 		Attempt to perform a business payment transaction
 
 		Args:
-			phone_number (str): -- The Mobile Number to receive the STK Pin Prompt.
-			amount (int) -- This is the Amount transacted normaly a numeric value. Money that customer pays to the Shorcode. Only whole numbers are supported.
-			transaction_desc (str) -- This is any additional information/comment that can be sent along with the request from your system. Maximum of 13 Characters.
-			call_back_url (str) -- This s a valid secure URL that is used to receive notifications from M-Pesa API. It is the endpoint to which the results will be sent by M-Pesa API.
-			occassion (str) -- Any additional information to be associated with the transaction.
+			phone_number (str): The Mobile Number to receive the payment.
+			amount (int): The Amount transacted, normally a numeric value. Only whole numbers are supported.
+			transaction_desc (str): Additional information/comment sent along with the request.
+			callback_url (str): A valid secure URL to receive notifications from M-Pesa API.
+			occassion (str): Any additional information to be associated with the transaction.
+			command_id (str): The command ID for the transaction.
 
 		Returns:
-			MpesaResponse: MpesaResponse object containing the details of the API response
-		
+			dict: MpesaResponse object containing the details of the API response
+
 		Raises:
 			MpesaInvalidParameterException: Invalid parameter passed
 			MpesaConnectionError: Connection error
 		"""
-
-		if str(transaction_desc).strip() == '':
+		if not transaction_desc.strip():
 			raise MpesaInvalidParameterException('Transaction description cannot be blank')
 		if not isinstance(amount, int):
 			raise MpesaInvalidParameterException('Amount must be an integer')
 
 		phone_number = format_phone_number(phone_number)
-		url = api_base_url() + 'mpesa/b2c/v1/paymentrequest'
+		url = f"{api_base_url()}mpesa/b2c/v1/paymentrequest"
 
 		business_short_code = mpesa_config('MPESA_SHORTCODE')
-
 		party_a = business_short_code
 		party_b = phone_number
 		initiator_username = mpesa_config('MPESA_INITIATOR_USERNAME')
@@ -169,16 +169,16 @@ class MpesaClient:
 			'Remarks': transaction_desc,
 			'QueueTimeOutURL': callback_url,
 			'ResultURL': callback_url,
-			'Occassion':  occassion
+			'Occassion': occassion
 		}
 
 		headers = {
-			'Authorization': 'Bearer ' + mpesa_access_token(),
+			'Authorization': f"Bearer {mpesa_access_token()}",
 			'Content-type': 'application/json'
 		}
 
 		try:
-			r = requests.post(url, json=data, headers=headers)
+			r = self.session.post(url, json=data, headers=headers)
 			response = mpesa_response(r)
 			return response
 		except requests.exceptions.ConnectionError:
@@ -186,14 +186,11 @@ class MpesaClient:
 		except Exception as ex:
 			raise MpesaConnectionError(str(ex))
 
-	def business_payment (self, phone_number, amount, transaction_desc, callback_url, occassion):
-		command_id = 'BusinessPayment'
-		return self.b2c_payment(phone_number, amount, transaction_desc, callback_url, occassion, command_id)
+	def business_payment(self, phone_number: str, amount: int, transaction_desc: str, callback_url: str, occassion: str) -> dict:
+		return self.b2c_payment(phone_number, amount, transaction_desc, callback_url, occassion, 'BusinessPayment')
 
-	def salary_payment (self, phone_number, amount, transaction_desc, callback_url, occassion):
-		command_id = 'SalaryPayment'
-		return self.b2c_payment(phone_number, amount, transaction_desc, callback_url, occassion, command_id)
+	def salary_payment(self, phone_number: str, amount: int, transaction_desc: str, callback_url: str, occassion: str) -> dict:
+		return self.b2c_payment(phone_number, amount, transaction_desc, callback_url, occassion, 'SalaryPayment')
 
-	def promotion_payment (self, phone_number, amount, transaction_desc, callback_url, occassion):
-		command_id = 'PromotionPayment'
-		return self.b2c_payment(phone_number, amount, transaction_desc, callback_url, occassion, command_id)
+	def promotion_payment(self, phone_number: str, amount: int, transaction_desc: str, callback_url: str, occassion: str) -> dict:
+		return self.b2c_payment(phone_number, amount, transaction_desc, callback_url, occassion, 'PromotionPayment')
