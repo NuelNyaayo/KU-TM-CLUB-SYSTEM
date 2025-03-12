@@ -10,7 +10,7 @@ body{
     font-style: normal;
     font-size: 1.2rem;
     /* height: 100vh; */
-    background: linear-gradient(to bottom, blue, darkblue, #005bb5);
+    background-color: darkblue;
     background-image: url("/static/assets/images/pexels-august-de-richelieu-4427623.jpg");
     background-size: cover;
     background-position: center;
@@ -20,9 +20,8 @@ body{
     align-items: center;
 }
 main {
-    width: 34%;
-    margin-top: 1.5rem;
-    margin-bottom: 1.5rem;
+    width: 38%;
+    /* margin-top: 5rem; */
     margin-left: auto;
     margin-right: auto;
     display: flex;
@@ -30,21 +29,18 @@ main {
     /* align-items: center; */
     background-color:azure;
     border-radius: 0.7rem;
-    padding: 2rem;
+    padding: 3rem;
+    margin: 2rem;
 }
 h2, .welcome {
     text-align: center;
     margin: 1rem;
 }
 
-h5 {
-    background-color: #333; 
-    color: gold;
-    padding: 1rem;
-    border-radius: 8px;
-    margin-top: 1rem;
+.message-style h5 {
+    background-color: gold !important; 
+    color: white !important;
 }
-
 .logo {
     display: flex;
     flex-direction: column;
@@ -67,8 +63,16 @@ h5 {
 }
 
 .contact__p {
-    margin: 2em 0;
+    margin: 2rem 0;
 }
+
+.error-message {
+    color: red;
+    font-size: 1rem;
+    display: block;
+    margin-top: 5px;
+}
+
 
 .contact__label {
     display: block;
@@ -76,8 +80,10 @@ h5 {
 }
 
 .contact__input, 
-.contact__textarea {
+.contact__textarea,
+.contact__select {
     padding: 0.5em;
+    border-radius: var(--BORDER-RADIUS);
     border-width: 2px;
     width: 100%;
     font-size: inherit;
@@ -90,6 +96,11 @@ h5 {
     display: flex;
     flex-direction: column;
 }
+/* .password-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+} */
 
 .password-input {
     position: relative;
@@ -143,9 +154,23 @@ a {
     color: darkblue;
     font-weight: bold;
 }
-/* p span {
-    color: darkblue;
+/* a span {
+    
 } */
+
 .forgot-register a:hover {
     color: #04115a;
+}
+
+input:focus, select:focus {
+    border-color: #333;
+    outline: none;
+}
+
+
+/* Success Message */
+form .success-message {
+    color: green;
+    font-weight: bold;
+    margin-top: 10px;
 }

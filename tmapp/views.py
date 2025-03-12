@@ -21,7 +21,7 @@ def login_view(request):  # Renamed from `login` to `login_view`
 
         if user is not None:
             login(request, user)  # Use Django's login function correctly
-            messages.success(request, 'Login success! Welcome.')
+            # messages.success(request, 'Login success! Welcome.')
             return redirect('memb_dash')  # Redirect to homepage
         else:
             messages.error(request, 'Invalid email or password')
@@ -125,4 +125,24 @@ def memb_contact(request):
 def memb_support(request): 
 
     return render(request, 'memb_support.html', {"current_page": "Support"})
+
+# Leader Dashboard Pages
+
+def leader_login(request): 
+
+    return render(request, 'leader_login.html')
+
+def leader_register(request): 
+
+    return render(request, 'leader_register.html')
+
+def leader_dash(request): 
+
+    return render(request, 'leader_dash.html', {"current_page": "Dashboard"})
+
+def leader_membership(request): 
+
+    return render(request, 'leader_membership.html', {"current_page": "Membership"})
+
+
 

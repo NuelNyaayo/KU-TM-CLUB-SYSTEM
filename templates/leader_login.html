@@ -5,9 +5,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Member Login</title>
+    <title>Leader Login</title>
     <link rel="icon" href="{% static 'assets/images/KU_TM_FavIcon_Logo.png' %}" type="image/png">
-    <link rel="stylesheet" href="{% static 'assets/css/login.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/leader_login.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
@@ -17,26 +17,37 @@
             <img src="{% static 'assets/images/KU_TM_FavIcon_Logo.png' %}" alt="KU Toastmasters Logo"width="120" height="120">
         </div>
         <article id="contact" class="main__article contact">
-            <p class="welcome">Welcome Back to KU Toastmasters</p>
-            <h2 class="contact__h2">👤 Login</h2>
+            <p class="welcome">Login into your Leader Account</p>
+            <h2 class="contact__h2">👑 Login</h2>
             {% for message in messages %}
                     <h5>{{ message }}</h5>
                 {% endfor %}
-            <form action="{% url 'login' %}" method="POST" class="contact__form" onsubmit="showLoading()">
+            <form action="{% url 'leader_login' %}" method="POST" class="contact__form" onsubmit="showLoading()">
                 {% csrf_token %}
               <fieldset class="contact__fieldset">
                 <legend class="offscreen">Send Us A Message</legend>
+                
                 <p class="contact__p">
-                    <label class="contact__label"for="name">Email:</label>
+                    <label class="contact__label"for="member-no">Member Number:</label>
                     <input class="contact__input"
-                    type="email"
-                    name="email"
-                    id="email"
-                    placeholder="your email"
-                    autocomplete="on"
+                    type="text"
+                    name="member-no"
+                    id="member-no"
+                    placeholder="enter your member number"
                     required
-                    autofocus
                     >
+                    <span class="error-message"></span>
+                </p>
+                <p class="contact__p">
+                    <label class="contact__label"for="leader-no">Leader Number:</label>
+                    <input class="contact__input"
+                    type="text"
+                    name="leader-no"
+                    id="leader-no"
+                    placeholder="enter your member number"
+                    required
+                    >
+                    <span class="error-message"></span>
                 </p>
                 <p class="contact__p">
                     <div class="password-container">
@@ -56,9 +67,9 @@
              <button class="contact__button" id="loginButton" type="submit">Sign in</button>
              <div class="forgot-register">
                 <!-- <a href="#">Forgot Password?<span>Click Here</span></a>
-                <a href="{% url 'registration' %}">New to Toastmasters?<span>Register Here</span></a> -->
-                <p><span>Forgot Password?</span>&nbsp;<a href="{% url 'registration' %}">Click Here</a></p>
-                <p><span>New to Toastmasters?</span>&nbsp;<a href="{% url 'registration' %}">Register Here</a></p>
+                <a href="{% url 'leader_register' %}">New to Toastmasters?<span>Register Here</span></a> -->
+                <p><span>Forgot Password?</span>&nbsp;<a href="{% url 'leader_register' %}">Click Here</a></p>
+                <p><span>New to Toastmasters?</span>&nbsp;<a href="{% url 'leader_register' %}">Register Here</a></p>
             </div>
             </form>
         </article>
@@ -75,7 +86,7 @@
         window.onpageshow = function (event) {
             if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
                 // If user tries to go back, redirect them to the login page
-                window.location.href = "{% url 'login' %}"; // Update 'login' with your login URL name
+                window.location.href = "{% url 'leader_login' %}"; // Update 'login' with your login URL name
             }
         };
     })();
@@ -100,6 +111,17 @@
         loginButton.disabled = true; // Disable button to prevent multiple clicks
         loginButton.style.opacity = "0.7"; // Reduce opacity to indicate it's loading
     }
+
+    document.addEventListener("DOMContentLoaded", function () {
+    const loginButton = document.getElementById("loginButton");
+    
+
+    loginButton.addEventListener("click", function () {
+        window.location.href = "/leader_dash/"; // Change "login.html" to the actual page URL
+    });
+
+
+});
     </script>
 </body>
 </html>

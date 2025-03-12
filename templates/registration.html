@@ -24,8 +24,8 @@
             <img src="{% static 'assets/images/KU_TM_FavIcon_Logo.png' %}" alt="KU Toastmasters Logo"width="120" height="120">
         </div>
         <article id="contact" class="main__article contact">
-            <p class="welcome">Enter Your Details to Create Account with Us</p>
-            <h2 class="contact__h2">Register</h2>
+            <p class="welcome">Create an Account with Us Today</p>
+            <h2 class="contact__h2">👤 Register</h2>
             {% for message in messages %}
                 <h5>{{ message }}</h5>
             {% endfor %}
@@ -126,7 +126,8 @@
              </fieldset>
              <button class="contact__button" id="registerButton" type="submit">Register</button>
              <div class="forgot-register">
-                <a href="{% url 'login' %}">Already Have an Account?<span>Login Here</span></a>
+                <!-- <a href="{% url 'login' %}">Already Have an Account?<span>Login Here</span></a> -->
+                <p><span>Already Have an Account?</span>&nbsp;<a href="{% url 'login' %}">Login Here</a></p>
             </div>
             </form>
         </article>

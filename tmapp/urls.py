@@ -17,5 +17,14 @@ urlpatterns = [
     path('memb_settings/', views.memb_settings, name='memb_settings'),   
     path('memb_contact/', views.memb_contact, name='memb_contact'),   
     path('memb_support/', views.memb_support, name='memb_support'),   
-    # path('post/<str:pk>', views.post, name ='post'),   
+    # path('post/<str:pk>', views.post, name ='post'), 
+
+    # Leader Dashboard  
+
+    path('leader_login/', views.leader_login, name='leader_login'),
+    path('leader_register/', views.leader_register, name='leader_register'),
+    path('leader_dash/', views.leader_dash, name='leader_dash'),
+    path('leader_membership/', views.leader_membership, name='leader_membership'),
+    # path('memb_support/', views.memb_support, name='memb_support'),
+    # path('memb_support/', views.memb_support, name='memb_support'),
 ]
