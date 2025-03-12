@@ -1,0 +1,33 @@
+# Ignore Python compiled files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore virtual environment folders
+venv/
+env/
+
+# Ignore database files
+db.sqlite3
+*.db
+
+# Ignore Django secrets and environment files
+.env
+*.env
+
+# Ignore logs and temp files
+*.log
+*.bak
+*.swp
+*.swo
+
+# Ignore Node.js dependencies (if applicable)
+node_modules/
+
+# Ignore VS Code settings
+.vscode/
+
+# Ignore system-specific files
+.DS_Store  # macOS
+Thumbs.db  # Windows
