@@ -9,8 +9,8 @@ body{
     font-weight: 400;
     font-style: normal;
     font-size: 1.2rem;
-    /* height: 100vh; */
     background: linear-gradient(to bottom, blue, darkblue, #005bb5);
+    /* Add the background image on top */
     background-image: url("/static/assets/images/pexels-august-de-richelieu-4427623.jpg");
     background-size: cover;
     background-position: center;
@@ -20,7 +20,7 @@ body{
     align-items: center;
 }
 main {
-    width: 34%;
+    width: 35%;
     margin-top: 1.5rem;
     margin-bottom: 1.5rem;
     margin-left: auto;
@@ -142,9 +142,9 @@ a {
     text-decoration: none;
     color: darkblue;
     font-weight: bold;
+
 }
 /* p span {
-    color: darkblue;
 } */
 .forgot-register a:hover {
     color: #04115a;

@@ -1,0 +1,212 @@
+{% extends 'leader_dash.html' %}
+
+{% load static %}
+
+
+{% block title %}Leader Membership{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'assets/css/leader_membership.css' %}">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.70/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.70/vfs_fonts.js"></script>
+{% endblock %}
+
+
+{% block content %}
+<!-- Dashboard Area -->
+<div class="dashboard-overview">
+    <h3> 📜&nbsp;Membership Reports</h3>
+    <div class="next-meeting">
+      <div class="top-container">
+        <!-- Filter Options -->
+        <div class="filter-container">
+            <label for="membershipFilter">Filter by Membership Status:</label>
+            <select id="membershipFilter">
+                <option value="all">All</option>
+                <option value="paid">Active</option>
+                <option value="unpaid">Inactive</option>
+            </select>
+        </div>
+
+        <!-- Download Button -->
+        <button id="downloadPDF">📥 Download as PDF</button>
+      </div>
+      
+      <!-- Members Table -->
+      <table id="membershipTable">
+        <thead>
+            <tr>
+                <th>Full Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Reg. Number</th>
+                <th>Member Status</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="member-row" data-status="paid">
+                <td>John Doe</td>
+                <td>johndoe@example.com</td>
+                <td>+254712345678</td>
+                <td>KU12345</td>
+                <td class="status">Active</td>
+                
+            </tr>
+            <tr class="member-row" data-status="unpaid">
+                <td>Jane Smith</td>
+                <td>janesmith@example.com</td>
+                <td>+254798765432</td>
+                <td>KU67890</td>
+                <td class="status">Inactive</td>
+                
+            </tr>
+            <tr class="member-row" data-status="paid">
+                <td>Michael Kimani</td>
+                <td>mkimani@example.com</td>
+                <td>+254712345999</td>
+                <td>KU56789</td>
+                <td class="status">Active</td>
+                
+            </tr>
+            <tr class="member-row" data-status="unpaid">
+                <td>Amina Hassan</td>
+                <td>aminahassan@example.com</td>
+                <td>+254711223344</td>
+                <td>KU22334</td>
+                <td class="status">Inactive</td>
+                
+            </tr>
+        </tbody>
+      </table>
+    </div>
+    
+  </div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+    let menuItems = document.querySelectorAll(".side-panel ul li");
+    
+    // Check if there's a stored active tab in localStorage
+    let activeTab = localStorage.getItem("activeTab");
+
+    // If no active tab is stored, set the first (Dashboard) as active
+    if (!activeTab) {
+        menuItems[0].classList.add("active"); // Dashboard by default
+    } else {
+        // Otherwise, apply the stored active class
+        menuItems.forEach((item) => {
+            if (item.querySelector("a").getAttribute("href") === activeTab) {
+                item.classList.add("active");
+            }
+        });
+    }
+
+    // Add click event listener to each menu item
+    menuItems.forEach((item) => {
+        item.addEventListener("click", function () {
+            // Remove 'active' class from all menu items
+            menuItems.forEach((el) => el.classList.remove("active"));
+
+            // Add 'active' class to clicked item
+            this.classList.add("active");
+
+            // Store selected tab in localStorage
+            localStorage.setItem("activeTab", this.querySelector("a").getAttribute("href"));
+        });
+    });
+});
+
+
+    document.getElementById("membershipFilter").addEventListener("change", function () {
+    let filter = this.value;
+    let rows = document.querySelectorAll(".member-row");
+
+    let visibleRows = []; // To track the filtered visible rows
+
+    rows.forEach((row) => {
+        let status = row.getAttribute("data-status").toLowerCase();
+        if (filter === "all" || status === filter) {
+            row.style.display = "";
+            visibleRows.push(row); // Collect visible rows
+        } else {
+            row.style.display = "none";
+        }
+    });
+
+    // Reset alternating row styles
+    visibleRows.forEach((row, index) => {
+        row.style.backgroundColor = index % 2 === 0 ? "#ffffff" : "#f2f2f2"; // Reapply styles
+    });
+});
+
+document.getElementById("downloadPDF").addEventListener("click", function () {
+    let table = document.getElementById("membershipTable");
+    let rows = table.getElementsByTagName("tr");
+    let data = [];
+
+    // Get table headers safely
+    let headers = [];
+    let headerRow = table.querySelector("thead tr"); // Ensure we get the header row
+    if (headerRow) {
+        let headerCells = headerRow.getElementsByTagName("th");
+        for (let th of headerCells) {
+            headers.push(th.innerText.trim());
+        }
+    }
+    data.push(headers); // Add headers as the first row
+
+    // Get visible table rows
+    for (let i = 1; i < rows.length; i++) { // Skip the header row
+        if (rows[i].style.display !== "none") {
+            let cols = rows[i].getElementsByTagName("td");
+            let rowData = [];
+            for (let j = 0; j < cols.length; j++) {
+                rowData.push(cols[j].innerText.trim());
+            }
+            if (rowData.length > 0) {
+                data.push(rowData);
+            }
+        }
+    }
+
+    let docDefinition = {
+        pageSize: "A4",
+        pageOrientation: "landscape", // Fit the table better in landscape mode
+        pageMargins: [40, 40, 40, 40], // Balanced left & right margins
+
+        content: [
+            { text: "Membership Reports", style: "header" },
+            {
+                table: {
+                    headerRows: 1,
+                    widths: ["25%", "25%", "20%", "15%", "15%"], // Adjusted column spacing
+                    body: data,
+                },
+                layout: {
+                    hLineWidth: function () { return 0.8; }, // Thinner horizontal lines
+                    vLineWidth: function () { return 0.8; }, // Thinner vertical lines
+                    paddingLeft: function () { return 5; }, // Add some padding for readability
+                    paddingRight: function () { return 5; },
+                    paddingTop: function () { return 3; },
+                    paddingBottom: function () { return 3; },
+                },
+            },
+        ],
+
+        styles: {
+            header: { fontSize: 18, bold: true, alignment: "center", margin: [0, 0, 0, 10] },
+            tableHeader: { bold: true, fillColor: "#f2f2f2", alignment: "center" }, // Center headers
+        },
+    };
+
+    pdfMake.createPdf(docDefinition).download("Membership_Reports.pdf");
+});
+
+ 
+   </script>
+{% endblock %}

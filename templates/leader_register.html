@@ -1,0 +1,242 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leader Registration</title>
+    <link rel="icon" href="{% static 'assets/images/KU_TM_FavIcon_Logo.png' %}" type="image/png">
+    <link rel="stylesheet" href="{% static 'assets/css/leader_register.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        h5 {
+            background-color: gold; 
+            color: black;
+            padding: 1rem;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    
+    <main>
+        <div class="logo">
+            <img src="{% static 'assets/images/KU_TM_FavIcon_Logo.png' %}" alt="KU Toastmasters Logo"width="120" height="120">
+        </div>
+        <article id="contact" class="main__article contact">
+            <p class="welcome">Create your Leadership Account Today.</p>
+            <h2 class="contact__h2">👑 Register</h2>
+            {% for message in messages %}
+                <h5>{{ message }}</h5>
+            {% endfor %}
+            
+            
+            <form action="{% url 'leader_register' %}" id="register-form" method="POST" class="contact__form" onsubmit="showLoading()">
+              {% csrf_token %}
+              <fieldset class="contact__fieldset">
+                <legend class="offscreen">Send Us A Message</legend>
+                <p class="contact__p">
+                    <label class="contact__label"for="role">Select Your Role:</label> 
+                    <select id="role" name="role" class="contact__select" required>
+                        <option value="" disabled selected>Choose your role</option>
+                        <option value="president">President</option>
+                        <option value="vpe">Vice President Education (VPE)</option>
+                        <option value="vpm">Vice President Membership (VPM)</option>
+                        <option value="vppr">Vice President Public Relations (VPPR)</option>
+                        <option value="treasurer">Treasurer</option>
+                        <option value="secretary">Secretary</option>
+                        <option value="sergeant">Sergeant at Arms</option>
+                    </select>
+                    <span class="error-message"></span>
+                </p>
+                <p class="contact__p">
+                    <label class="contact__label"for="corporate_email">Corporate Email:</label>
+                    <input class="contact__input"
+                    type="email"
+                    name="corporate_email"
+                    id="email"
+                    placeholder="your student email"
+                    required
+                    autofocus
+                    >
+                    <span class="error-message"></span>
+                </p>
+                <p class="contact__p">
+                    <label class="contact__label"for="member-no">Member Number:</label>
+                    <input class="contact__input"
+                    type="text"
+                    name="member-no"
+                    id="member-no"
+                    placeholder="Enter your member number"
+                    required
+                    >
+                    <span class="error-message"></span>
+                </p>
+                <p class="contact__p">
+                    <label class="contact__label"for="leader-no">Leader Number:</label>
+                    <input class="contact__input"
+                    type="text"
+                    name="leader-no"
+                    id="leader-no"
+                    placeholder="Enter your member number"
+                    required
+                    >
+                    <span class="error-message"></span>
+                </p>
+                <p class="contact__p">
+                    <div class="password-container">
+                        <label class="contact__label" for="password">Password:</label>
+                        <div class="password-input">
+                            <input class="contact__password__input" type="password" name="password" id="password" placeholder="Your password" required>
+                            <i class="fas fa-eye toggle-password" id="togglePassword"></i>
+                        </div>
+                        <span class="error-message"></span>
+                    </div>
+                    
+                </p>
+                <p class="contact__p">
+                    <div class="password-container">
+                        <label class="contact__label" for="password2">Retype Password:</label>
+                        <div class="password-input">
+                            <input class="contact__password__input" type="password" name="password2" id="password2" placeholder="Retype Your password" required>
+                            <i class="fas fa-eye toggle-password" id="togglePassword2"></i>
+                        </div>
+                        <span class="error-message"></span>
+                    </div>
+                    
+                </p>
+                <p class="contact__p">
+                    <input type="checkbox" id="remember" name="remember">
+                    <label for="remember">By clicking Sign up you agree to KU Toastmasters Terms of conditions & Privacy policy</label>
+                </p>
+                
+             </fieldset>
+             <button class="contact__button" id="registerButton" type="submit">Register</button>
+             <p id="success-message" class="success-message"></p>
+
+             <div class="forgot-register">
+                <!-- <a href="{% url 'leader_login' %}">Already Have an Account?<span>Login Here</span></a> -->
+                <p><span>Already Have an Account?</span>&nbsp;<a href="{% url 'leader_login' %}">Login Here</a></p>
+            </div>
+            </form>
+        </article>
+        
+    </main>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("register-form");
+    const role = document.getElementById("role");
+    const email = document.getElementById("email");
+    const memberNo = document.getElementById("member-no");
+    const leaderNo = document.getElementById("leader-no");
+    const password = document.getElementById("password");
+    const confirmPassword = document.getElementById("password2");
+    const successMessage = document.getElementById("success-message");
+    const registerButton = document.getElementById("registerButton");
+
+    form.addEventListener("submit", function (event) {
+        let valid = true;
+
+        // Clear previous error messages
+        document.querySelectorAll(".error-message").forEach(e => e.innerText = "");
+
+        // Role Validation
+        let roleError = role.closest(".contact__p").querySelector(".error-message");
+        roleError.innerText = "";
+        if (!role.value) {
+            roleError.innerText = "Please select a role.";
+            valid = false;
+        }
+
+        // Email Validation
+        let emailError = email.closest(".contact__p").querySelector(".error-message");
+        emailError.innerText = "";
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(email.value.trim())) {
+            emailError.innerText = "Enter a valid email address.";
+            valid = false;
+        }
+
+        // Member Number Validation
+        let memberNoError = memberNo.closest(".contact__p").querySelector(".error-message");
+        memberNoError.innerText = "";
+        if (memberNo.value.trim() === "") {
+            memberNoError.innerText = "Enter your member number.";
+            valid = false;
+        }
+
+        // Leader Number Validation
+        let leaderNoError = leaderNo.closest(".contact__p").querySelector(".error-message");
+        leaderNoError.innerText = "";
+        if (leaderNo.value.trim() === "") {
+            leaderNoError.innerText = "Enter your leader number.";
+            valid = false;
+        }
+
+        // Password Strength Validation
+        let passwordError = password.closest(".password-container").querySelector(".error-message");
+        passwordError.innerText = "";
+        const passwordPattern = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        if (!passwordPattern.test(password.value)) {
+            passwordError.innerText = "Password must be at least 8 characters with 1 uppercase, 1 number, and 1 special character.";
+            valid = false;
+        }
+
+        // Confirm Password Validation
+        let confirmPasswordError = confirmPassword.closest(".password-container").querySelector(".error-message");
+        confirmPasswordError.innerText = "";
+        if (confirmPassword.value !== password.value) {
+            confirmPasswordError.innerText = "Passwords do not match.";
+            valid = false;
+        }
+
+        // If validation fails, prevent form submission
+        if (!valid) {
+        event.preventDefault();
+        showLoading(true);  // Reset button to original state
+        return;
+    }
+
+        // Show loading state
+        showLoading();
+
+        // Show success message
+        successMessage.textContent = "Registration successful!";
+        setTimeout(() => successMessage.textContent = "", 3000);
+    });
+
+    // Password Toggle Functionality
+    const togglePassword = document.getElementById("togglePassword");
+    const togglePassword2 = document.getElementById("togglePassword2");
+
+    togglePassword.addEventListener("click", function () {
+        password.type = password.type === "password" ? "text" : "password";
+        togglePassword.classList.toggle("fa-eye-slash");
+    });
+
+    togglePassword2.addEventListener("click", function () {
+        confirmPassword.type = confirmPassword.type === "password" ? "text" : "password";
+        togglePassword2.classList.toggle("fa-eye-slash");
+    });
+});
+
+function showLoading(reset = false) {
+    var registerButton = document.getElementById("registerButton");
+    
+    if (reset) {
+        registerButton.innerHTML = "Register";
+        registerButton.disabled = false;
+        registerButton.style.opacity = "1";
+    } else {
+        registerButton.innerHTML = "Creating Account...";
+        registerButton.disabled = true;
+        registerButton.style.opacity = "0.7";
+    }
+}
+
+
+    </script>
+    
+</body>
+</html>
