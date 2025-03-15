@@ -112,3 +112,36 @@ document.addEventListener("DOMContentLoaded", function () {
     // }, 5000);
 });
 
+
+document.addEventListener("DOMContentLoaded", function () {
+    let menuItems = document.querySelectorAll(".side-panel ul li");
+    
+    // Check if there's a stored active tab in localStorage
+    let activeTab = localStorage.getItem("activeTab");
+
+    // If no active tab is stored, set the first (Dashboard) as active
+    if (!activeTab) {
+        menuItems[0].classList.add("active"); // Dashboard by default
+    } else {
+        // Otherwise, apply the stored active class
+        menuItems.forEach((item) => {
+            if (item.querySelector("a").getAttribute("href") === activeTab) {
+                item.classList.add("active");
+            }
+        });
+    }
+
+    // Add click event listener to each menu item
+    menuItems.forEach((item) => {
+        item.addEventListener("click", function () {
+            // Remove 'active' class from all menu items
+            menuItems.forEach((el) => el.classList.remove("active"));
+
+            // Add 'active' class to clicked item
+            this.classList.add("active");
+
+            // Store selected tab in localStorage
+            localStorage.setItem("activeTab", this.querySelector("a").getAttribute("href"));
+        });
+    });
+});

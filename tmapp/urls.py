@@ -25,6 +25,6 @@ urlpatterns = [
     path('leader_register/', views.leader_register, name='leader_register'),
     path('leader_dash/', views.leader_dash, name='leader_dash'),
     path('leader_membership/', views.leader_membership, name='leader_membership'),
-    # path('memb_support/', views.memb_support, name='memb_support'),
-    # path('memb_support/', views.memb_support, name='memb_support'),
+    path('leader_attendance/', views.leader_attendance, name='leader_attendance'),
+    path('leader_elections/', views.leader_elections, name='leader_elections'),
 ]

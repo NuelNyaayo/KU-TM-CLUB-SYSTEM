@@ -144,5 +144,13 @@ def leader_membership(request):
 
     return render(request, 'leader_membership.html', {"current_page": "Membership"})
 
+def leader_attendance(request): 
+
+    return render(request, 'leader_attendance.html', {"current_page": "Attendance"})
+
+def leader_elections(request): 
+
+    return render(request, 'leader_elections.html', {"current_page": "Elections"})
+
 
 
