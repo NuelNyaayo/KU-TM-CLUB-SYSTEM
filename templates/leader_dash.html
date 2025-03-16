@@ -16,7 +16,7 @@
   {% load django_browser_reload %}
   {% django_browser_reload_script %}
 </head>
-<body>
+<body data-default-tab="{% url 'leader_dash' %}">
 
   <!-- Side Panel (Collapsible on Mobile) -->
   <div class="side-panel">
@@ -260,81 +260,81 @@
   {% block extra_js %}
   <script >
     document.addEventListener("DOMContentLoaded", function () {
-// Mock data for recently viewed reports
-let recentReports = ["Membership Payment Report", "Attendance Report", "Election Results"];
-let reportList = document.getElementById("recentReports");
-reportList.innerHTML = recentReports.map(report => `<li>${report}</li>`).join("");
+  // Mock data for recently viewed reports
+  let recentReports = ["Membership Payment Report", "Attendance Report", "Election Results"];
+  let reportList = document.getElementById("recentReports");
+  reportList.innerHTML = recentReports.map(report => `<li>${report}</li>`).join("");
 
-// Meeting Attendance Bar Chart
-new Chart(document.getElementById("attendanceChart"), {
-    type: 'bar',
-    data: {
-        labels: ["Feb 29", "Mar 7", "Mar 14"], // Last 3 Thursdays
-        datasets: [{
-            label: 'Attendance',
-            data: [25, 30, 28], // Mock attendance numbers
-            backgroundColor: ['blue', 'darkblue', 'gold']
-        }]
-    },
-    options: { responsive: true }
-});
+  // Meeting Attendance Bar Chart
+  new Chart(document.getElementById("attendanceChart"), {
+      type: 'bar',
+      data: {
+          labels: ["Feb 29", "Mar 7", "Mar 14"], // Last 3 Thursdays
+          datasets: [{
+              label: 'Attendance',
+              data: [25, 30, 28], // Mock attendance numbers
+              backgroundColor: ['blue', 'darkblue', 'gold']
+          }]
+      },
+      options: { responsive: true }
+  });
 
-// Membership Payment Pie Chart
-new Chart(document.getElementById("membershipChart"), {
-    type: 'pie',
-    data: {
-        labels: ["Active", "Inactive", "Expired"],
-        datasets: [{
-            data: [60, 25, 15], // Percentage distribution
-            backgroundColor: ['blue', 'gold', 'darkblue']
-        }]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,  // Allows custom size
-        layout: {
-            padding: 10
-        }
-    }
-});
+  // Membership Payment Pie Chart
+  new Chart(document.getElementById("membershipChart"), {
+      type: 'pie',
+      data: {
+          labels: ["Active", "Inactive", "Expired"],
+          datasets: [{
+              data: [60, 25, 15], // Percentage distribution
+              backgroundColor: ['blue', 'gold', 'darkblue']
+          }]
+      },
+      options: {
+          responsive: true,
+          maintainAspectRatio: false,  // Allows custom size
+          layout: {
+              padding: 10
+          }
+      }
+  });
 
-// Recently Viewed Resources Line Graph
-new Chart(document.getElementById("resourcesChart"), {
-    type: 'line',
-    data: {
-        labels: ["Resource 1", "Resource 2", "Resource 3"],
-        datasets: [{
-            label: "Times Accessed",
-            data: [5, 8, 3],
-            borderColor: "blue",
-            fill: false
-        }]
-    },
-    options: { responsive: true }
-});
+  // Recently Viewed Resources Line Graph
+  new Chart(document.getElementById("resourcesChart"), {
+      type: 'line',
+      data: {
+          labels: ["Resource 1", "Resource 2", "Resource 3"],
+          datasets: [{
+              label: "Times Accessed",
+              data: [5, 8, 3],
+              borderColor: "blue",
+              fill: false
+          }]
+      },
+      options: { responsive: true }
+  });
 
-// Election Vote Turnout Pie Chart
-new Chart(document.getElementById("voteChart"), {
-    type: 'pie',
-    data: {
-        labels: ["Voted", "Didn't Vote"],
-        datasets: [{
-            data: [70, 30], // Mock turnout
-            backgroundColor: ['blue', 'darkblue']
-        }]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,  // Allows custom size
-        layout: {
-            padding: 10
-        }
-    }
-});
-});
+  // Election Vote Turnout Pie Chart
+  new Chart(document.getElementById("voteChart"), {
+      type: 'pie',
+      data: {
+          labels: ["Voted", "Didn't Vote"],
+          datasets: [{
+              data: [70, 30], // Mock turnout
+              backgroundColor: ['blue', 'darkblue']
+          }]
+      },
+      options: {
+          responsive: true,
+          maintainAspectRatio: false,  // Allows custom size
+          layout: {
+              padding: 10
+          }
+      }
+  });
+  });
 
-  </script> 
-  {% endblock %}
+    </script> 
+    {% endblock %}
 
   
 

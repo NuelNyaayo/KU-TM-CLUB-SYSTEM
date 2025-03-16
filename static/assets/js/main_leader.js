@@ -1,8 +1,10 @@
 document.addEventListener("DOMContentLoaded", function () {
     let menuItems = document.querySelectorAll(".side-panel ul li a");
-    let defaultTab = "{% url 'leader_dash' %}"; // Default to the dashboard
 
-    // Get last active tab or use default if none is set
+    // Get the default tab URL from a data attribute in the HTML
+    let defaultTab = document.body.getAttribute("data-default-tab") || "/leader_dash/"; 
+
+    // Get last active tab from localStorage, or fallback to default
     let activeTab = localStorage.getItem("activeTab") || defaultTab;
 
     function setActiveTab(tabHref) {

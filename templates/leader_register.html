@@ -29,7 +29,10 @@
             {% for message in messages %}
                 <h5>{{ message }}</h5>
             {% endfor %}
-            
+            {% if form.errors %}
+                <h5 class="error">There was an issue with your submission. Please try again.</h5>
+            {% endif %}
+
             
             <form action="{% url 'leader_register' %}" id="register-form" method="POST" class="contact__form" onsubmit="showLoading()">
               {% csrf_token %}
@@ -45,7 +48,7 @@
                         <option value="vppr">Vice President Public Relations (VPPR)</option>
                         <option value="treasurer">Treasurer</option>
                         <option value="secretary">Secretary</option>
-                        <option value="sergeant">Sergeant at Arms</option>
+                        <option value="saa">Sergeant at Arms</option>
                     </select>
                     <span class="error-message"></span>
                 </p>
@@ -78,33 +81,12 @@
                     type="text"
                     name="leader-no"
                     id="leader-no"
-                    placeholder="Enter your member number"
+                    placeholder="Enter your leader number"
                     required
                     >
                     <span class="error-message"></span>
                 </p>
-                <p class="contact__p">
-                    <div class="password-container">
-                        <label class="contact__label" for="password">Password:</label>
-                        <div class="password-input">
-                            <input class="contact__password__input" type="password" name="password" id="password" placeholder="Your password" required>
-                            <i class="fas fa-eye toggle-password" id="togglePassword"></i>
-                        </div>
-                        <span class="error-message"></span>
-                    </div>
-                    
-                </p>
-                <p class="contact__p">
-                    <div class="password-container">
-                        <label class="contact__label" for="password2">Retype Password:</label>
-                        <div class="password-input">
-                            <input class="contact__password__input" type="password" name="password2" id="password2" placeholder="Retype Your password" required>
-                            <i class="fas fa-eye toggle-password" id="togglePassword2"></i>
-                        </div>
-                        <span class="error-message"></span>
-                    </div>
-                    
-                </p>
+                
                 <p class="contact__p">
                     <input type="checkbox" id="remember" name="remember">
                     <label for="remember">By clicking Sign up you agree to KU Toastmasters Terms of conditions & Privacy policy</label>
@@ -112,10 +94,9 @@
                 
              </fieldset>
              <button class="contact__button" id="registerButton" type="submit">Register</button>
-             <p id="success-message" class="success-message"></p>
+             {% comment %} <p id="success-message" class="success-message"></p> {% endcomment %}
 
              <div class="forgot-register">
-                <!-- <a href="{% url 'leader_login' %}">Already Have an Account?<span>Login Here</span></a> -->
                 <p><span>Already Have an Account?</span>&nbsp;<a href="{% url 'leader_login' %}">Login Here</a></p>
             </div>
             </form>
@@ -130,8 +111,6 @@
     const email = document.getElementById("email");
     const memberNo = document.getElementById("member-no");
     const leaderNo = document.getElementById("leader-no");
-    const password = document.getElementById("password");
-    const confirmPassword = document.getElementById("password2");
     const successMessage = document.getElementById("success-message");
     const registerButton = document.getElementById("registerButton");
 
@@ -174,22 +153,7 @@
             valid = false;
         }
 
-        // Password Strength Validation
-        let passwordError = password.closest(".password-container").querySelector(".error-message");
-        passwordError.innerText = "";
-        const passwordPattern = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-        if (!passwordPattern.test(password.value)) {
-            passwordError.innerText = "Password must be at least 8 characters with 1 uppercase, 1 number, and 1 special character.";
-            valid = false;
-        }
-
-        // Confirm Password Validation
-        let confirmPasswordError = confirmPassword.closest(".password-container").querySelector(".error-message");
-        confirmPasswordError.innerText = "";
-        if (confirmPassword.value !== password.value) {
-            confirmPasswordError.innerText = "Passwords do not match.";
-            valid = false;
-        }
+        
 
         // If validation fails, prevent form submission
         if (!valid) {
@@ -206,19 +170,7 @@
         setTimeout(() => successMessage.textContent = "", 3000);
     });
 
-    // Password Toggle Functionality
-    const togglePassword = document.getElementById("togglePassword");
-    const togglePassword2 = document.getElementById("togglePassword2");
-
-    togglePassword.addEventListener("click", function () {
-        password.type = password.type === "password" ? "text" : "password";
-        togglePassword.classList.toggle("fa-eye-slash");
-    });
-
-    togglePassword2.addEventListener("click", function () {
-        confirmPassword.type = confirmPassword.type === "password" ? "text" : "password";
-        togglePassword2.classList.toggle("fa-eye-slash");
-    });
+    
 });
 
 function showLoading(reset = false) {
