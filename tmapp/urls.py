@@ -5,7 +5,9 @@ urlpatterns = [
     path('', views.index, name='index'),  
     path('registration/', views.registration, name='registration'),      
     path('login/', views.login_view, name='login'),   
-    path('verify/', views.verify, name='verify'),   
+    path('verify/', views.verify, name='verify'),
+
+    # Member Dashboard Pages   
     path('memb_dash/', views.memb_dash, name='memb_dash'),   
     path('memb_roles/', views.memb_roles, name='memb_roles'), 
     path('logout/', views.logout_view, name='logout'),  # Logout route   
@@ -19,8 +21,7 @@ urlpatterns = [
     path('memb_support/', views.memb_support, name='memb_support'),   
     # path('post/<str:pk>', views.post, name ='post'), 
 
-    # Leader Dashboard  
-
+    # Leader Dashboard  pages
     path('leader_login/', views.leader_login, name='leader_login'),
     path('leader_register/', views.leader_register, name='leader_register'),
     path('leader_dash/', views.leader_dash, name='leader_dash'),

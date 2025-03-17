@@ -61,8 +61,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "django_browser_reload.middleware.BrowserReloadMiddleware",
 
-    # Your custom middleware
-    'tmapp.middleware.LoginRequiredMiddleware',  
+    # Your custom middlewares
+    'tmapp.middleware.MemberLoginRequiredMiddleware',  
+    'tmapp.middleware.LeaderLoginRequiredMiddleware',  
 ]
 
 ROOT_URLCONF = 'tmwebproject.urls'
