@@ -10,12 +10,13 @@
   <link rel="stylesheet" href="{% static 'assets/css/leader_styles.css' %}">
   {% block extra_css %}
   <link rel="stylesheet" href="{% static 'assets/css/leader_dash.css' %}">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   {% endblock %}
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   {% load django_browser_reload %}
   {% django_browser_reload_script %}
 </head>
-<body>
+<body data-default-tab="{% url 'leader_dash' %}">
 
   <!-- Side Panel (Collapsible on Mobile) -->
   <div class="side-panel">
@@ -50,12 +51,12 @@
             </a>
         </li>
         <li>
-            <a href="{% url 'memb_contact' %}">
+            <a href="{% url 'leader_attendance' %}">
               <span>📅</span> Attendance
             </a>
         </li>
         <li>
-            <a href="{% url 'memb_support' %}">
+            <a href="{% url 'leader_elections' %}">
               <span>🗂️</span> Elections 
             </a>
         </li>
@@ -108,529 +109,232 @@
       </nav>
     </div>
 
+    {% block content %}
     <!-- Dashboard Area -->
     <div class="dashboard">
-      {% block content %}
-        <div class="welcome-user">
-          <h2>Welcome Back, {{ user.first_name }} 👋</h2>
-          <p>This is a personalize KU toastmasters membership dashboard specifically tailored to your needs and made for you.</p>
+
+      <div class="reports-summary">
+        <h3> 📌 Recently Viewed Reports</h3>
+        <div class="card">
+          <ul id="recentReports">
+            <li>No reports viewed yet.</li>
+          </ul>
         </div>
-
-        <div class="dashboard-overview">
-          <h3> Dashboard Overview</h3>
-          <div class="status-date">
-            <div class="status">
-              <p><span class="status-label">Membership Status:</span>
-                <span class="status-value active">Active</span></p>
-              <p><span class="expiry-label">Expiry Date:</span>
-                <span class="expiry-date">15th April 2025</span></p>
-            </div>
-            <div id="datetime">
-              <div id="date"></div>
-              <div id="time"></div>
-          </div>
-          </div>
-          <div class="next-meeting">
-            <p><span class="status-label">Next Meeting:</span>
-              <span class="meeting-label">Meeting 046</span></p>
-            <p><span class="status-label">Meeting Date:</span>
-              <span class="meeting-label">12th Feb 2025</span></p>
-            <p><span class="status-label">Meeting Time:</span>
-              <span class="meeting-label">06:30pm - 8:30pm</span></p>
-            <p><span class="status-label">Your Role:</span>
-              <span class="role-label">Toastmaster Of The Day</span></p>
-            <div class="role-btn">
-              <button class="confirm">Confirm Role</button>
-              <button class="change">Request Change</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="recent-resources">
-          <h3> Recently Viewed Resources</h3>
-          <div class="viewed-resources">
-
-            <div class="resource-cont">
-              <div id="resource-grid" class="resource-grid">
-                <div  class="resource-card" data-type="document">
-                  <img src="{% static 'assets/images/pexels-vietfotos-10928778.jpg' %}" alt="Speech Guidelines">
-                    <h3>Speech Guidelines</h3>
-                    <p>Essential rules for structuring your speech.</p>
-                    <button>View <i class="fa fa-file-alt"></i></button>
-                </div>
-                <div  class="resource-card" data-type="video">
-                  <img src="{% static 'assets/images/pexels-vietfotos-10928778.jpg' %}" alt="Public Speaking Tips">
-                    <h3>Public Speaking Tips</h3>
-                    <p>Learn to master stage presence.</p>
-                    <button>Watch <i class="fa fa-video"></i></button>
-                </div>
-                <div  class="resource-card" data-type="link">
-                  <img src="{% static 'assets/images/pexels-vietfotos-10928778.jpg' %}" alt="Toastmasters Website">
-                    <h3>Toastmasters Website</h3>
-                    <p>Explore official resources.</p>
-                    <button>Open <i class="fa fa-link"></i></button>
-                </div>
-                <!-- <div  class="resource-card" data-type="audio">
-                  <img src="{% static 'assets/images/pexels-vietfotos-10928778.jpg' %}" alt="CC1 Speech Audio">
-                    <h3>CC1 Speech Audio</h3>
-                    <p>Listen to sample speeches.</p>
-                    <button>Listen <i class="fa fa-headphones"></i></button>
-                </div> -->
-              </div>
-            </div>
-            
-          </div>
-        </div>
-
-        <div class="meetings-summary">
-          <h3> Meetings Summary</h3>
-          <div class="meetings-tables">
-            <h4> Upcoming Meetings</h4>
-            <table>
-              <thead>
-                  <tr>
-                      <th>Meeting No</th>
-                      <th>Theme</th>
-                      <th>Your Role</th>
-                      <th>Venue</th>
-                      <th>Date</th>
-                  </tr>
-              </thead>
-              <tbody>
-                  <tr>
-                      <td>046</td>
-                      <td>Love</td>
-                      <td>TMOD</td>
-                      <td>EF 09</td>
-                      
-                      <td>23rd Jan 2025</td>
-                  </tr>
-                  <tr>
-                    <td>047</td>
-                    <td>Self Awareness</td>
-                    <td>Cc3 speaker</td>
+      </div>
+      <div class="meetings-summary">
+        <h3>📝 Meetings Summary</h3>
+        <div class="card">
+          <h4> Upcoming Meetings</h4>
+          <table>
+            <thead>
+                <tr>
+                    <th>Meeting No</th>
+                    <th>Theme</th>
+                    <th>Your Role</th>
+                    <th>Venue</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>046</td>
+                    <td>Love</td>
+                    <td>TMOD</td>
+                    <td>EF 09</td>
+                    
+                    <td>23rd Jan 2025</td>
+                </tr>
+                <tr>
+                  <td>047</td>
+                  <td>Self Awareness</td>
+                  <td>Cc3 speaker</td>
+                  <td>Bssc Rm-255</td>
+                  
+                  <td>27rd Jan 2025</td>
+                </tr>
+                <tr>
+                    <td>048</td>
+                    <td>Happiness</td>
+                    <td>Grammarian</td>
                     <td>Bssc Rm-255</td>
                     
-                    <td>27rd Jan 2025</td>
-                  </tr>
-                  <tr>
-                      <td>048</td>
-                      <td>Happiness</td>
-                      <td>Grammarian</td>
-                      <td>Bssc Rm-255</td>
-                      
-                      <td>3rd Feb 2025</td>
-                  </tr>
-              </tbody>
-            </table>
-            
-          </div>
-          <div class="meetings-tables">
-            <h4> Recent Meetings</h4>
-            <table>
-              <thead>
-                  <tr>
-                      <th>Meeting No</th>
-                      <th>Theme</th>
-                      <th>Your Role</th>
-                      <th>Venue</th>
-                      <th>Date</th>
-                  </tr>
-              </thead>
-              <tbody>
-                  <tr>
-                      <td>045</td>
-                      <td>Reignite Momentum</td>
-                      <td>Attendee</td>
-                      <td>EF 09</td>
-                      
-                      <td>16th Jan 2025</td>
-                  </tr>
-                  <tr>
-                      <td>044</td>
-                      <td>Achieving Greatness</td>
-                      <td>Table Topics Master</td>
-                      <td>EF 09</td>
-                      
-                      <td>9th Jan 2025</td>
-                  </tr>
-                  <tr>
-                      <td>043</td>
-                      <td>Change</td>
-                      <td>Timer</td>
-                      <td>EF 09</td>
-                      
-                      <td>2nd Jan 2025</td>
-                  </tr>
-              </tbody>
-            </table>
-            
-          </div>
-        </div>
-
-        <div class="quick-links">
-          <h3> Quick Action Links</h3>
-          <div class="action-links">
-            <div class="action-btn">
-              <i class="fa-solid fa-users"></i>
-              <p>Sign Up For a Role</p>
-            </div>
-            <div class="action-btn">
-              <i class="fa-solid fa-wallet"></i>
-              <p>Make a Payment</p>
-            </div>
-            <div class="action-btn">
-              <i class="fa-solid fa-folder-open"></i>
-              <p>View Resources</p>
-            </div>
-            <div class="action-btn">
-              <i class="fa-solid fa-envelope"></i>
-              <p>View Notifications</p>
-            </div>
-            
-            
-          </div>
-        </div>
-
-        <div class="notification-summary">
-          <h3> Notification Updates</h3>
-          <div class="notification-container">
-            <ul id="notification-list">
-              <li class="notification unread">
-                  <i class="fas fa-bell"></i>
-                  <span class="message">Your membership payment is due mid-April.</span>
-                  <span class="timestamp">2 hours ago</span>
-                  <button class="mark-read">Mark as Read</button>
-              </li>
-              <li class="notification unread">
-                  <i class="fas fa-user"></i>
-                  <span class="message">New resource "KU Gavel Constitution" uploaded. Check it out.</span>
-                  <span class="timestamp">5 hours ago</span>
-                  <button class="mark-read">Mark as Read</button>
-              </li>
-              <li class="notification unread">
-                  <i class="fas fa-bell"></i>
-                  <span class="message">Your membership payment is due mid-April.</span>
-                  <span class="timestamp">2 hours ago</span>
-                  <button class="mark-read">Mark as Read</button>
-              </li>
-              <li class="notification unread">
-                  <i class="fas fa-user"></i>
-                  <span class="message">New resource "KU Gavel Constitution" uploaded. Check it out.</span>
-                  <span class="timestamp">5 hours ago</span>
-                  <button class="mark-read">Mark as Read</button>
-              </li>
-              
-            </ul>
-          </div>
-        </div>
-
-
-        <div class="payment-summary">
-          <h3> Payment History</h3>
-          <div class="payment-container">
-            <table>
-              <thead>
-                  <tr>
-                      <th>Transaction ID</th>
-                      <th>Date</th>
-                      <th>Time</th>
-                      <th>Amount</th>
-                      <th>Status</th>
-                      <th>Actions</th>
-                  </tr>
-              </thead>
-              <tbody id="payment-table">
-                  <tr data-status="paid">
-                      <td>#TXN12345</td>
-                      <td>Feb 10, 2025</td>
-                      <td>8:09 am</td>
-                      <td><b>Ksh 300</b></td>
-                      <td class="status paid">Paid</td>
-                      <td><button class="download-btn"><i class="fa-solid fa-download"></i>Receipt</button></td>
-                  </tr>
-                  <tr data-status="paid">
-                      <td>#TXN12345</td>
-                      <td>Nov 18, 2024</td>
-                      <td>11:23 am</td>
-                      <td><b>Ksh 150</b></td>
-                      <td class="status paid">Paid</td>
-                      <td><button class="download-btn"><i class="fa-solid fa-download"></i>Receipt</button></td>
-                  </tr>
-                  <tr data-status="pending">
-                      <td>#TXN12346</td>
-                      <td>Mar 13th, 2024</td>
-                      <td>6:35 pm</td>
-                      <td><b>Ksh 300</b></td>
-                      <td class="status paid">Paid</td>
-                      <td><button class="download-btn"><i class="fa-solid fa-download"></i>Receipt</button></td>
-                  </tr>
-                  <tr data-status="failed">
-                      <td>#TXN12347</td>
-                      <td>Nov 26, 2023</td>
-                      <td>1:12 pm</td>
-                      <td><b>Ksh 200</b></td>
-                      <td class="status paid">Paid</td>
-                      <td><button class="download-btn"><i class="fa-solid fa-download"></i>Receipt</button></td>
-                  </tr>
-              </tbody>
+                    <td>3rd Feb 2025</td>
+                </tr>
+            </tbody>
           </table>
+          
+        </div>
+        <div class="card">
+          <h4> Recent Meetings</h4>
+          <table>
+            <thead>
+                <tr>
+                    <th>Meeting No</th>
+                    <th>Theme</th>
+                    <th>Your Role</th>
+                    <th>Venue</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>045</td>
+                    <td>Reignite Momentum</td>
+                    <td>Attendee</td>
+                    <td>EF 09</td>
+                    
+                    <td>16th Jan 2025</td>
+                </tr>
+                <tr>
+                    <td>044</td>
+                    <td>Achieving Greatness</td>
+                    <td>Table Topics Master</td>
+                    <td>EF 09</td>
+                    
+                    <td>9th Jan 2025</td>
+                </tr>
+                <tr>
+                    <td>043</td>
+                    <td>Change</td>
+                    <td>Timer</td>
+                    <td>EF 09</td>
+                    
+                    <td>2nd Jan 2025</td>
+                </tr>
+            </tbody>
+          </table>
+          
+        </div>
+      </div>
+
+      <div class="meetings-summary">
+        <h3> 📊 Meeting Attendance (Last 3 Thursdays)</h3>
+        <div class="card">
+          <div class="chart-container">
+            <canvas id="attendanceChart"></canvas>
+          </div>
+          
+        </div>
+      </div>
+
+      <div class="meetings-summary">
+        <h3> 🥧 Membership Payment Status</h3>
+        <div class="card">
+          <div class="chart-container">
+            <canvas id="membershipChart"></canvas>
           </div>
         </div>
+      </div>
 
-        <div class="vote-elections">
-          <h3> Voting & Elections</h3>
-          <div class="election-history">
-            <div class="countdown-summary">
-              <div class="election-countdown">
-                <h3>Election Countdown</h3>
-                <div class="countdown">
-                  <div class="time-box">
-                      <span id="days">00</span>
-                      <p>Days</p>
-                  </div>
-                  <div class="time-box">
-                      <span id="hours">00</span>
-                      <p>Hours</p>
-                  </div>
-                  <div class="time-box">
-                      <span id="minutes">00</span>
-                      <p>Minutes</p>
-                  </div>
-                  <div class="time-box">
-                      <span id="seconds">00</span>
-                      <p>Seconds</p>
-                  </div>
-                </div>
-              </div>
-              <div class="election-countdown">
-                <h3>Nomination Countdown</h3>
-                <div class="countdown">
-                  <div class="time-box">
-                      <span id="days">00</span>
-                      <p>Days</p>
-                  </div>
-                  <div class="time-box">
-                      <span id="hours">00</span>
-                      <p>Hours</p>
-                  </div>
-                  <div class="time-box">
-                      <span id="minutes">00</span>
-                      <p>Minutes</p>
-                  </div>
-                  <div class="time-box">
-                      <span id="seconds">00</span>
-                      <p>Seconds</p>
-                  </div>
-                </div>
-              </div>
-            </div>  
-            <div class="election-summary">
-              <div class="election-summary-count">
-                <p><span class="vote-label">Recent Vote Count:</span>
-                  <span class="date-label">23 votes</span></p>
-                <p><span class="nomination-label">Recent Nomination Count:</span>
-                  <span class="date-label">16 votes</span></p>
-              </div>
-
-              <div class="vote-btn-cont">
-                <button id="voteBtn" class="vote-btn" data-url="{% url 'memb_elections' %}"><span><i class="fa-solid fa-check-to-slot"></i></span>Vote Now</button>
-              </div>
-            </div>
+      <div class="meetings-summary">
+        <h3> 📈 Recently Viewed Resources</h3>
+        <div class="card">
+          <div class="chart-container">
+            <canvas id="resourcesChart"></canvas>
           </div>
+          
         </div>
-      {% endblock %}
+      </div>
+
+      <div class="meetings-summary">
+        <h3> 🗳️ Recent Election Vote Turnout</h3>
+        <div class="card">
+          <div class="chart-container">
+            <canvas id="voteChart"></canvas>
+          </div>
+          
+        </div>
+      </div>
+
+        
+
 
     </div>
+
+    {% endblock %}
 
   </div>
 
   <script src="{% static 'assets/js/main_leader.js' %}"></script>
 
   {% block extra_js %}
-  <script>
+  <script >
+    document.addEventListener("DOMContentLoaded", function () {
+  // Mock data for recently viewed reports
+  let recentReports = ["Membership Payment Report", "Attendance Report", "Election Results"];
+  let reportList = document.getElementById("recentReports");
+  reportList.innerHTML = recentReports.map(report => `<li>${report}</li>`).join("");
 
-    
-document.addEventListener("DOMContentLoaded", function () {
-    let menuItems = document.querySelectorAll(".side-panel ul li");
-    
-    // Check if there's a stored active tab in localStorage
-    let activeTab = localStorage.getItem("activeTab");
+  // Meeting Attendance Bar Chart
+  new Chart(document.getElementById("attendanceChart"), {
+      type: 'bar',
+      data: {
+          labels: ["Feb 29", "Mar 7", "Mar 14"], // Last 3 Thursdays
+          datasets: [{
+              label: 'Attendance',
+              data: [25, 30, 28], // Mock attendance numbers
+              backgroundColor: ['blue', 'darkblue', 'gold']
+          }]
+      },
+      options: { responsive: true }
+  });
 
-    // If no active tab is stored, set the first (Dashboard) as active
-    if (!activeTab) {
-        menuItems[0].classList.add("active"); // Dashboard by default
-    } else {
-        // Otherwise, apply the stored active class
-        menuItems.forEach((item) => {
-            if (item.querySelector("a").getAttribute("href") === activeTab) {
-                item.classList.add("active");
-            }
-        });
-    }
-
-    // Add click event listener to each menu item
-    menuItems.forEach((item) => {
-        item.addEventListener("click", function () {
-            // Remove 'active' class from all menu items
-            menuItems.forEach((el) => el.classList.remove("active"));
-
-            // Add 'active' class to clicked item
-            this.classList.add("active");
-
-            // Store selected tab in localStorage
-            localStorage.setItem("activeTab", this.querySelector("a").getAttribute("href"));
-        });
-    });
-});
-
-    function updateDateTime() {
-    const now = new Date();
-
-    // Format the date as "24th Jan 2025"
-    const day = now.getDate();
-    const month = now.toLocaleString('default', { month: 'short' }); // 'Jan', 'Feb', etc.
-    const year = now.getFullYear();
-
-    // Convert day to ordinal (e.g., 1st, 2nd, 3rd, etc.)
-    const ordinalSuffix = (day) => {
-        if (day > 3 && day < 21) return "th"; // Covers 11th, 12th, 13th, etc.
-        switch (day % 10) {
-            case 1: return "st";
-            case 2: return "nd";
-            case 3: return "rd";
-            default: return "th";
-        }
-    };
-
-    const formattedDate = `${day}${ordinalSuffix(day)} ${month} ${year}`;
-
-    // Format the time as "06:55 PM"
-    const hours = now.getHours();
-    const minutes = now.getMinutes().toString().padStart(2, "0");
-    const amPm = hours >= 12 ? "PM" : "AM";
-    const formattedTime = `${((hours + 11) % 12 + 1)}:${minutes} ${amPm}`;
-
-    // Update the divs
-    document.getElementById("date").textContent = formattedDate;
-    document.getElementById("time").textContent = formattedTime;
-
-    //document.getElementById("date2").textContent = formattedDate;
-}
-
-  // Update every second
-  setInterval(updateDateTime, 1000);
-
-  document.addEventListener("DOMContentLoaded", function () {
-    updateDateTime();
-});
-
-
-document.addEventListener("DOMContentLoaded", function () {
-    const markReadButtons = document.querySelectorAll(".mark-read");
-    const markAllReadButton = document.getElementById("mark-all-read");
-    const clearAllButton = document.getElementById("clear-all");
-    const notificationList = document.getElementById("notification-list");
-    const notificationBadge = document.getElementById("notification-badge");
-
-    // Get the initial unread count based on existing unread notifications
-    let unreadNotifications = document.querySelectorAll(".notification.unread").length;
-
-    // Function to update the notification badge count
-    function updateNotificationBadge(count) {
-        if (count > 0) {
-            notificationBadge.textContent = count;
-            notificationBadge.style.display = "flex"; // Show the badge
-        } else {
-            notificationBadge.style.display = "none"; // Hide if no unread notifications
-        }
-    }
-
-    // Initialize badge with the correct count
-    updateNotificationBadge(unreadNotifications);
-
-    // Mark a single notification as read
-    markReadButtons.forEach(button => {
-        button.addEventListener("click", function () {
-            const notification = this.closest(".notification");
-            notification.classList.remove("unread");
-            this.remove(); // Remove the button after marking as read
-
-            // Decrease unread count and update the badge
-            unreadNotifications = Math.max(0, unreadNotifications - 1);
-            updateNotificationBadge(unreadNotifications);
-        });
-    });
-
-    // Mark all as read
-    markAllReadButton.addEventListener("click", function () {
-        document.querySelectorAll(".notification.unread").forEach(notification => {
-            notification.classList.remove("unread");
-            const button = notification.querySelector(".mark-read");
-            if (button) button.remove();
-        });
-
-        // Set unread count to zero and update the badge
-        unreadNotifications = 0;
-        updateNotificationBadge(unreadNotifications);
-    });
-
-    // Clear all notifications
-    clearAllButton.addEventListener("click", function () {
-        notificationList.innerHTML = "<p>No notifications</p>";
-
-        // Set unread count to zero and update the badge
-        unreadNotifications = 0;
-        updateNotificationBadge(unreadNotifications);
-    });
-});
-
-
-
-          // Set the target date (Change this to your event date)
-  const targetDate = new Date("March 15, 2025 00:00:00").getTime();
-
-  // Function to update the countdown
-  function updateCountdown() {
-      const now = new Date().getTime();
-      const timeLeft = targetDate - now;
-
-      if (timeLeft <= 0) {
-          document.querySelector(".countdown").innerHTML = "<h2>Event Started!</h2>";
-          clearInterval(interval);
-          return;
+  // Membership Payment Pie Chart
+  new Chart(document.getElementById("membershipChart"), {
+      type: 'pie',
+      data: {
+          labels: ["Active", "Inactive", "Expired"],
+          datasets: [{
+              data: [60, 25, 15], // Percentage distribution
+              backgroundColor: ['blue', 'gold', 'darkblue']
+          }]
+      },
+      options: {
+          responsive: true,
+          maintainAspectRatio: false,  // Allows custom size
+          layout: {
+              padding: 10
+          }
       }
+  });
 
-      // Calculate time components
-      const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+  // Recently Viewed Resources Line Graph
+  new Chart(document.getElementById("resourcesChart"), {
+      type: 'line',
+      data: {
+          labels: ["Resource 1", "Resource 2", "Resource 3"],
+          datasets: [{
+              label: "Times Accessed",
+              data: [5, 8, 3],
+              borderColor: "blue",
+              fill: false
+          }]
+      },
+      options: { responsive: true }
+  });
 
-      // Update the DOM
-      document.getElementById("days").textContent = days < 10 ? "0" + days : days;
-      document.getElementById("hours").textContent = hours < 10 ? "0" + hours : hours;
-      document.getElementById("minutes").textContent = minutes < 10 ? "0" + minutes : minutes;
-      document.getElementById("seconds").textContent = seconds < 10 ? "0" + seconds : seconds;
-  }
+  // Election Vote Turnout Pie Chart
+  new Chart(document.getElementById("voteChart"), {
+      type: 'pie',
+      data: {
+          labels: ["Voted", "Didn't Vote"],
+          datasets: [{
+              data: [70, 30], // Mock turnout
+              backgroundColor: ['blue', 'darkblue']
+          }]
+      },
+      options: {
+          responsive: true,
+          maintainAspectRatio: false,  // Allows custom size
+          layout: {
+              padding: 10
+          }
+      }
+  });
+  });
 
-  // Update the countdown every second
-  const interval = setInterval(updateCountdown, 1000);
-  updateCountdown(); // Initial call to prevent delay
-
-  document.addEventListener("DOMContentLoaded", function () {
-    const voteBtn = document.getElementById("voteBtn");
-
-    voteBtn.addEventListener("click", function () {
-      const votingUrl = this.getAttribute("data-url");  // Get URL from button
-      window.location.href = votingUrl; 
-    });
-});
-
-  
-
-  </script>
-  {% endblock %}
+    </script> 
+    {% endblock %}
 
   
 

@@ -126,6 +126,20 @@ document.getElementById('profilePicInput').addEventListener('change', function (
         }
     });
 
+    // Edit icon functionality (Separate and independent)
+    document.addEventListener("DOMContentLoaded", function () {
+        const profilePicInput = document.getElementById("profilePicInput");
+        const editIcon = document.querySelector(".edit-icon"); // Select the edit icon
+
+        // Function to trigger file selection
+        function openFileDialog() {
+            profilePicInput.click(); // Opens file dialog
+        }
+
+        // Add event listener to edit icon (Triggers file selection)
+        editIcon.addEventListener("click", openFileDialog);
+    });
+
     function saveChanges() {
         alert("Your changes have been saved successfully!");
     }

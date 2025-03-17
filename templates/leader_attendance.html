@@ -1,0 +1,299 @@
+{% extends 'leader_dash.html' %}
+
+{% load static %}
+
+
+{% block title %}Leader Attendance{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'assets/css/leader_attendance.css' %}">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.70/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.70/vfs_fonts.js"></script>
+{% endblock %}
+
+
+{% block content %}
+<!-- Dashboard Area -->
+<div class="dashboard-overview">
+    <h3> 📅&nbsp;Meeting Attendance</h3>
+    <div class="next-meeting">
+      
+      <!-- Filter Options -->
+      <div class="filter-container">
+        <label for="meetingNumber">Select Meeting:</label>
+        <select id="meetingNumber">
+            <option value="" selected>-- Choose Meeting --</option>
+            <option value="045">Meeting 045</option>
+            <option value="044">Meeting 044</option>
+            <option value="043">Meeting 043</option>
+        </select>
+      </div>
+
+      <div class="top-container">
+        <!-- Attendance Filter (Hidden Initially) -->
+        <div class="filter-container hidden" id="attendanceFilterContainer">
+          <label for="attendanceFilter">Filter by Attendance:</label>
+          <select id="attendanceFilter">
+              <option value="all">All</option>
+              <option value="attended">Attended</option>
+              <option value="did_not_attend">Did Not Attend</option>
+          </select>
+        </div>
+        <!-- Buttons (Hidden Initially) -->
+        <div class="buttons-container hidden" id="buttonsContainer">
+          <button id="downloadPDF">📥 Download as PDF</button>
+          <button id="viewDetails">🔍 View Meeting Details</button>
+        </div>
+      </div>
+      
+      
+      
+      <!-- Table (Hidden Initially) -->
+      <table id="attendanceTable" class="hidden">
+        <thead>
+            <tr>
+                <th>Member No</th>
+                <th>Full Name</th>
+                <th>Role</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody">
+            <!-- Dynamic Data Here -->
+        </tbody>
+      </table>
+
+      <!-- Meeting Details Modal (Hidden Initially) -->
+      <div id="meetingModal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Meeting Details</h2>
+            <p><strong>Meeting No:</strong> &nbsp;<span id="modalMeetingNo"></span></p>
+            <p><strong>Theme:</strong> &nbsp;<span id="modalMeetingTheme"></span></p>
+            <p><strong>Date:</strong> &nbsp;<span id="modalMeetingDate"></span></p>
+            <p><strong>Time:</strong> &nbsp;6:30 - 8:30 PM</p>
+            <p><strong>Venue:</strong> &nbsp; EF09</p>
+            <p><strong>Members Attended:</strong> &nbsp;<span id="modalAttendeesCount"></span></p>
+        </div>
+      </div>
+
+
+    </div>
+    
+  </div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+
+    // Sample meetings data
+const meetingsData = {
+"045": {
+    theme: "Leadership and Growth",
+    date: "5th Feb 2025",
+    attendees: [
+        { memberNo: "001", name: "Emmanuel Omokaya", role: "TMOD", status: "attended" },
+        { memberNo: "002", name: "Jane Doe", role: "Evaluator", status: "did_not_attend" }
+    ]
+},
+"044": {
+    theme: "Effective Communication",
+    date: "29th Jan 2025",
+    attendees: [
+        { memberNo: "003", name: "John Smith", role: "Speaker", status: "attended" }
+    ]
+},
+"043": {
+    theme: "Pathways and Leadership",
+    date: "22nd Jan 2025",
+    attendees: [] // No attendees, but meeting details exist
+}
+};
+
+// Handle Meeting Selection
+document.getElementById('meetingNumber').addEventListener('change', function () {
+const selectedMeeting = this.value;
+const filterContainer = document.getElementById('attendanceFilterContainer');
+const table = document.getElementById('attendanceTable');
+const buttons = document.getElementById('buttonsContainer');
+const attendanceFilter = document.getElementById('attendanceFilter');
+
+if (selectedMeeting) {
+    filterContainer.classList.remove('hidden');
+    table.classList.remove('hidden');
+    buttons.classList.remove('hidden');
+
+    populateTable(selectedMeeting);
+
+    // Reset attendance filter to "all" when switching meetings
+    attendanceFilter.value = "all";
+} else {
+    filterContainer.classList.add('hidden');
+    table.classList.add('hidden');
+    buttons.classList.add('hidden');
+}
+
+this.querySelector('option[value=""]').remove();
+});
+
+// Populate Table
+function populateTable(meetingNumber) {
+const tableBody = document.getElementById('tableBody');
+tableBody.innerHTML = '';
+
+const members = meetingsData[meetingNumber]?.attendees || [];
+
+if (members.length === 0) {
+    tableBody.innerHTML = `<tr>
+        <td colspan="4" style="text-align: center; font-weight: bold; background-color: #f2f2f2;">No attendance records available</td>
+    </tr>`;
+} else {
+    members.forEach(member => {
+        let row = `<tr data-status="${member.status}">
+            <td>${member.memberNo}</td>
+            <td>${member.name}</td>
+            <td>${member.role}</td>
+            <td class="status">${member.status === "attended" ? "✅ Attended" : "❌ Did Not Attend"}</td>
+        </tr>`;
+        tableBody.innerHTML += row;
+    });
+
+    // Check if filtering removes all rows
+    if (tableBody.innerHTML.trim() === '') {
+        tableBody.innerHTML = `<tr>
+            <td colspan="4" style="text-align: center; font-weight: bold;">No attendance records available</td>
+        </tr>`;
+    }
+}
+}
+
+// Filter Attendance (Fixed Version)
+document.getElementById('attendanceFilter').addEventListener('change', function () {
+const filter = this.value;
+const tableBody = document.getElementById('tableBody');
+const selectedMeeting = document.getElementById('meetingNumber').value;
+const meeting = meetingsData[selectedMeeting];
+
+// Clear table before applying filter
+tableBody.innerHTML = '';
+
+let visibleCount = 0;
+
+// Check if meeting has attendees
+if (meeting.attendees.length === 0) {
+    tableBody.innerHTML = `<tr id="noRecordsRow">
+        <td colspan="4" style="text-align: center; font-weight: bold;">No attendance records available</td>
+    </tr>`;
+    return; // Exit function early as there's nothing to filter
+}
+
+// Filter attendees based on status
+meeting.attendees.forEach(member => {
+    if (filter === "all" || member.status === filter) {
+        let row = `<tr data-status="${member.status}">
+            <td>${member.memberNo}</td>
+            <td>${member.name}</td>
+            <td>${member.role}</td>
+            <td class="status">${member.status === "attended" ? "✅ Attended" : "❌ Did Not Attend"}</td>
+        </tr>`;
+        tableBody.innerHTML += row;
+        visibleCount++;
+    }
+});
+
+// If no attendees match the filter, show "No attendance records available"
+if (visibleCount === 0) {
+    tableBody.innerHTML = `<tr id="noRecordsRow">
+        <td colspan="4" style="text-align: center; font-weight: bold;">No attendance records available</td>
+    </tr>`;
+}
+});
+
+
+
+// Show Modal with Meeting Details
+document.getElementById('viewDetails').addEventListener('click', function () {
+const selectedMeeting = document.getElementById('meetingNumber').value;
+const modal = document.getElementById('meetingModal');
+const meeting = meetingsData[selectedMeeting];
+
+if (meeting) {
+    const attendedCount = meeting.attendees.filter(m => m.status === "attended").length || 0;
+    const didNotAttendCount = meeting.attendees.filter(m => m.status === "did_not_attend").length || 0;
+
+    document.getElementById('modalMeetingNo').innerText = selectedMeeting;
+    document.getElementById('modalMeetingTheme').innerText = meeting.theme;
+    document.getElementById('modalMeetingDate').innerText = meeting.date;
+    document.getElementById('modalAttendeesCount').innerText = `${attendedCount} Attended | ${didNotAttendCount} Did Not Attend`;
+
+    modal.classList.remove('hidden');
+}
+});
+
+// Close Modal
+document.querySelector('.close').addEventListener('click', function () {
+document.getElementById('meetingModal').classList.add('hidden');
+});
+
+// PDF Export
+document.getElementById('downloadPDF').addEventListener('click', function () {
+let table = document.getElementById('attendanceTable');
+let rows = table.getElementsByTagName('tr');
+let data = [];
+
+let visibleRowCount = 0;
+
+for (let i = 1; i < rows.length; i++) { // Skip header row
+    if (rows[i].style.display !== "none") {
+        let cols = rows[i].getElementsByTagName('td');
+        let rowData = [];
+
+        for (let j = 0; j < cols.length; j++) {
+            rowData.push(cols[j].innerText);
+        }
+
+        // Ignore the placeholder message row
+        if (rowData.length > 0 && rowData[0] !== "No attendance records available") {
+            data.push(rowData);
+            visibleRowCount++;
+        }
+    }
+}
+
+// Alert if no records are available for download
+if (visibleRowCount === 0) {
+    alert("No records to download! Please check your filters or select a different meeting.");
+    return;
+}
+
+let docDefinition = {
+    content: [
+        { text: 'Meeting Attendance Report', style: 'header' },
+        {
+            table: {
+                headerRows: 1,
+                widths: ['*', '*', '*', '*'],
+                body: [
+                    // Apply bold style to the header row
+                    [
+                        { text: 'Member No', bold: true },
+                        { text: 'Full Name', bold: true },
+                        { text: 'Role', bold: true },
+                        { text: 'Status', bold: true }
+                    ],
+                    ...data
+                ]
+            }
+        }
+    ],
+    styles: {
+        header: { fontSize: 18, bold: true, margin: [0, 0, 0, 10] }
+    }
+};
+
+pdfMake.createPdf(docDefinition).download('Meeting_Attendance_Report.pdf');
+});
+
+  </script>
+{% endblock %}

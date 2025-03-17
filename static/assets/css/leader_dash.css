@@ -1,274 +1,30 @@
-.welcome-user {
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    padding-top: 0.5rem;
-    padding-bottom: 2rem;
-    margin: 1rem 0;
-    margin-top: 3rem;
-  }
+/* Main Dashboard */
+.dashboard {
+  padding: 20px;
+  flex-grow: 1;
+}
+
+.dashboard-overview {
+  background-color: whitesmoke;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding-bottom: 1.5rem;
+  margin: 1rem 0;
+}
+
+
   
-  .welcome-user h2 {
-    text-align: left;
-    padding-left: 1rem;
-  }
+  h3 {
+  background-color: white;
+  text-align: center;
+  color: darkblue;
+  padding: 1rem;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 0;
+  border-bottom-right-radius: 0;
   
-  .welcome-user p {
-    text-align: left;
-    font-weight: bold;
-    padding-left: 2rem;
-    
-  }
+}
   
-  .dashboard-overview {
-    background-color: whitesmoke;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    padding-bottom: 1.5rem;
-    margin: 1rem 0;
-    
-  }
-  
-   h3 {
-    background-color: white;
-    text-align: center;
-    color: darkblue;
-    padding: 1rem;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-    border-bottom-right-radius: 0;
-    border-bottom-right-radius: 0;
-  }
-  
-  .dashboard-overview .status-date {
-    display: flex;
-    justify-content: space-between;
-    /* border: 1px solid lightblue; */
-    
-  }
-  
-  .status {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 2rem;
-    padding-right: 32rem;
-    margin-top: 1rem;
-    margin-left: 2rem;
-    background-color: #fff;
-    border-radius: 8px;
-    
-  }
-  
-  .status p {
-    margin-bottom: 1rem;
-    
-  }
-  
-  .status-label {
-    font-weight: bold;
-    margin: 1rem 1rem;
-    margin-right: 4rem;
-  }
-  
-  .status-value.active {
-    color: green;
-    font-weight: bold;
-    /* margin-left: 1rem; */
-  }
-  
-  .expiry-label {
-    font-weight: bold;
-    margin: 1rem 1rem;
-    margin-right: 8.2rem;
-  }
-  
-  .expiry-date, .date-label {
-    color: darkblue;
-    font-weight: bold;
-  }
-  
-  #datetime {
-    text-align: center;
-    font-family: inherit;
-    background: darkblue;
-    padding: 1rem;
-    padding-bottom: 1rem;
-    margin: 0 2rem;
-    margin-top: 1rem;
-    border-radius: 8px;
-    display: inline-block;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-    }
-    
-  #date {
-      font-size: inherit;
-      font-weight: bold;
-      color: white;
-      padding: 1rem 0;
-  }
-  
-  #time {
-      font-size:inherit;
-      font-weight: bold;
-      color: white;
-      border-top: 0.2rem solid white;
-      padding-top: 1rem;
-      padding-bottom: 0;
-  }
-  
-  .next-meeting {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 2rem;
-    margin-top: 1rem;
-    margin-right: 2rem;
-    margin-left: 2rem;
-    background-color: #fff;
-    border-radius: 8px;
-  }
-  
-  .next-meeting p {
-    
-    margin-bottom: 1rem;
-  }
-  
-  .role-label {
-    color: darkblue;
-    font-weight: bold;
-    margin-left: 5.2rem;
-  }
-  
-  .meeting-label {
-    color: darkblue;
-    font-weight: bold;
-    margin-left: 3rem;
-  }
-  
-  .role-btn {
-    display: flex;
-    gap: 7rem;
-    margin-top: 1rem;
-    margin-left: 1rem;
-  }
-  
-  .role-btn button {
-    padding: 0.5rem 1rem;
-    border-radius: 0.2rem;
-    font-size: 1rem;
-  }
-  .role-btn .confirm {
-    padding: 0.5rem 1rem;
-    color: white;
-    background-color: darkblue;
-    border-radius: 0.2rem;
-    border: none;
-  }
-  
-  .role-btn .confirm:hover {
-    background-color: #04115a;
-  }
-  .role-btn .change {
-    padding: 0.5rem 1rem;
-    background: #ccc;
-      color: black;
-    border: 2px solid #ccc;
-    font-weight: bold;
-  }
-  
-  .recent-resources {
-    background-color: whitesmoke;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    padding-bottom: 1.5rem;
-    margin: 1rem 0;
-  }
-  
-  .viewed-resources {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 2rem;
-    margin-top: 1rem;
-    margin-right: 2rem;
-    margin-left: 2rem;
-    background-color: white;
-    border-radius: 8px;
-  }
-  
-  /* Ensure the grid displays cards in a row */
-  .resource-grid {
-    flex-grow: 1;
-    display: flex;
-    flex-wrap: wrap; /* Allow wrapping when necessary */
-    /* justify-content: center; */ /* Center items in the row */
-    /* align-items: stretch; */ /* Ensure uniform height */
-    gap: 3rem; /* Space between cards */
-    padding: 2rem;
-    margin: 1rem;
-    background-color: whitesmoke;
-    border-radius: 8px;
-  }
-  
-  /* Make resource cards flex items */
-  .resource-card {
-    background: white;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s ease;
-    text-align: center;
-    padding-bottom: 15px;
-    width: max(200px, 18vw);
-    height: max(200px, 20vw);
-    border-radius: 15px;
-    display: flex;
-    flex-direction: column; /* Stack content inside properly */
-    align-items: center;
-    justify-content: space-between;
-  }
-  
-  .resource-card:hover {
-    transform: translateY(-5px);
-  }
-  
-  .resource-card img {
-    margin-top: 1rem;
-    width: 100%;
-    height: 150px;
-    object-fit: cover;
-    border-bottom: 3px solid #ddd;
-  }
-  
-  .resource-card h3 {
-    margin-bottom: 0;
-    padding-bottom: 0;
-  }
-  
-  .resource-card p {
-    font-size: 14px;
-    color: #333;
-    padding: 1rem 0.2rem;
-  }
-  
-  .resource-card button {
-    background: darkblue;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    font-size: 16px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-    margin-bottom: 1rem;
-  }
-  
-  .resource-card button i {
-    margin-left: 0.5rem;
-    font-size: 1.2rem;
-  }
-  
-  .resource-card button:hover {
-    background: #04115a;
-  }
   
   .meetings-summary {
     background-color: whitesmoke;
@@ -276,11 +32,20 @@
     padding-bottom: 1.5rem;
     margin: 1rem 0;
   }
+
+  .reports-summary {
+    background-color: whitesmoke;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding-bottom: 1.5rem;
+    margin: 1rem 0;
+    margin-top: 2.3rem;
+  }
   
-  .meetings-tables {
+  .card {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     padding: 2rem;
     margin-top: 1rem;
     margin-right: 2rem;
@@ -324,357 +89,24 @@
     text-align: left;
   }
   
-  .quick-links {
-    background-color: whitesmoke;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    padding-bottom: 1.5rem;
-    margin: 1rem 0;
-  }
-  
-  .quick-links .action-links {
-    display: flex;
-    gap: 2rem;
-    padding: 2rem;
-    margin: 0 2rem;
-    margin-top: 1rem;
-    background-color: #fff;
-    border-radius: 8px;
-  }
-  
-  .quick-links .action-links .action-btn {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    align-items: center;
-    background-color: darkblue;
-    color: white;
-    padding: 2rem;
-    border-radius: 8px;
-    cursor: pointer;
-  }
-  
-  .quick-links .action-links .action-btn i {
-    font-size: 2rem;
-  }
-  
-  
-  .notification-summary {
-    background-color: whitesmoke;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    padding-bottom: 1.5rem;
-    margin: 1rem 0;
-  }
-  
-  .notification-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 2rem;
-    margin-top: 1rem;
-    margin-right: 2rem;
-    margin-left: 2rem;
-    background-color: #fff;
-    border-radius: 8px;
-    overflow-y: auto;
-  }
-    
-  /* Notification Card */
-  .notification {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: #f2f2f2;
-    padding: 1rem 2rem;
-    border-radius: 8px;
-    margin-bottom: 1.5rem;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    transition: 0.3s;
-  }
-  
-  /* Unread Notification */
-  .notification.unread {
-    background: #dde8ff;
-    font-weight: bold;
-  }
-  
-  /* Notification Icons */
-  .notification i {
-    color: darkblue;
-    font-size: 1.5rem;
-    margin-right: 1rem;
-  }
-  
-  /* Message Styling */
-  .message {
-    flex: 1;
-    color: #333;
-  }
-  
-  /* Timestamp */
-  .timestamp {
-    font-size: 0.9rem;
-    color: gray;
-    margin-left: 1rem;
-  }
-  
-  /* Mark Read Button */
-  .mark-read {
-    background: darkblue;
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 0.8rem;
-    transition: 0.3s;
-    margin-left: 1rem;
-  }
-  
-  .mark-read:hover {
-    background: #04115a;
-  }
-  
-  /* Scrollbar for Notifications */
-  .notification-container::-webkit-scrollbar {
-    width: 5px;
-  }
-  
-  .notification-container::-webkit-scrollbar-thumb {
-    background-color: darkblue;
-    border-radius: 10px;
-  }
-  
-  
-  .payment-summary {
-    background-color: whitesmoke;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    padding-bottom: 1.5rem;
-    margin: 1rem 0;
-  }
-  
-  .payment-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 2rem;
-    margin-top: 1rem;
-    margin-right: 2rem;
-    margin-left: 2rem;
-    background-color: #fff;
-    border-radius: 8px;
-  }
-  
-  /* Table */
-  .payment-container table {
-    width: 100%;
-    border-collapse: collapse;
-    background: white;
-    border-radius: 8px;
-    overflow: hidden;
-  }
-  
-  .payment-container th, .payment-container td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  .payment-container th {
-    background: darkblue;
-    color: white;
-    font-weight: 600;
-  }
-  
-  /* .payment-container tr:hover {
-    background-color: blue;
-    color: white;
-  } */
-  
-  /* Status Labels */
-  /* .payment-container .status {
-    font-weight: 600;
-    text-align: center;
-  } */
-  
-  .payment-container .paid {
-    background: #28a745;
-    font-weight: bold;
-    font-size: 1rem;
-    text-align: center;
-    color: white;
-    padding: 0.5rem;
-    margin-right: 2rem;
-    margin-bottom: 1rem;
-    
-  }
-  
-  
-  /* Buttons */
-  .payment-container .download-btn {
-    background: darkblue;
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: 0.3s;
-  }
-  
-  .payment-container .download-btn i {
-    margin-right: 1rem;
-  }
-  
-  .payment-container .download-btn:hover {
-    background: #04115a;
-  }
-  
-  
-  .vote-elections {
-    background-color: whitesmoke;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    padding-bottom: 1.5rem;
-    margin: 1rem 0;
-    
-  }
-  
-  .election-history {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    padding: 1.5rem;
-    margin-top: 1rem;
-    margin-right: 2rem;
-    margin-left: 2rem;
-    background-color: #fff;
-    border-radius: 8px;
-  }
-  
-  .election-summary {
-    display: flex;
-    gap: 13rem;
-    margin-top: 2rem;
-    /* border: 2px solid #333; */
-  }
-  
-  .election-summary .election-summary-count {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 2rem;
-    margin-left: 0.8rem;
-  }
-  
-  .countdown-summary {
-    display: flex;
-    /* justify-content: space-between; */
-    align-items: center;
-    gap: 5rem;
-    
-  }
-  
-  .election-countdown {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 1rem;
-    padding: 1.8rem;
-    margin-left: 2rem;
-    background-color: darkblue;
-    color: white;
-    border-radius: 8px;
-  }
-  
-  .countdown {
-    display: flex;
-    gap: 20px;
-  }
-  
-  .time-box {
-    background: #3b3f4a;
-    padding: 0.8rem;
-    border-radius: 8px;
-    text-align: center;
-    min-width: 5rem;
-  }
-  
-  .time-box span {
-    display: block;
-    font-size: 2rem;
-    font-weight: bold;
-  }
-  
-  .time-box p {
-    font-size: 1rem;
-    margin-top: 0.5rem;
-    color: #bbb;
-  }
-  
-  .vote-date-label, .nomination-date-label {
-    color: white;
-    font-weight: bold;
-  }
-  
-  .vote-label {
-    font-weight: bold;
-    margin: 1rem 1rem;
-    margin-right: 6rem;
-  }
-  
-  .nomination-label {
-    font-weight: bold;
-    margin: 1rem 1rem;
-    margin-right: 2rem;
-  }
-  
-  .election-count-label {
-    font-weight: bold;
-    margin: 1rem 1rem;
-    margin-right: 3rem;
-  }
-  
-  .nomination-count-label {
-    font-weight: bold;
-    margin: 1rem 1rem;
-  }
-  
-  
-  .vote-btn-cont {
+  .chart-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 2rem;
+    width: 70%;
+    height: 70%;
   }
-  
-  .vote-btn-cont .vote-btn {
-    padding: 0.7rem 10rem;
-    color: white;
-    background-color: darkblue;
-    border-radius: 0.2rem;
-    border: none;
-    font-size: inherit;
-    margin-left: 1rem;
-   
-  }
-  
-  .vote-btn-cont .vote-btn i {
-    color: white;
-    font-size: 1.5rem;
-    margin-right: 1rem;
-    /* font-size: inherit;
-    margin-left: 1rem; */
-   
-  }
-  
-  .vote-btn-cont .vote-btn:hover {
-    animation: bounce 0.5s ease infinite;
-    background-color: #04115a;
-  }
-  
-  @keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-5px); }
-  }
-  
-  
-  
+
+  /* Recently Viewed Reports */
+#recentReports {
+  list-style-type: none;
+  padding: 0;
+}
+
+#recentReports li {
+  background: darkblue;
+  color: white;
+  padding: 8px;
+  margin: 5px;
+  border-radius: 5px;
+}
