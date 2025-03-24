@@ -49,6 +49,29 @@
     border: 0.3rem solid #003366;
     object-fit: cover;
   }
+
+  /* .profile-pic {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+} */
+
+/* Style for Initials Fallback */
+.initials {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: darkblue; /* Customize background color */
+    color: white;
+    font-size: 4rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    width: 175px;
+    height: 175px;
+    border-radius: 50%;
+}
+
   
   
   /* Profile Details */

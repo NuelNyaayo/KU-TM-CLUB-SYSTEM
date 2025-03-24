@@ -1,5 +1,8 @@
 from django.urls import path
 from . import views
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 urlpatterns = [
     path('', views.index, name='index'),  
@@ -16,7 +19,8 @@ urlpatterns = [
     path('memb_notifications/', views.memb_notifications, name='memb_notifications'),   
     path('memb_elections/', views.memb_elections, name='memb_elections'),   
     path('memb_profile/', views.memb_profile, name='memb_profile'),   
-    path('memb_settings/', views.memb_settings, name='memb_settings'),   
+    path('memb_settings/', views.memb_settings, name='memb_settings'),  
+    path("update-profile-picture/", views.update_profile_picture, name="update_profile_picture"), 
     path('memb_contact/', views.memb_contact, name='memb_contact'),   
     path('memb_support/', views.memb_support, name='memb_support'),   
     # path('post/<str:pk>', views.post, name ='post'), 
@@ -28,4 +32,9 @@ urlpatterns = [
     path('leader_membership/', views.leader_membership, name='leader_membership'),
     path('leader_attendance/', views.leader_attendance, name='leader_attendance'),
     path('leader_elections/', views.leader_elections, name='leader_elections'),
-]
+]  
+
+# Only serve media files in development
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

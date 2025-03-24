@@ -35,19 +35,28 @@ class CustomUserManager(BaseUserManager):
 
 # 2. CustomUser Model
 class CustomUser(AbstractUser):
-    username = None  # Remove username field
-    email = models.EmailField(unique=True)  # Primary login field
+    username = None  
+    email = models.EmailField(unique=True)
     phone_number = models.CharField(max_length=15, unique=True, null=True, blank=True)
     registration_number = models.CharField(max_length=20, unique=True, null=True, blank=True)
     dob = models.DateField(null=True, blank=True)
+    profile_picture = models.ImageField(upload_to='profile_pics/', null=True, blank=True)
+    
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['first_name', 'last_name']  # Remove extra fields for superusers
+    REQUIRED_FIELDS = ['first_name', 'last_name']
 
     objects = CustomUserManager()
 
     def __str__(self):
         return self.email
+
+    def get_initials(self):
+        first = self.first_name[0] if self.first_name else ""
+        last = self.last_name[0] if self.last_name else ""
+        return (first + last).upper() if first or last else "U"
+
+
 
 User = get_user_model()
 

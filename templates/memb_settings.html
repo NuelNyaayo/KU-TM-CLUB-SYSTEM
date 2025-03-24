@@ -19,42 +19,65 @@
             <div class="head"></div>
         </div>
         
-      <div class="profile-header">
-        <label for="profilePicInput" title="Click to update your profile picture">
-          <img src="{% static 'assets/images/pexels-vietfotos-10928778.jpg' %}" id="profilePic" class="profile-pic" alt="Profile Picture">
-        </label>
-        <input type="file" id="profilePicInput" accept="image/*" style="display: none">
-        <i class="fa-solid fa-pen edit-icon"></i>
-      </div>
+        <div class="profile-header">
+            <label for="profilePicInput" title="Click to update your profile picture">
+                {% if user.profile_picture %}
+                    <img src="{{ user.profile_picture.url }}" id="profilePic" class="profile-pic" alt="Profile Picture">
+                {% else %}
+                    <div id="profilePicInitials" class="prof-initials">
+                        {{ user.get_initials }}
+                    </div>
+                {% endif %}
+            </label>
+            <input type="file" id="profilePicInput" accept="image/*" style="display: none">
+            
+        
+            <!-- Edit Icon -->
+            <i class="fa-solid fa-pen edit-icon"></i>
+        
+            <!-- Dropdown Menu -->
+            <div id="profileDropdown" class="dropdown-menu" d>
+                <button id="changePic">Change Profile Picture</button>
+                <button id="removePic">Remove Profile Picture</button>
+            </div>
+        </div>
+        
       
-      <form id="settingsForm">
+      <form id="settingsForm" method="post" action="{% url 'memb_settings' %}">
+        {% csrf_token %}
         <div class="form-group">
             <label>First Name:</label>
-            <input type="text" id="firstName" value="John">
+            <input type="text" id="firstName" name="first_name" value="{{ user.first_name }}">
         </div>
+        
         <div class="form-group">
             <label>Last Name:</label>
-            <input type="text" id="lastName" value="Doe">
+            <input type="text" id="lastName" name="last_name" value="{{ user.last_name }}">
         </div>
+        
         <div class="form-group">
             <label>Corporate Email:</label>
-            <input type="email" id="email" value="john.doe@example.com">
+            <input type="email" id="email" name="email" value="{{ user.email }}" readonly>
         </div>
+        
         <div class="form-group">
             <label>Registration Number:</label>
-            <input type="text" id="regNumber" value="KU123456">
+            <input type="text" id="regNumber" name="registration_number" value="{{ user.registration_number }}" readonly>
         </div>
+        
         <div class="form-group">
             <label>Phone Number:</label>
-            <input type="tel" id="phone" value="+254700000000">
+            <input type="tel" id="phone" name="phone_number" value="{{ user.phone_number }}">
         </div>
+        
         <div class="form-group">
             <label>Date of Birth:</label>
-            <input type="date" id="dob" value="1995-01-01">
+            <input type="date" id="dob" name="dob" value="{{ user.dob|date:'Y-m-d' }}">
         </div>
         
         <div class="btn-container">
             <button type="button" class="btn save-btn" onclick="saveChanges()">Save Changes</button>
+            {% comment %} type="submit" {% endcomment %}
             <button type="button" class="btn cancel-btn" onclick="cancelChanges()">Cancel</button>
         </div>
     </form>
@@ -112,33 +135,128 @@
 
 {% endblock %}
 
+<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+
+
 {% block extra_js %}
 <script>
 
-document.getElementById('profilePicInput').addEventListener('change', function (event) {
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                document.getElementById('profilePic').src = e.target.result;
-            };
-            reader.readAsDataURL(file);
-        }
-    });
-
-    // Edit icon functionality (Separate and independent)
     document.addEventListener("DOMContentLoaded", function () {
         const profilePicInput = document.getElementById("profilePicInput");
-        const editIcon = document.querySelector(".edit-icon"); // Select the edit icon
-
-        // Function to trigger file selection
-        function openFileDialog() {
-            profilePicInput.click(); // Opens file dialog
+        const editIcon = document.querySelector(".edit-icon");
+        const dropdownMenu = document.getElementById("profileDropdown");
+        const changePicBtn = document.getElementById("changePic");
+        const removePicBtn = document.getElementById("removePic");
+        const profilePic = document.getElementById("profilePic");
+        const profileInitials = document.getElementById("profilePicInitials");
+    
+        function updateDropdownOptions() {
+            if (!profilePic || profilePic.style.display === "none" || !profilePic.src) {
+                changePicBtn.textContent = "Add Profile Picture";
+                removePicBtn.style.display = "none"; // Hide remove option
+            } else {
+                changePicBtn.textContent = "Change Profile Picture";
+                removePicBtn.style.display = "block"; // Show remove option
+            }
         }
-
-        // Add event listener to edit icon (Triggers file selection)
-        editIcon.addEventListener("click", openFileDialog);
+    
+        // Toggle dropdown menu
+        editIcon.addEventListener("click", function (event) {
+            event.stopPropagation();
+            updateDropdownOptions(); // Update dropdown content dynamically
+    
+            // Toggle dropdown visibility
+            dropdownMenu.style.display = dropdownMenu.style.display === "flex" ? "none" : "flex";
+        });
+    
+        // Close dropdown when clicking outside
+        document.addEventListener("click", function (event) {
+            if (!editIcon.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                dropdownMenu.style.display = "none";
+            }
+        });
+    
+        // Change or Add Profile Picture
+        changePicBtn.addEventListener("click", function () {
+            profilePicInput.click(); // Open file dialog
+            dropdownMenu.style.display = "none";
+        });
+    
+        // Remove Profile Picture and Show Initials
+        removePicBtn.addEventListener("click", function () {
+            if (profilePic) {
+                profilePic.src = "";
+                profilePic.style.display = "none"; // Hide the image
+            }
+            profileInitials.style.display = "flex"; // Show initials
+            updateDropdownOptions(); // Update dropdown
+            dropdownMenu.style.display = "none";
+        });
+    
+        document.addEventListener("DOMContentLoaded", function () {
+            const profilePicInput = document.getElementById("profilePicInput");
+            const profilePic = document.getElementById("profilePic");
+            const profileInitials = document.getElementById("profilePicInitials");
+        
+            profilePicInput.addEventListener("change", function (event) {
+                const file = event.target.files[0];
+                if (file) {
+                    // Show preview before uploading
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        profilePic.src = e.target.result; // Update preview
+                        profilePic.style.display = "block"; // Ensure image is visible
+                        profileInitials.style.display = "none"; // Hide initials
+                    };
+                    
+                    reader.readAsDataURL(file);
+        
+                    // Upload to backend
+                    const formData = new FormData();
+                    formData.append("profile_picture", file);
+        
+                    fetch("/update-profile-picture/", {
+                        method: "POST",
+                        body: formData,
+                        headers: {
+                            "X-CSRFToken": getCSRFToken(),
+                        },
+                    })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        if (data.success) {
+                            profilePic.src = data.image_url; // Use actual uploaded image URL
+                            profilePic.style.display = "block";
+                            profileInitials.style.display = "none"; // Hide initials
+                        } else {
+                            alert("Error updating profile picture.");
+                        }
+                    })
+                    .catch((error) => console.error("Error:", error));
+                    
+                }
+            });
+        
+            function getCSRFToken() {
+                return document.querySelector("[name=csrfmiddlewaretoken]").value || "";
+            }
+            
+        });
+        
+        
+    
+        // Clicking profile picture or initials should trigger file dialog
+        document.querySelector(".profile-header label").addEventListener("click", function () {
+            profilePicInput.click();
+        });
+    
+        // Initialize dropdown options on page load
+        updateDropdownOptions();
     });
+    
+    
+    
+    
 
     function saveChanges() {
         alert("Your changes have been saved successfully!");

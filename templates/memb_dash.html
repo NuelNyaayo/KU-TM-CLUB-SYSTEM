@@ -27,17 +27,19 @@
       <div class="profile-cont">
         
         <div class="profile-icon">
-          <img src="{% static 'assets/images/pexels-vietfotos-10928778.jpg' %}" alt="Profile" class="profile-icon">
-          <!-- <i class="fa-solid fa-user"></i> -->
+          {% if user.profile_picture %}
+              <img src="{{ user.profile_picture.url }}" alt="Profile" class="profile-pic">
+          {% else %}
+              <div class="profile-initials">
+                  {{ user.get_initials }}
+              </div>
+          {% endif %}
         </div>
-        <!-- <div class="user_details">
-          <p>Nuel Nyaayo</p>
-          <p class="memb_no">Member No - 001</p>
-        </div> -->
+        
         <div class="user_details">
           <p class="user_name">{{ user.first_name }} {{ user.last_name }}</p>
           <p class="memb_no">Member No - {{ user.id|leading_zeros }}</p>
-      </div>
+        </div>
       
       </div>
 

@@ -2,71 +2,78 @@
 
 {% load static %}
 
-
 {% block title %}Member Profile{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'assets/css/memb_profile.css' %}">
 {% endblock %}
 
-
 {% block content %}
 <div class="dashboard-overview">
     <h3> 🆔&nbsp; My Profile Information</h3>
     <div class="next-meeting">
-      <div class="profile-header">
-        <img src="{% static 'assets/images/pexels-vietfotos-10928778.jpg' %}" alt="Profile Picture" class="profile-pic">
-        <h2>My Profile</h2>
-      </div>
+        <div class="profile-header">
+            {% if user.profile_picture %}
+                <img src="{{ user.profile_picture.url }}" alt="Profile Picture" class="profile-pic">
+            {% else %}
+                <div class="profile-pic initials">
+                    {{ user.get_initials }}
+                </div>
+            {% endif %}
+            <h2>My Profile</h2>
+        </div>
+
       
-      <div class="profile-details">
-          <div class="detail">
-              <span class="label">First Name:</span>
-              <span class="value">John</span>
-          </div>
-          <div class="detail">
-              <span class="label">Last Name:</span>
-              <span class="value">Doe</span>
-          </div>
-          <div class="detail">
-              <span class="label">Corporate Email:</span>
-              <span class="value">john.doe@kutm.ac.ke</span>
-          </div>
-          <div class="detail">
-              <span class="label">Registration Number:</span>
-              <span class="value">KU123456</span>
-          </div>
-          <div class="detail">
-              <span class="label">Phone Number:</span>
-              <span class="value">+254 712 345 678</span>
-          </div>
-          <div class="detail">
-              <span class="label">Date of Birth:</span>
-              <span class="value">March 10, 1995</span>
-          </div>
-          <div class="detail">
-              <span class="label">Membership Status:</span>
-              <span class="value active">Active Member</span>
-          </div>
-          <div class="detail">
-              <span class="label">Date Joined:</span>
-              <span class="value">January 15, 2023</span>
-          </div>
-      </div>
-      <button class="logout-button"><i class="fa-solid fa-arrow-right-from-bracket"></i>Log Out</button>
-      
+        <div class="profile-details">
+            <div class="detail">
+                <span class="label">First Name:</span>
+                <span class="value">{{ user.first_name|default:"N/A" }}</span>
+            </div>
+            <div class="detail">
+                <span class="label">Last Name:</span>
+                <span class="value">{{ user.last_name|default:"N/A" }}</span>
+            </div>
+            <div class="detail">
+                <span class="label">Corporate Email:</span>
+                <span class="value">{{ user.email|default:"N/A" }}</span>
+            </div>
+            <div class="detail">
+                <span class="label">Registration Number:</span>
+                <span class="value">{{ user.registration_number|default:"N/A" }}</span>
+            </div>
+            <div class="detail">
+                <span class="label">Phone Number:</span>
+                <span class="value">{{ user.phone_number|default:"N/A" }}</span>
+            </div>
+            <div class="detail">
+                <span class="label">Date of Birth:</span>
+                <span class="value">{{ user.dob|date:"F d, Y"|default:"N/A" }}</span>
+            </div>
+            
+            <div class="detail">
+                <span class="label">Membership Status:</span>
+                <span class="value {% if user.membership.status == 'Active' %}active{% else %}inactive{% endif %}">
+                    {{ user.membership.status|default:"N/A" }}
+                </span>
+            </div>
+            
+            <div class="detail">
+                <span class="label">Date Joined:</span>
+                <span class="value">{{ user.date_joined|date:"F d, Y" }}</span>
+            </div>
+        </div>
+
+        <button class="logout-button"><i class="fa-solid fa-arrow-right-from-bracket"></i> Log Out</button>
     </div>
-  </div>
+</div>
 {% endblock %}
 
 {% block extra_js %}
 <script>
-
 document.querySelector('.logout-button').addEventListener('click', function() {
-        if (confirm("Are you sure you want to log out?")) {
-            window.location.href = "{% url 'logout' %}"; // Redirect to logout page
-        }
+    if (confirm("Are you sure you want to log out?")) {
+        window.location.href = "{% url 'logout' %}"; // Redirect to logout page
+    }
 });
-
-  </script>
+</script>
 {% endblock %}

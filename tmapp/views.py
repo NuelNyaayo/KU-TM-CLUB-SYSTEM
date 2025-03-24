@@ -9,6 +9,13 @@ from django.views.decorators.cache import never_cache
 from .models import Leader, ROLE_MAPPING, CustomUser
 from django.contrib.auth.hashers import check_password  # Used to verify passwords
 from django.contrib.auth.hashers import check_password
+from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
+from django.conf import settings
+
 
 def index(request): 
 
@@ -112,13 +119,55 @@ def memb_elections(request):
 
     return render(request, 'memb_elections.html', {"current_page": "Elections"})
 
-def memb_profile(request): 
+@login_required
+def memb_profile(request):
+    CustomUser = get_user_model()
+    user = CustomUser.objects.get(pk=request.user.pk)  # Ensure fetching from CustomUser model
+    return render(request, 'memb_profile.html', {
+        "current_page": "Profile",
+        "user": user
+    })
 
-    return render(request, 'memb_profile.html', {"current_page": "Profile"})
+@login_required  # Ensure only logged-in users can update profile pictures
+def update_profile_picture(request):
+    if request.method == "POST" and request.FILES.get("profile_picture"):
+        user = request.user
+        profile_pic = request.FILES["profile_picture"]
 
-def memb_settings(request): 
+        # Save the file with a unique name
+        file_path = f"profile_pics/{user.id}_{profile_pic.name}"
+        saved_path = default_storage.save(file_path, ContentFile(profile_pic.read()))
 
-    return render(request, 'memb_settings.html', {"current_page": "Settings"})
+        # Construct the full URL for the saved image
+        image_url = request.build_absolute_uri(settings.MEDIA_URL + saved_path)
+
+        # Update user's profile picture in the database
+        user.profile_picture = saved_path
+        user.save()
+
+        return JsonResponse({"success": True, "image_url": image_url})
+
+    return JsonResponse({"success": False, "error": "Invalid request"}, status=400)
+
+@login_required
+def memb_settings(request):
+    user = request.user  # Get logged-in user
+
+    if request.method == 'POST':
+        user.first_name = request.POST.get('first_name', '').strip()
+        user.last_name = request.POST.get('last_name', '').strip()
+        user.phone_number = request.POST.get('phone_number', '').strip()
+        user.dob = request.POST.get('dob', '').strip() or None  # Handle empty DOB
+        
+        user.save()
+        messages.success(request, 'Your account settings have been updated successfully!')
+        return redirect('memb_settings')
+
+    return render(request, 'memb_settings.html', {
+        "current_page": "Settings",
+        "user": user
+    })
+
 
 def memb_contact(request): 
 
