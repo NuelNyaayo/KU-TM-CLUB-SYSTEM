@@ -34,7 +34,8 @@ urlpatterns = [
     path('leader_elections/', views.leader_elections, name='leader_elections'),
 ]  
 
-# Only serve media files in development
+# Serve media files only in development
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
 

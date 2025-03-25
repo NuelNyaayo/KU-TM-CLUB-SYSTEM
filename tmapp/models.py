@@ -4,7 +4,12 @@ from django.contrib.auth.models import BaseUserManager
 from django.contrib.auth import get_user_model
 import re
 from django.utils.timezone import now
-
+from django.conf import settings
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from datetime import timedelta 
+from django.utils import timezone
+from django.core.exceptions import ValidationError
 
 
 # 1. CustomUserManager Model
@@ -111,12 +116,31 @@ class Membership(models.Model):
         ('Expired', 'Expired'),
     ]
 
-    member = models.OneToOneField(User, on_delete=models.CASCADE, related_name='membership')
+    member = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='membership')
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='Inactive')
     expiry_date = models.DateField(null=True, blank=True)
 
     def __str__(self):
-        return f"{self.member.username} - {self.status}"
+        return f"{self.member.email} - {self.status}"
+
+    def activate_membership(self, duration_in_days=180):
+        """Activates membership and sets expiry date"""
+        self.status = 'Active'
+        self.expiry_date = now().date() + timedelta(days=duration_in_days)
+        self.save()
+
+    def check_and_update_status(self):
+        """Automatically updates membership status if expired"""
+        if self.expiry_date and self.expiry_date < now().date():
+            self.status = 'Expired'
+            self.save()
+
+# Signal to create Membership when a User is created
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
+def create_membership(sender, instance, created, **kwargs):
+    if created:
+        Membership.objects.create(member=instance)
+
 
 
 # 5. Payment Model
@@ -146,6 +170,12 @@ class Payment(models.Model):
 
 # 6. Meeting Model
 class Meeting(models.Model):
+    STATUS_CHOICES = [
+        ("Upcoming", "Upcoming Meeting"),
+        ("Ongoing", "Ongoing Meeting"),
+        ("Previous", "Previous Meeting"),
+    ]
+
     meeting_number = models.CharField(max_length=20, unique=True)
     date = models.DateField()
     time = models.TimeField()
@@ -154,9 +184,29 @@ class Meeting(models.Model):
 
     attendees = models.ManyToManyField(User, related_name='attended_meetings', blank=True)
     absentees = models.ManyToManyField(User, related_name='missed_meetings', blank=True)
+    
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default="Upcoming")  # Status field
+
+    def update_status(self):
+        """Automatically updates the meeting status based on the current time."""
+        now = timezone.localtime(timezone.now())  # Get current date & time in local timezone
+        meeting_datetime = timezone.make_aware(timezone.datetime.combine(self.date, self.time))  # Meeting start datetime
+        meeting_end_time = meeting_datetime + timezone.timedelta(hours=2, minutes=30)  # 2.5-hour duration
+
+        if meeting_datetime <= now <= meeting_end_time:
+            self.status = "Ongoing"
+        elif now < meeting_datetime:
+            self.status = "Upcoming"
+        else:
+            self.status = "Previous"
+
+    def save(self, *args, **kwargs):
+        """Override save method to ensure status updates before saving."""
+        self.update_status()
+        super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"Meeting {self.meeting_number} - {self.date} - {self.venue} - Theme: {self.theme}"
+        return f"Meeting {self.meeting_number} - {self.date} - {self.venue} - Theme: {self.theme} - Status: {self.status}"
 
 
 
@@ -176,15 +226,67 @@ class MeetingRole(models.Model):
         ('Attendee', 'Attendee'),
     ]
 
+    SPEECH_PROJECT_CHOICES = [(f'CC{i}', f'CC{i}') for i in range(1, 11)]  # ('CC1', 'CC1') to ('CC10', 'CC10')
+
     meeting = models.ForeignKey(Meeting, on_delete=models.CASCADE, related_name='roles')
     member = models.ForeignKey(User, on_delete=models.CASCADE, related_name='meeting_roles')
     role = models.CharField(max_length=30, choices=ROLE_CHOICES)
 
+    # TMOD specific field (optional)
+    meeting_attire = models.CharField(max_length=50, blank=True, null=True, help_text="e.g., Formal, Casual, Kitenge")
+
+    # CC Speaker Fields
+    speech_project = models.CharField(max_length=10, choices=SPEECH_PROJECT_CHOICES, blank=True, null=True, help_text="Specify CC project (e.g., CC1 - CC10)")
+    speech_title = models.CharField(max_length=255, blank=True, null=True, help_text="Optional speech title")
+
+    # Evaluator Fields
+    evaluated_speech_project = models.CharField(max_length=10, choices=SPEECH_PROJECT_CHOICES, blank=True, null=True, help_text="Specify CC project evaluated (e.g., CC1 - CC10)")
+
+    # Grammarian field (optional word of the day)
+    word_of_the_day = models.CharField(max_length=50, blank=True, null=True, help_text="Optional Word of the Day")
+
+    # General Evaluator field (optional focus point)
+    focus_point = models.CharField(max_length=255, blank=True, null=True, help_text="Optional evaluation focus (e.g., timing, filler words)")
+
     class Meta:
         unique_together = ('meeting', 'member')
 
+    def get_available_cc_speech_projects(self):
+        """Fetches CC Speaker projects from the same meeting, marking already assigned ones as disabled."""
+        available_projects = list(MeetingRole.objects.filter(
+            meeting=self.meeting, role='CC_Speaker'
+        ).exclude(speech_project__isnull=True).exclude(speech_project="")
+        .values_list('speech_project', flat=True).distinct())
+
+        assigned_projects = list(MeetingRole.objects.filter(
+            meeting=self.meeting, role='Evaluator'
+        ).exclude(pk=self.pk).values_list('evaluated_speech_project', flat=True))
+
+        return [(project, project, project in assigned_projects) for project in available_projects]  # (value, label, disabled)
+
+    def clean(self):
+        """Custom validation rules"""
+        if self.role == 'CC_Speaker' and not self.speech_project:
+            raise ValidationError({'speech_project': "CC Speakers must select a speech project."})
+
+        if self.role == 'Evaluator':
+            if not self.evaluated_speech_project:
+                raise ValidationError({'evaluated_speech_project': "Evaluators must specify a project to evaluate."})
+
+            available_speech_projects = [proj[0] for proj in self.get_available_cc_speech_projects()]
+
+            if self.evaluated_speech_project not in available_speech_projects:
+                raise ValidationError({'evaluated_speech_project': "Selected speech project is not assigned to any CC Speaker in this meeting or already taken."})
+
+    def save(self, *args, **kwargs):
+        """Ensure validation runs before saving."""
+        self.clean()
+        super().save(*args, **kwargs)
+
     def __str__(self):
-        return f"{self.meeting.meeting_number} - {self.member.username} - {self.role}"
+        return f"{self.meeting.meeting_number} - {self.member.email} - {self.role}"
+
+
 
 
 # 8. Resource Model

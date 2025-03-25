@@ -72,7 +72,16 @@
 .status-value.active {
   color: green;
   font-weight: bold;
-  /* margin-left: 1rem; */
+}
+
+.status-value.inactive {
+  color: #726f6f;
+  font-weight: bold;
+}
+
+.status-value.expired {
+  color: red;
+  font-weight: bold;
 }
 
 .expiry-label {

@@ -26,7 +26,7 @@
       <h2>CLUB MEMBER</h2>
       <div class="profile-cont">
         
-        <div class="profile-icon">
+        <div class="profile-icon {% if not user.profile_picture %}no-picture{% endif %}">
           {% if user.profile_picture %}
               <img src="{{ user.profile_picture.url }}" alt="Profile" class="profile-pic">
           {% else %}
@@ -142,11 +142,25 @@
           <h3> Dashboard Overview</h3>
           <div class="status-date">
             <div class="status">
-              <p><span class="status-label">Membership Status:</span>
-                <span class="status-value active">Active</span></p>
-              <p><span class="expiry-label">Expiry Date:</span>
-                <span class="expiry-date">15th April 2025</span></p>
-            </div>
+              <p>
+                  <span class="status-label">Membership Status:</span>
+                  <span class="status-value {% if membership.status == 'Active' %}active{% elif membership.status == 'Expired' %}expired{% else %}inactive{% endif %}">
+                      {{ membership.status }}
+                  </span>
+              </p>
+          
+              <p>
+                  <span class="expiry-label">Expiry Date:</span>
+                  <span class="expiry-date">
+                      {% if membership.expiry_date %}
+                          {{ membership.expiry_date|date:"jS F Y" }}
+                      {% else %}
+                          Not Available
+                      {% endif %}
+                  </span>
+              </p>
+          </div>
+          
             <div id="datetime">
               <div id="date"></div>
               <div id="time"></div>
@@ -248,7 +262,7 @@
             
           </div>
           <div class="meetings-tables">
-            <h4> Recent Meetings</h4>
+            <h4> Previous Meetings</h4>
             <table>
               <thead>
                   <tr>

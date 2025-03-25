@@ -270,12 +270,16 @@ h2 {
   border-radius: 50%;
 }
 
+.profile-cont .profile-icon.no-picture {
+  border: 0.2rem solid white;
+}
+
 .profile-initials {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: azure; 
-  color: darkblue;
+  background-color: goldenrod; 
+  color:black;
   font-size: 3rem;
   font-weight: bold;
   text-transform: uppercase;

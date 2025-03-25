@@ -15,6 +15,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 from django.conf import settings
+from .models import Membership
 
 
 def index(request): 
@@ -91,12 +92,12 @@ def verify(request):
 
     return render(request, 'verify.html')
 
-# @never_cache
 def memb_dash(request):
-    # if not request.user.is_authenticated:
-    #     return redirect('login')  # Redirect to login if not authenticated 
-
-    return render(request, 'memb_dash.html', {"current_page": "Dashboard"})
+    membership, _ = Membership.objects.get_or_create(member=request.user)
+    return render(request, 'memb_dash.html', {
+        "current_page": "Dashboard",
+        "membership": membership
+    })
 
 
 def memb_roles(request): 
