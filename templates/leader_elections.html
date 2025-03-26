@@ -95,18 +95,18 @@
 <script>
     const electionData = {
         "2024/2025": {
-            meetingNo: "050",
-            electionDate: "10th Feb 2025",
+            meetingNo: "048",
+            electionDate: "20th Mar 2025",
             totalVotes: 30,
             results: {
                 "President": [
-                    { memberNo: "001", name: "Alice Kim", votes: 15, status: "Winner" },
-                    { memberNo: "002", name: "Bob Oduor", votes: 10, status: "First Runner-Up" },
-                    { memberNo: "003", name: "Charlie Njeri", votes: 5, status: "Second Runner-Up" }
+                    { memberNo: "001", name: "Emmanuel Nyaayo", votes: 15, status: "Winner" },
+                    { memberNo: "002", name: "Joseph Okune", votes: 10, status: "First Runner-Up" },
+                    { memberNo: "003", name: "Samwel Gachiri", votes: 5, status: "Second Runner-Up" }
                 ],
                 "VPE": [
-                    { memberNo: "004", name: "David Omondi", votes: 20, status: "Winner" },
-                    { memberNo: "005", name: "Eve Atieno", votes: 10, status: "First Runner-Up" }
+                    { memberNo: "004", name: "Mark Kahenya", votes: 20, status: "Winner" },
+                    { memberNo: "005", name: "Brian Kariss", votes: 10, status: "First Runner-Up" }
                 ]
             }
         }
@@ -208,21 +208,31 @@
         });
         
         // Download as PDF Functionality (Updated for proper table fitting)
-        downloadPDFBtn.addEventListener('click', function () {
-        const year = electionYearSelect.value;
-        const position = positionFilterSelect.value;
-        let results = electionData[year]?.results || {};
-        
-        // Check if there are results to download
-        let hasResults = Object.keys(results).some(pos => (position === "all" || position === pos) && results[pos].length > 0);
-        
-        if (!hasResults) {
-            alert("There are no records to download.");
-            return;
-        }
-        
+downloadPDFBtn.addEventListener('click', function () {
+    const year = electionYearSelect.value;
+    const position = positionFilterSelect.value;
+    let results = electionData[year]?.results || {};
+
+    // Check if there are results to download
+    let hasResults = Object.keys(results).some(pos => (position === "all" || position === pos) && results[pos].length > 0);
+
+    if (!hasResults) {
+        alert("There are no records to download.");
+        return;
+    }
+
+    let logoPath = "{% static 'assets/images/KU_TM_FavIcon_Logo.png' %}"; 
+
+    toDataURL(logoPath, function (base64Image) {
         let docDefinition = {
             content: [
+                {
+                    image: base64Image,
+                    width: 120,
+                    alignment: 'center',
+                    margin: [0, 0, 0, 10] // Space below logo
+                },
+                { text: 'KU Toastmasters Election Results', style: 'title', alignment: 'center' },
                 { text: `Leader Election Results (${year})`, style: 'header' },
                 { text: `Election Date: ${electionData[year]?.electionDate || 'N/A'}`, style: 'subheader' },
                 { text: `Meeting Number: ${electionData[year]?.meetingNo || 'N/A'}`, style: 'subheader' },
@@ -231,6 +241,7 @@
                 { text: '\n' }
             ],
             styles: {
+                title: { fontSize: 20, bold: true, margin: [0, 10, 0, 10] },
                 header: { fontSize: 18, bold: true, margin: [0, 0, 0, 10] },
                 subheader: { fontSize: 14, bold: true, margin: [0, 5, 0, 5] },
                 tableHeader: { bold: true, fillColor: '#eeeeee' }
@@ -238,21 +249,21 @@
             pageSize: 'A4',
             pageMargins: [40, 20, 40, 20] // Ensuring equal margins on left and right
         };
-        
+
         let tableBody = [
             [
-                { text: 'Position', style: 'tableHeader' }, 
-                { text: 'Member No', style: 'tableHeader' }, 
-                { text: 'Full Name', style: 'tableHeader' }, 
-                { text: 'Total Votes', style: 'tableHeader' }, 
+                { text: 'Position', style: 'tableHeader' },
+                { text: 'Member No', style: 'tableHeader' },
+                { text: 'Full Name', style: 'tableHeader' },
+                { text: 'Total Votes', style: 'tableHeader' },
                 { text: 'Winning Status', style: 'tableHeader' }
             ]
         ];
-        
+
         Object.keys(results).forEach(pos => {
             if (position === "all" || position === pos) {
                 tableBody.push([{ text: pos, colSpan: 5, alignment: 'center', bold: true }, {}, {}, {}, {}]);
-        
+
                 results[pos].forEach(candidate => {
                     tableBody.push([
                         pos,
@@ -264,16 +275,33 @@
                 });
             }
         });
-        
+
         docDefinition.content.push({
-            table: { 
+            table: {
                 widths: ['20%', '15%', '30%', '15%', '20%'], // Ensuring columns fit within A4 width
-                body: tableBody 
+                body: tableBody
             }
         });
-        
+
         pdfMake.createPdf(docDefinition).download(`Election_Results_${year}.pdf`);
-        });
+    });
+});
+
+// Function to Convert Image to Base64
+function toDataURL(url, callback) {
+    let xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+        let reader = new FileReader();
+        reader.onloadend = function () {
+            callback(reader.result);
+        };
+        reader.readAsDataURL(xhr.response);
+    };
+    xhr.open("GET", url);
+    xhr.responseType = "blob";
+    xhr.send();
+}
+
 
   </script>
 {% endblock %}

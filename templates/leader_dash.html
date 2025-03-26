@@ -33,9 +33,9 @@
         </div>
         
         <div class="user_details">
-          <p class="user_name">Emmanuel Nyaayo</p>
-          <p class="memb_no">Leader No - 001/2021</p>
-      </div>
+          <p class="user_name">{{ user_name }}</p>
+          <p class="memb_no">Leader No - {{ leader_no }}</p>
+        </div>
       
       </div>
 
@@ -137,28 +137,28 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>046</td>
-                    <td>Love</td>
+                    <td>049 </td>
+                    <td>Reignite Momentum</td>
                     <td>TMOD</td>
-                    <td>EF 09</td>
+                    <td>Bssc Rm-255</td>
                     
-                    <td>23rd Jan 2025</td>
+                    <td>27th Mar 2025</td>
                 </tr>
                 <tr>
-                  <td>047</td>
-                  <td>Self Awareness</td>
+                  <td>050</td>
+                  <td>Happiness</td>
                   <td>Cc3 speaker</td>
                   <td>Bssc Rm-255</td>
                   
-                  <td>27rd Jan 2025</td>
+                  <td>3rd Apr 2025</td>
                 </tr>
                 <tr>
-                    <td>048</td>
-                    <td>Happiness</td>
+                    <td>051</td>
+                    <td>Self Awareness</td>
                     <td>Grammarian</td>
                     <td>Bssc Rm-255</td>
                     
-                    <td>3rd Feb 2025</td>
+                    <td>10th Apr 2025</td>
                 </tr>
             </tbody>
           </table>
@@ -178,28 +178,28 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>045</td>
-                    <td>Reignite Momentum</td>
-                    <td>Attendee</td>
-                    <td>EF 09</td>
-                    
-                    <td>16th Jan 2025</td>
-                </tr>
-                <tr>
-                    <td>044</td>
+                    <td>048</td>
                     <td>Achieving Greatness</td>
-                    <td>Table Topics Master</td>
+                    <td>Evaluator</td>
                     <td>EF 09</td>
                     
-                    <td>9th Jan 2025</td>
+                    <td>20th Mar 2025</td>
                 </tr>
                 <tr>
-                    <td>043</td>
-                    <td>Change</td>
+                    <td>047</td>
+                    <td>Love</td>
                     <td>Timer</td>
                     <td>EF 09</td>
                     
-                    <td>2nd Jan 2025</td>
+                    <td>13th Mar 2025</td>
+                </tr>
+                <tr>
+                    <td>046</td>
+                    <td>Friendship</td>
+                    <td>Evaluator</td>
+                    <td>EF 09</td>
+                    
+                    <td>6th Mar 2025</td>
                 </tr>
             </tbody>
           </table>
@@ -269,10 +269,10 @@
   new Chart(document.getElementById("attendanceChart"), {
       type: 'bar',
       data: {
-          labels: ["Feb 29", "Mar 7", "Mar 14"], // Last 3 Thursdays
+          labels: ["Mar 6", "Mar 13", "Mar 20"], // Last 3 Thursdays
           datasets: [{
               label: 'Attendance',
-              data: [25, 30, 28], // Mock attendance numbers
+              data: [8, 10, 8], // Mock attendance numbers
               backgroundColor: ['blue', 'darkblue', 'gold']
           }]
       },
@@ -285,7 +285,7 @@
       data: {
           labels: ["Active", "Inactive", "Expired"],
           datasets: [{
-              data: [60, 25, 15], // Percentage distribution
+              data: [25, 67, 8], // Percentage distribution
               backgroundColor: ['blue', 'gold', 'darkblue']
           }]
       },
@@ -302,7 +302,7 @@
   new Chart(document.getElementById("resourcesChart"), {
       type: 'line',
       data: {
-          labels: ["Resource 1", "Resource 2", "Resource 3"],
+          labels: ["Toastmasters Website", "Public Speaking Tips", "Speech Guidelines"],
           datasets: [{
               label: "Times Accessed",
               data: [5, 8, 3],
@@ -319,7 +319,7 @@
       data: {
           labels: ["Voted", "Didn't Vote"],
           datasets: [{
-              data: [70, 30], // Mock turnout
+              data: [94, 6], // Mock turnout
               backgroundColor: ['blue', 'darkblue']
           }]
       },

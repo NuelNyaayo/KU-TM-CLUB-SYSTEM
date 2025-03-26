@@ -23,11 +23,13 @@
         <label for="meetingNumber">Select Meeting:</label>
         <select id="meetingNumber">
             <option value="" selected>-- Choose Meeting --</option>
-            <option value="045">Meeting 045</option>
-            <option value="044">Meeting 044</option>
-            <option value="043">Meeting 043</option>
+            {% for meeting in previous_meetings %}
+                <option value="{{ meeting.meeting_number }}">{{ meeting.meeting_number }}</option> <!-- Use meeting_number -->
+            {% endfor %}
         </select>
-      </div>
+        </div>
+    
+    
 
       <div class="top-container">
         <!-- Attendance Filter (Hidden Initially) -->
@@ -77,6 +79,9 @@
         </div>
       </div>
 
+      <input type="hidden" id="hiddenMeetingNumber">
+
+
 
     </div>
     
@@ -86,214 +91,256 @@
 
 {% block extra_js %}
 <script>
+    document.getElementById('meetingNumber').addEventListener('change', function () {
+        const meetingNumber = this.value; // Get selected meeting number
+        document.getElementById('hiddenMeetingNumber').value = meetingNumber; // Store the meeting number
 
-    // Sample meetings data
-const meetingsData = {
-"045": {
-    theme: "Leadership and Growth",
-    date: "5th Feb 2025",
-    attendees: [
-        { memberNo: "001", name: "Emmanuel Omokaya", role: "TMOD", status: "attended" },
-        { memberNo: "002", name: "Jane Doe", role: "Evaluator", status: "did_not_attend" }
-    ]
-},
-"044": {
-    theme: "Effective Communication",
-    date: "29th Jan 2025",
-    attendees: [
-        { memberNo: "003", name: "John Smith", role: "Speaker", status: "attended" }
-    ]
-},
-"043": {
-    theme: "Pathways and Leadership",
-    date: "22nd Jan 2025",
-    attendees: [] // No attendees, but meeting details exist
-}
-};
-
-// Handle Meeting Selection
-document.getElementById('meetingNumber').addEventListener('change', function () {
-const selectedMeeting = this.value;
-const filterContainer = document.getElementById('attendanceFilterContainer');
-const table = document.getElementById('attendanceTable');
-const buttons = document.getElementById('buttonsContainer');
-const attendanceFilter = document.getElementById('attendanceFilter');
-
-if (selectedMeeting) {
-    filterContainer.classList.remove('hidden');
-    table.classList.remove('hidden');
-    buttons.classList.remove('hidden');
-
-    populateTable(selectedMeeting);
-
-    // Reset attendance filter to "all" when switching meetings
-    attendanceFilter.value = "all";
-} else {
-    filterContainer.classList.add('hidden');
-    table.classList.add('hidden');
-    buttons.classList.add('hidden');
-}
-
-this.querySelector('option[value=""]').remove();
-});
-
-// Populate Table
-function populateTable(meetingNumber) {
-const tableBody = document.getElementById('tableBody');
-tableBody.innerHTML = '';
-
-const members = meetingsData[meetingNumber]?.attendees || [];
-
-if (members.length === 0) {
-    tableBody.innerHTML = `<tr>
-        <td colspan="4" style="text-align: center; font-weight: bold; background-color: #f2f2f2;">No attendance records available</td>
-    </tr>`;
-} else {
-    members.forEach(member => {
-        let row = `<tr data-status="${member.status}">
-            <td>${member.memberNo}</td>
-            <td>${member.name}</td>
-            <td>${member.role}</td>
-            <td class="status">${member.status === "attended" ? "✅ Attended" : "❌ Did Not Attend"}</td>
-        </tr>`;
-        tableBody.innerHTML += row;
+        const filterContainer = document.getElementById('attendanceFilterContainer');
+        const table = document.getElementById('attendanceTable');
+        const buttons = document.getElementById('buttonsContainer');
+        const attendanceFilter = document.getElementById('attendanceFilter');
+    
+        if (meetingNumber) {
+            filterContainer.classList.remove('hidden');
+            table.classList.remove('hidden');
+            buttons.classList.remove('hidden');
+    
+            fetchAttendanceData(meetingNumber); // Fetch attendance data
+    
+            // Reset filter when switching meetings
+            attendanceFilter.value = "all";
+        } else {
+            filterContainer.classList.add('hidden');
+            table.classList.add('hidden');
+            buttons.classList.add('hidden');
+        }
     });
-
-    // Check if filtering removes all rows
-    if (tableBody.innerHTML.trim() === '') {
-        tableBody.innerHTML = `<tr>
-            <td colspan="4" style="text-align: center; font-weight: bold;">No attendance records available</td>
-        </tr>`;
+    
+    // Fetch attendance data from backend
+    function fetchAttendanceData(meetingNumber) {
+        fetch(`/get_attendance/${encodeURIComponent(meetingNumber)}/`)  // Ensure meeting_number is used
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    console.error("Error from server:", data.error);
+                    alert("Error fetching attendance data: " + data.error);
+                    return;
+                }
+                populateTable(data.attendance);
+            })
+            .catch(error => {
+                console.error("Error fetching attendance data:", error);
+                alert("An error occurred while fetching attendance data.");
+            });
     }
-}
-}
-
-// Filter Attendance (Fixed Version)
-document.getElementById('attendanceFilter').addEventListener('change', function () {
-const filter = this.value;
-const tableBody = document.getElementById('tableBody');
-const selectedMeeting = document.getElementById('meetingNumber').value;
-const meeting = meetingsData[selectedMeeting];
-
-// Clear table before applying filter
-tableBody.innerHTML = '';
-
-let visibleCount = 0;
-
-// Check if meeting has attendees
-if (meeting.attendees.length === 0) {
-    tableBody.innerHTML = `<tr id="noRecordsRow">
-        <td colspan="4" style="text-align: center; font-weight: bold;">No attendance records available</td>
-    </tr>`;
-    return; // Exit function early as there's nothing to filter
-}
-
-// Filter attendees based on status
-meeting.attendees.forEach(member => {
-    if (filter === "all" || member.status === filter) {
-        let row = `<tr data-status="${member.status}">
-            <td>${member.memberNo}</td>
-            <td>${member.name}</td>
-            <td>${member.role}</td>
-            <td class="status">${member.status === "attended" ? "✅ Attended" : "❌ Did Not Attend"}</td>
-        </tr>`;
-        tableBody.innerHTML += row;
-        visibleCount++;
-    }
-});
-
-// If no attendees match the filter, show "No attendance records available"
-if (visibleCount === 0) {
-    tableBody.innerHTML = `<tr id="noRecordsRow">
-        <td colspan="4" style="text-align: center; font-weight: bold;">No attendance records available</td>
-    </tr>`;
-}
-});
-
-
-
-// Show Modal with Meeting Details
-document.getElementById('viewDetails').addEventListener('click', function () {
-const selectedMeeting = document.getElementById('meetingNumber').value;
-const modal = document.getElementById('meetingModal');
-const meeting = meetingsData[selectedMeeting];
-
-if (meeting) {
-    const attendedCount = meeting.attendees.filter(m => m.status === "attended").length || 0;
-    const didNotAttendCount = meeting.attendees.filter(m => m.status === "did_not_attend").length || 0;
-
-    document.getElementById('modalMeetingNo').innerText = selectedMeeting;
-    document.getElementById('modalMeetingTheme').innerText = meeting.theme;
-    document.getElementById('modalMeetingDate').innerText = meeting.date;
-    document.getElementById('modalAttendeesCount').innerText = `${attendedCount} Attended | ${didNotAttendCount} Did Not Attend`;
-
-    modal.classList.remove('hidden');
-}
-});
-
-// Close Modal
-document.querySelector('.close').addEventListener('click', function () {
-document.getElementById('meetingModal').classList.add('hidden');
-});
-
-// PDF Export
-document.getElementById('downloadPDF').addEventListener('click', function () {
-let table = document.getElementById('attendanceTable');
-let rows = table.getElementsByTagName('tr');
-let data = [];
-
-let visibleRowCount = 0;
-
-for (let i = 1; i < rows.length; i++) { // Skip header row
-    if (rows[i].style.display !== "none") {
-        let cols = rows[i].getElementsByTagName('td');
-        let rowData = [];
-
-        for (let j = 0; j < cols.length; j++) {
-            rowData.push(cols[j].innerText);
+    
+    // Populate the table with attendance data
+    function populateTable(attendanceData) {
+        const tableBody = document.getElementById('tableBody');
+        tableBody.innerHTML = '';
+    
+        if (!attendanceData || attendanceData.length === 0) {
+            tableBody.innerHTML = `<tr>
+                <td colspan="4" style="text-align: center; font-weight: bold;">No attendance records available</td>
+            </tr>`;
+            return;
         }
-
-        // Ignore the placeholder message row
-        if (rowData.length > 0 && rowData[0] !== "No attendance records available") {
-            data.push(rowData);
-            visibleRowCount++;
-        }
+    
+        attendanceData.forEach(member => {
+            let row = `<tr data-status="${member.status}">
+                <td>${member.member_no}</td>
+                <td>${member.name}</td>
+                <td>${member.role}</td>
+                <td class="status">${member.status === "attended" ? "✅ Attended" : "❌ Did Not Attend"}</td>
+            </tr>`;
+            tableBody.innerHTML += row;
+        });
     }
-}
-
-// Alert if no records are available for download
-if (visibleRowCount === 0) {
-    alert("No records to download! Please check your filters or select a different meeting.");
-    return;
-}
-
-let docDefinition = {
-    content: [
-        { text: 'Meeting Attendance Report', style: 'header' },
-        {
-            table: {
-                headerRows: 1,
-                widths: ['*', '*', '*', '*'],
-                body: [
-                    // Apply bold style to the header row
-                    [
-                        { text: 'Member No', bold: true },
-                        { text: 'Full Name', bold: true },
-                        { text: 'Role', bold: true },
-                        { text: 'Status', bold: true }
-                    ],
-                    ...data
-                ]
+    
+    
+    // Attendance filtering
+    document.getElementById('attendanceFilter').addEventListener('change', function () {
+        const filter = this.value;
+        const tableBody = document.getElementById('tableBody');
+        const rows = tableBody.getElementsByTagName('tr');
+        
+        let visibleCount = 0;
+        for (let row of rows) {
+            if (row.dataset.status) {
+                if (filter === "all" || row.dataset.status === filter) {
+                    row.style.display = "";
+                    visibleCount++;
+                } else {
+                    row.style.display = "none";
+                }
             }
         }
-    ],
-    styles: {
-        header: { fontSize: 18, bold: true, margin: [0, 0, 0, 10] }
-    }
-};
+    
+        // Show "No records" if no matching rows
+        if (visibleCount === 0) {
+            tableBody.innerHTML = `<tr>
+                <td colspan="4" style="text-align: center; font-weight: bold;">No attendance records available</td>
+            </tr>`;
+        }
+    });
+    
+    // Show meeting details in a modal
+    document.getElementById('viewDetails').addEventListener('click', function () {
+        const meetingNumber = document.getElementById('meetingNumber').value; // Ensure correct meeting number is selected
+    
+        if (!meetingNumber) {
+            alert("Please select a meeting first.");
+            return;
+        }
+    
+        fetch(`/get_meeting_details/${encodeURIComponent(meetingNumber)}/`) // Use meeting_number
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(meeting => {
+                if (meeting.error) {
+                    console.error("Error from server:", meeting.error);
+                    return;
+                }
+    
+                // Count attendees and absentees
+                const attendedCount = meeting.attendees.length;
+                const didNotAttendCount = meeting.absentees.length;
+    
+                // Update modal content
+                document.getElementById('modalMeetingNo').innerText = meeting.meeting_number;
+                document.getElementById('modalMeetingTheme').innerText = meeting.theme;
+                document.getElementById('modalMeetingDate').innerText = meeting.date;
+                document.getElementById('modalAttendeesCount').innerText = `${attendedCount} Attended | ${didNotAttendCount} Did Not Attend`;
 
-pdfMake.createPdf(docDefinition).download('Meeting_Attendance_Report.pdf');
-});
+                // Store meeting number in a hidden field for PDF use
+                document.getElementById('hiddenMeetingNumber').value = meeting.meeting_number;
+    
+                // Show the modal
+                document.getElementById('meetingModal').classList.remove('hidden');
+            })
+            .catch(error => console.error("Error fetching meeting details:", error));
+    });
+    
+    // Close meeting details modal
+    document.querySelector('.close').addEventListener('click', function () {
+        document.getElementById('meetingModal').classList.add('hidden');
+    });
+    
+    
+    
+    
+
+    
+    // Export attendance data as PDF
+    document.getElementById('downloadPDF').addEventListener('click', function () {
+        let table = document.getElementById('attendanceTable');
+        let rows = table.getElementsByTagName('tr');
+        let data = [];
+    
+        let visibleRowCount = 0;
+        for (let i = 1; i < rows.length; i++) { // Skip header row
+            if (rows[i].style.display !== "none") {
+                let cols = rows[i].getElementsByTagName('td');
+                let rowData = [];
+    
+                for (let j = 0; j < cols.length; j++) {
+                    rowData.push(cols[j].innerText);
+                }
+    
+                // Ignore placeholder row
+                if (rowData.length > 0 && rowData[0] !== "No attendance records available") {
+                    data.push(rowData);
+                    visibleRowCount++;
+                }
+            }
+        }
+    
+        // Alert if no records are available
+        if (visibleRowCount === 0) {
+            alert("No records to download! Please check your filters or select a different meeting.");
+            return;
+        }
+    
+        let logoPath = "{% static 'assets/images/KU_TM_FavIcon_Logo.png' %}";
+        
+        // Fetch the meeting number from the hidden field
+        let meetingNumber = document.getElementById('hiddenMeetingNumber').value;
+    
+        // Convert Image to Base64
+        toDataURL(logoPath, function (base64Image) {
+            let docDefinition = {
+                content: [
+                    {
+                        image: base64Image,  // Use Base64 Image
+                        width: 120,
+                        alignment: 'center',
+                        margin: [0, 0, 0, 10] // Space below logo
+                    },
+                    { 
+                        text: 'KU Toastmasters Meeting Attendance Report', 
+                        style: 'header', 
+                        alignment: 'center' 
+                    },
+                    {
+                        text: `Meeting Number: ${meetingNumber}`, // Dynamically show the meeting number
+                        style: 'subheader',
+                        alignment: 'center',
+                        margin: [0, 5, 0, 10] // Space below subheader
+                    },
+                    {
+                        text: `Total Members: ${visibleRowCount}`,
+                        alignment: 'right',
+                        margin: [0, 10, 0, 10]
+                    },
+                    {
+                        table: {
+                            headerRows: 1,
+                            widths: ['*', '*', '*', '*'],
+                            body: [
+                                // Bold header row
+                                [
+                                    { text: 'Member No', bold: true },
+                                    { text: 'Full Name', bold: true },
+                                    { text: 'Role', bold: true },
+                                    { text: 'Status', bold: true }
+                                ],
+                                ...data
+                            ]
+                        }
+                    }
+                ],
+                styles: {
+                    header: { fontSize: 18, bold: true, margin: [0, 0, 0, 5] },
+                    subheader: { fontSize: 14, bold: true, margin: [0, 5, 0, 10] }
+                }
+            };
+    
+            pdfMake.createPdf(docDefinition).download('Meeting_Attendance_Report.pdf');
+        });
+    });
+    
+    // Function to Convert Image to Base64
+    function toDataURL(url, callback) {
+        let xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+            let reader = new FileReader();
+            reader.onloadend = function () {
+                callback(reader.result);
+            };
+            reader.readAsDataURL(xhr.response);
+        };
+        xhr.open("GET", url);
+        xhr.responseType = "blob";
+        xhr.send();
+    }
+    
+    
+    
+    
 
   </script>
 {% endblock %}

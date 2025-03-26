@@ -34,7 +34,10 @@ urlpatterns = [
     path('leader_register/', views.leader_register, name='leader_register'),
     path('leader_dash/', views.leader_dash, name='leader_dash'),
     path('leader_membership/', views.leader_membership, name='leader_membership'),
+    path("get_membership_data/", views.get_membership_data, name="get_membership_data"),
     path('leader_attendance/', views.leader_attendance, name='leader_attendance'),
+    path('get_attendance/<str:meeting_number>/', views.get_attendance, name='get_attendance'),
+    path('get_meeting_details/<str:meeting_number>/', views.get_meeting_details, name='get_meeting_details'),
     path('leader_elections/', views.leader_elections, name='leader_elections'),
 ]  
 

@@ -532,16 +532,114 @@ def leader_register(request):
 
 
 def leader_dash(request): 
+    user = request.user  # Get the logged-in user
 
-    return render(request, 'leader_dash.html', {"current_page": "Dashboard"})
+    try:
+        leader = Leader.objects.get(user=user)  # Fetch leader details
+        leader_no = leader.leader_no
+    except Leader.DoesNotExist:
+        leader_no = "Not Assigned"  # Default if the user has no leader number
+
+    context = {
+        "current_page": "Dashboard",
+        "user_name": f"{user.first_name} {user.last_name}",
+        "leader_no": leader_no
+    }
+    
+    return render(request, 'leader_dash.html', context)
+
 
 def leader_membership(request): 
 
     return render(request, 'leader_membership.html', {"current_page": "Membership"})
 
-def leader_attendance(request): 
+def get_membership_data(request):
+    """Fetches all users with their membership status and returns JSON."""
+    users = CustomUser.objects.all().select_related("membership")
 
-    return render(request, 'leader_attendance.html', {"current_page": "Attendance"})
+    members_data = []
+    for user in users:
+        membership_status = user.membership.status if hasattr(user, "membership") else "Inactive"
+        members_data.append({
+            "member_no": f"{user.id:03}",  # Formats ID as three digits (e.g., 001, 010)
+            "full_name": f"{user.first_name} {user.last_name}",
+            "phone": user.phone_number or "N/A",
+            "reg_no": user.registration_number or "N/A",
+            "status": membership_status,
+        })
+
+    return JsonResponse({"members": members_data})
+
+def leader_attendance(request):
+    # Fetch meetings where status = "Previous"
+    previous_meetings = Meeting.objects.filter(status="Previous").order_by("-date")
+
+    return render(request, 'leader_attendance.html', {
+        "current_page": "Attendance",
+        "previous_meetings": previous_meetings
+    })
+
+def get_attendance(request, meeting_number):
+    """
+    Fetch attendance data for a specific meeting with status 'Previous',
+    using user ID formatted as a three-digit member number.
+    """
+    try:
+        # Ensure the meeting exists and has 'Previous' status
+        meeting = get_object_or_404(Meeting, meeting_number=meeting_number, status="Previous")
+
+        # Fetch attendees and absentees
+        attendees = meeting.attendees.all()
+        absentees = meeting.absentees.all()
+
+        attendance_data = []
+
+        # Populate attendees list
+        for member in attendees:
+            role_entry = MeetingRole.objects.filter(meeting=meeting, member=member).first()
+            attendance_data.append({
+                "member_no": f"{member.id:03}",  # Formats user ID as three digits (e.g., 001, 010)
+                "name": f"{member.first_name} {member.last_name}",
+                "role": role_entry.role if role_entry else "Attendee",
+                "status": "attended"
+            })
+
+        # Populate absentees list
+        for member in absentees:
+            role_entry = MeetingRole.objects.filter(meeting=meeting, member=member).first()
+            attendance_data.append({
+                "member_no": f"{member.id:03}",  # Formats user ID as three digits (e.g., 001, 010)
+                "name": f"{member.first_name} {member.last_name}",
+                "role": role_entry.role if role_entry else "Attendee",
+                "status": "did_not_attend"
+            })
+
+        return JsonResponse({"attendance": attendance_data})
+
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
+
+
+def get_meeting_details(request, meeting_number):
+    """
+    Fetch meeting details using the meeting_number (not ID).
+    """
+    try:
+        # Fetch meeting based on meeting_number, ensuring it's a previous meeting
+        meeting = get_object_or_404(Meeting, meeting_number=meeting_number, status="Previous")
+
+        meeting_data = {
+            "meeting_number": meeting.meeting_number,  # This is the unique identifier
+            "theme": meeting.theme,
+            "date": meeting.date.strftime("%d %b %Y"),  # Example: "05 Feb 2025"
+            "venue": meeting.venue,
+            "attendees": list(meeting.attendees.values("id", "first_name", "last_name")),
+            "absentees": list(meeting.absentees.values("id", "first_name", "last_name")),
+        }
+        return JsonResponse(meeting_data)
+
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=400)
 
 def leader_elections(request): 
 

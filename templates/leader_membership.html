@@ -36,48 +36,18 @@
       <table id="membershipTable">
         <thead>
             <tr>
+                <th>Member No</th>
                 <th>Full Name</th>
-                <th>Email</th>
                 <th>Phone</th>
                 <th>Reg. Number</th>
                 <th>Member Status</th>
                 
             </tr>
         </thead>
-        <tbody>
-            <tr class="member-row" data-status="paid">
-                <td>John Doe</td>
-                <td>johndoe@example.com</td>
-                <td>+254712345678</td>
-                <td>KU12345</td>
-                <td class="status">Active</td>
-                
-            </tr>
-            <tr class="member-row" data-status="unpaid">
-                <td>Jane Smith</td>
-                <td>janesmith@example.com</td>
-                <td>+254798765432</td>
-                <td>KU67890</td>
-                <td class="status">Inactive</td>
-                
-            </tr>
-            <tr class="member-row" data-status="paid">
-                <td>Michael Kimani</td>
-                <td>mkimani@example.com</td>
-                <td>+254712345999</td>
-                <td>KU56789</td>
-                <td class="status">Active</td>
-                
-            </tr>
-            <tr class="member-row" data-status="unpaid">
-                <td>Amina Hassan</td>
-                <td>aminahassan@example.com</td>
-                <td>+254711223344</td>
-                <td>KU22334</td>
-                <td class="status">Inactive</td>
-                
-            </tr>
+        <tbody id="membershipTableBody">
+            <!-- Data will be inserted dynamically via JavaScript -->
         </tbody>
+        
       </table>
     </div>
     
@@ -88,46 +58,98 @@
 {% block extra_js %}
 <script>
 
-    document.getElementById("membershipFilter").addEventListener("change", function () {
-    let filter = this.value;
-    let rows = document.querySelectorAll(".member-row");
-
-    let visibleRows = []; // To track the filtered visible rows
-
-    rows.forEach((row) => {
-        let status = row.getAttribute("data-status").toLowerCase();
-        if (filter === "all" || status === filter) {
-            row.style.display = "";
-            visibleRows.push(row); // Collect visible rows
-        } else {
-            row.style.display = "none";
-        }
+    document.addEventListener("DOMContentLoaded", function () {
+        fetchMembershipData(); // Load members when the page loads
+    
+        document.getElementById("membershipFilter").addEventListener("change", function () {
+            filterMembers(this.value);
+        });
+    
+        document.getElementById("downloadPDF").addEventListener("click", function () {
+            downloadMembershipPDF();
+        });
     });
-
-    // Reset alternating row styles
-    visibleRows.forEach((row, index) => {
-        row.style.backgroundColor = index % 2 === 0 ? "#ffffff" : "#f2f2f2"; // Reapply styles
-    });
-});
-
-document.getElementById("downloadPDF").addEventListener("click", function () {
+    
+    function fetchMembershipData() {
+        fetch("{% url 'get_membership_data' %}")  // Call the Django view
+            .then(response => response.json())
+            .then(data => {
+                populateTable(data.members);
+            })
+            .catch(error => console.error("Error fetching membership data:", error));
+    }
+    
+    function populateTable(members) {
+        let tbody = document.getElementById("membershipTable").querySelector("tbody");
+        tbody.innerHTML = ""; // Clear existing data
+    
+        members.forEach(member => {
+            let row = document.createElement("tr");
+            row.classList.add("member-row");
+            row.setAttribute("data-status", member.status.toLowerCase());
+    
+            row.innerHTML = `
+                <td>${member.member_no}</td>
+                <td>${member.full_name}</td>
+                <td>${member.phone}</td>
+                <td>${member.reg_no}</td>
+                <td class="status">${member.status}</td>
+            `;
+    
+            tbody.appendChild(row);
+        });
+    
+        filterMembers(document.getElementById("membershipFilter").value); // Apply filter after loading data
+    }
+    
+    function filterMembers(filter) {
+        let rows = document.querySelectorAll(".member-row");
+        let visibleRows = [];
+    
+        rows.forEach(row => {
+            let status = row.getAttribute("data-status").toLowerCase(); // Convert to lowercase
+            let showRow = false;
+    
+            if (filter === "all") {
+                showRow = true;
+            } else if (filter === "paid" && status === "active") {
+                showRow = true;
+            } else if (filter === "unpaid" && (status === "inactive" || status === "expired")) {
+                showRow = true;
+            }
+    
+            if (showRow) {
+                row.style.display = "";
+                visibleRows.push(row);
+            } else {
+                row.style.display = "none";
+            }
+        });
+    
+        // Reset alternating row styles for better readability
+        visibleRows.forEach((row, index) => {
+            row.style.backgroundColor = index % 2 === 0 ? "#ffffff" : "#f2f2f2";
+        });
+    }
+    
+    
+    function downloadMembershipPDF() {
     let table = document.getElementById("membershipTable");
     let rows = table.getElementsByTagName("tr");
     let data = [];
 
-    // Get table headers safely
     let headers = [];
-    let headerRow = table.querySelector("thead tr"); // Ensure we get the header row
+    let headerRow = table.querySelector("thead tr");
     if (headerRow) {
         let headerCells = headerRow.getElementsByTagName("th");
         for (let th of headerCells) {
             headers.push(th.innerText.trim());
         }
     }
-    data.push(headers); // Add headers as the first row
+    data.push(headers);
 
-    // Get visible table rows
-    for (let i = 1; i < rows.length; i++) { // Skip the header row
+    let totalMembers = 0; // Count visible rows
+    for (let i = 1; i < rows.length; i++) {
         if (rows[i].style.display !== "none") {
             let cols = rows[i].getElementsByTagName("td");
             let rowData = [];
@@ -136,43 +158,75 @@ document.getElementById("downloadPDF").addEventListener("click", function () {
             }
             if (rowData.length > 0) {
                 data.push(rowData);
+                totalMembers++; // Increment count
             }
         }
     }
 
-    let docDefinition = {
-        pageSize: "A4",
-        pageOrientation: "landscape", // Fit the table better in landscape mode
-        pageMargins: [40, 40, 40, 40], // Balanced left & right margins
+    let logoPath = "{% static 'assets/images/KU_TM_FavIcon_Logo.png' %}";
 
-        content: [
-            { text: "Membership Reports", style: "header" },
-            {
-                table: {
-                    headerRows: 1,
-                    widths: ["25%", "25%", "20%", "15%", "15%"], // Adjusted column spacing
-                    body: data,
+    toDataURL(logoPath, function (logoBase64) {
+        let docDefinition = {
+            pageSize: "A4",
+            pageOrientation: "landscape",
+            pageMargins: [40, 40, 40, 40],
+            content: [
+                {
+                    image: logoBase64,
+                    width: 100,
+                    alignment: "center",
+                    margin: [0, 0, 0, 10],
                 },
-                layout: {
-                    hLineWidth: function () { return 0.8; }, // Thinner horizontal lines
-                    vLineWidth: function () { return 0.8; }, // Thinner vertical lines
-                    paddingLeft: function () { return 5; }, // Add some padding for readability
-                    paddingRight: function () { return 5; },
-                    paddingTop: function () { return 3; },
-                    paddingBottom: function () { return 3; },
+                { text: "KU Toastmasters Membership Reports", style: "header" },
+                { 
+                    text: `Total Members: ${totalMembers}`, 
+                    style: "subheader", 
+                    alignment: "right", 
+                    margin: [0, 0, 0, 10] 
                 },
+                {
+                    table: {
+                        headerRows: 1,
+                        widths: ["25%", "25%", "20%", "15%", "15%"], // Adjusted to prevent overflow
+                        body: data,
+                    },
+                    layout: {
+                        hLineWidth: function () { return 0.8; },
+                        vLineWidth: function () { return 0.8; },
+                        paddingLeft: function () { return 5; },
+                        paddingRight: function () { return 5; },
+                        paddingTop: function () { return 3; },
+                        paddingBottom: function () { return 3; },
+                    },
+                },
+            ],
+            styles: {
+                header: { fontSize: 18, bold: true, alignment: "center", margin: [0, 10, 0, 10] },
+                subheader: { fontSize: 14, bold: true, color: "black" },
+                tableHeader: { bold: true, fillColor: "#f2f2f2", alignment: "center" },
             },
-        ],
+        };
 
-        styles: {
-            header: { fontSize: 18, bold: true, alignment: "center", margin: [0, 0, 0, 10] },
-            tableHeader: { bold: true, fillColor: "#f2f2f2", alignment: "center" }, // Center headers
-        },
-    };
+        pdfMake.createPdf(docDefinition).download("Membership_Reports.pdf");
+    });
+}
 
-    pdfMake.createPdf(docDefinition).download("Membership_Reports.pdf");
-});
-
+    // Function to convert image to Base64
+    function toDataURL(url, callback) {
+        let xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+            let reader = new FileReader();
+            reader.onloadend = function () {
+                callback(reader.result);
+            };
+            reader.readAsDataURL(xhr.response);
+        };
+        xhr.open("GET", url);
+        xhr.responseType = "blob";
+        xhr.send();
+    }
+    
+    
  
    </script>
 {% endblock %}

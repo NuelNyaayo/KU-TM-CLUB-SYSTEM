@@ -11,6 +11,11 @@
 <div class="dashboard-overview">
     <h3> 📝&nbsp; Sign Up for Toastmasters Role</h3>
     <div class="next-meeting">
+
+        {% for message in messages %}
+                <h5>{{ message }}</h5>
+        {% endfor %}
+        
         <form id="role-signup-form" method="post">
             {% csrf_token %}
 
