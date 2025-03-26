@@ -1,7 +1,5 @@
 {% extends 'memb_dash.html' %}
-
 {% load static %}
-
 
 {% block title %}Member Roles{% endblock %}
 
@@ -9,190 +7,198 @@
 <link rel="stylesheet" href="{% static 'assets/css/memb_roles.css' %}">
 {% endblock %}
 
-
 {% block content %}
 <div class="dashboard-overview">
     <h3> 📝&nbsp; Sign Up for Toastmasters Role</h3>
     <div class="next-meeting">
-      <form id="role-signup-form">
-      
-          <!-- Select Meeting Number -->
-          <label for="meeting-number">Select Meeting Number:</label>
-          <select id="meeting-number" name="meeting-number" required>
-              <option value="">-- Select Meeting --</option>
-              <option value="046" data-date="12th Feb 2025">Meeting 046</option>
-              <option value="047" data-date="19th Feb 2025">Meeting 047</option>
-              <option value="048" data-date="26th Feb 2025">Meeting 048</option>
-          </select>
+        <form id="role-signup-form" method="post">
+            {% csrf_token %}
 
-          <!-- Meeting Date (Auto-Filled) -->
-          <p><strong>Meeting Date:</strong> <span id="meeting-date">Select a meeting</span></p>
+            <!-- Select Meeting Number -->
+            <label for="meeting-number">Select Meeting Number:</label>
+            <select id="meeting-number" name="meeting-number" required>
+                <option value="">-- Select Meeting --</option>
+                {% for meeting in meetings %}
+                    <option value="{{ meeting.meeting_number }}" data-date="{{ meeting.date }}">
+                        Meeting {{ meeting.meeting_number }} ({{ meeting.date }})
+                    </option>
+                {% endfor %}
+            </select>
 
-          <!-- Confirm Availability -->
-          <label>Confirm Availability:</label>
-          <label>
-              <input type="radio" name="availability" value="yes" id="available"> I will be available
-          </label>
-          <label>
-              <input type="radio" name="availability" value="no" id="not-available"> I won't be available
-          </label>
+            <!-- Meeting Date (Auto-Filled) -->
+            <p><strong>Meeting Date:</strong> <span id="meeting-date">Select a meeting</span></p>
 
-          <!-- Role Selection (Hidden by Default) -->
-          <div id="role-selection" class="hidden">
-              <label for="role">Select Your Role:</label>
-              <select id="role" name="role">
-                  <option value="">-- Select Role --</option>
-                  <option value="tmod">Toastmaster of the Day (Tmod)</option>
-                  <option value="grammarian">Grammarian</option>
-                  <option value="speech-presenter">Speech Presenter</option>
-                  <option value="speech-evaluator">Speech Evaluator</option>
-                  <option value="general-evaluator">General Evaluator</option>
-                  <option value="ah-counter">Ah Counter</option>
-                  <option value="hackmaster">Hackmaster</option>
-                  <option value="timer">Timer</option>
-                  <option value="table-topics-master">Table Topics Master</option>
-                  <option value="jokemaster">Jokemaster</option>
-                  <option value="attendee">Attendee</option>
-              </select>
-          </div>
+            <!-- Confirm Availability -->
+            <label>Confirm Availability:</label>
+            <label>
+                <input type="radio" name="availability" value="yes" id="available"> I will be available
+            </label>
+            <label>
+                <input type="radio" name="availability" value="no" id="not-available"> I won't be available
+            </label>
 
-          <!-- Additional Fields (Hidden by Default) -->
-          <div id="additional-fields">
+            <!-- Role Selection (Hidden by Default) -->
+            <div id="role-selection" class="hidden">
+                <label for="role">Select Your Role:</label>
+                <select id="role" name="role">
+                    <option value="">-- Select Role --</option>
+                    {% for role_code, role_name in meeting_roles %}
+                        <option value="{{ role_code }}">{{ role_name }}</option>
+                    {% endfor %}
 
-              <!-- Meeting Attire (Tmod) -->
-              <div id="attire-field" class="optional-field">
-                  <label for="meeting-attire">Meeting Attire (Optional):</label>
-                  <input type="text" id="meeting-attire" name="meeting-attire" placeholder="e.g., Formal, Casual">
-              </div>
+                </select>
+            </div>
 
-              <!-- Word of the Day (Grammarian) -->
-              <div id="word-of-day-field" class="optional-field">
-                  <label for="word-of-day">Word of the Day (Optional):</label>
-                  <input type="text" id="word-of-day" name="word-of-day" placeholder="Enter Word of the Day">
-              </div>
+            <!-- Additional Fields (Hidden by Default) -->
+            <div id="additional-fields">
 
-              <!-- Speech Title & Project (Speech Presenter) -->
-              <div id="speech-details-field" class="optional-field">
-                  <label for="speech-project">Select Speech Project:</label>
-                  <select id="speech-project" name="speech-project">
-                      <option value="">-- Select Project --</option>
-                      <option value="icebreaker">Icebreaker</option>
-                      <option value="persuasive-speech">Persuasive Speech</option>
-                      <option value="storytelling">Storytelling</option>
-                  </select>
+                <!-- Meeting Attire (Tmod) -->
+                <div id="attire-field" class="optional-field">
+                    <label for="meeting-attire">Meeting Attire (Optional):</label>
+                    <input type="text" id="meeting-attire" name="meeting-attire" placeholder="e.g., Formal, Casual">
+                </div>
 
-                  <label for="speech-title">Enter Speech Title:</label>
-                  <input type="text" id="speech-title" name="speech-title" placeholder="Enter Speech Title">
-              </div>
+                <!-- Word of the Day (Grammarian) -->
+                <div id="word-of-day-field" class="optional-field">
+                    <label for="word-of-day">Word of the Day (Optional):</label>
+                    <input type="text" id="word-of-day" name="word-of-day" placeholder="Enter Word of the Day">
+                </div>
 
-              <!-- Speech Evaluation (Speech Evaluator) -->
-              <div id="evaluation-field" class="optional-field">
-                  <label for="evaluation-project">Select Speech Project to Evaluate:</label>
-                  <select id="evaluation-project" name="evaluation-project">
-                      <option value="">-- Select Project --</option>
-                      <option value="icebreaker">Icebreaker</option>
-                      <option value="persuasive-speech">Persuasive Speech</option>
-                      <option value="storytelling">Storytelling</option>
-                  </select>
-              </div>
+                <!-- Speech Title & Project (Speech Presenter) -->
+                <div id="speech-details-field" class="optional-field">
+                    <label for="speech-project">Select Speech Project:</label>
+                    <select id="speech-project" name="speech-project">
+                        <option value="">-- Select Project --</option>
+                        {% for project in speech_projects %}
+                            <option value="{{ project }}">{{ project }}</option>
+                        {% endfor %}
+                    </select>
 
-              <!-- General Evaluator Point of Focus -->
-              <div id="focus-field" class="optional-field">
-                  <label for="focus-point">Point of Focus (Optional):</label>
-                  <input type="text" id="focus-point" name="focus-point" placeholder="e.g., Timing, Filler Words">
-              </div>
+                    <label for="speech-title">Enter Speech Title:</label>
+                    <input type="text" id="speech-title" name="speech-title" placeholder="Enter Speech Title">
+                </div>
 
-          </div>
+                <!-- Speech Evaluation (Speech Evaluator) -->
+                <div id="evaluation-field" class="optional-field">
+                    <label for="evaluation-project">Select Speech Project to Evaluate:</label>
+                    <select id="evaluation-project" name="evaluation-project">
+                        <option value="">-- Select Project --</option>
+                        {% for project in available_evaluation_projects %}
+                            <option value="{{ project }}">{{ project }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
 
-          <!-- Submit Button (Initially Hidden) -->
-          <button type="submit" id="submit-btn" >Submit</button>
-      </form>
+                <!-- General Evaluator Point of Focus -->
+                <div id="focus-field" class="optional-field">
+                    <label for="focus-point">Point of Focus (Optional):</label>
+                    <input type="text" id="focus-point" name="focus-point" placeholder="e.g., Timing, Filler Words">
+                </div>
+
+            </div>
+
+            <!-- Submit Button (Initially Hidden) -->
+            <button type="submit" id="submit-btn">Submit</button>
+        </form>
     </div>
 </div>
 {% endblock %}
 
 {% block extra_js %}
 <script>
-
     document.addEventListener("DOMContentLoaded", function () {
-    const meetingSelect = document.getElementById("meeting-number");
-    const meetingDateDisplay = document.getElementById("meeting-date");
-    const availableRadio = document.getElementById("available");
-    const notAvailableRadio = document.getElementById("not-available");
-    const roleSelection = document.getElementById("role-selection");
-    const roleSelect = document.getElementById("role");
-    const additionalFields = document.getElementById("additional-fields");
-    const submitBtn = document.getElementById("submit-btn");
+        const meetingSelect = document.getElementById("meeting-number");
+        const meetingDateDisplay = document.getElementById("meeting-date");
+        const availableRadio = document.getElementById("available");
+        const notAvailableRadio = document.getElementById("not-available");
+        const roleSelection = document.getElementById("role-selection");
+        const roleSelect = document.getElementById("role");
+        const additionalFields = document.getElementById("additional-fields");
+        const submitBtn = document.getElementById("submit-btn");
 
-    // Role-based fields mapping
-    const fields = {
-        "tmod": "attire-field",
-        "grammarian": "word-of-day-field",
-        "speech-presenter": "speech-details-field",
-        "speech-evaluator": "evaluation-field",
-        "general-evaluator": "focus-field"
-    };
+        // Role-based fields mapping
+        const fields = {
+            "TMOD": "attire-field",
+            "Grammarian": "word-of-day-field",
+            "CC_Speaker": "speech-details-field",
+            "Evaluator": "evaluation-field",
+            "General_Evaluator": "focus-field"
+        };
 
-    // Initially disable options
-    availableRadio.disabled = true;
-    notAvailableRadio.disabled = true;
-    roleSelect.disabled = true;
-    submitBtn.disabled = true;
+        // Disable options initially
+        availableRadio.disabled = true;
+        notAvailableRadio.disabled = true;
+        roleSelect.disabled = true;
+        submitBtn.disabled = true;
 
-    // Enable availability options when meeting is selected
-    meetingSelect.addEventListener("change", function () {
-        const selectedOption = this.options[this.selectedIndex];
-        if (selectedOption.value) {
-            meetingDateDisplay.textContent = selectedOption.getAttribute("data-date") || "Select a meeting";
-            availableRadio.disabled = false;
-            notAvailableRadio.disabled = false;
-        } else {
-            meetingDateDisplay.textContent = "Select a meeting";
-            availableRadio.disabled = true;
-            notAvailableRadio.disabled = true;
-            roleSelect.disabled = true;
-            submitBtn.disabled = true;
-            roleSelection.classList.remove("show"); // Hide role selection
+        // Enable availability options when a meeting is selected
+        meetingSelect.addEventListener("change", function () {
+            const selectedOption = this.options[this.selectedIndex];
+            if (selectedOption.value) {
+                meetingDateDisplay.textContent = selectedOption.getAttribute("data-date") || "Select a meeting";
+                availableRadio.disabled = false;
+                notAvailableRadio.disabled = false;
+                
+                // Fetch available roles dynamically
+                fetch(`/get_available_roles/${selectedOption.value}/`)
+                    .then(response => response.json())
+                    .then(data => {
+                        roleSelect.innerHTML = '<option value="">-- Select Role --</option>';
+                        data.forEach(role => {
+                            roleSelect.innerHTML += `<option value="${role}">${role.replace("_", " ")}</option>`;
+                        });
+                    });
+            } else {
+                meetingDateDisplay.textContent = "Select a meeting";
+                availableRadio.disabled = true;
+                notAvailableRadio.disabled = true;
+                roleSelect.disabled = true;
+                submitBtn.disabled = true;
+                roleSelection.classList.remove("show");
+            }
+        });
+
+        // Handle Availability Selection
+        function handleAvailabilityChange() {
+            submitBtn.disabled = false; 
+
+            if (availableRadio.checked) {
+                roleSelection.classList.add("show");
+                roleSelect.disabled = false;
+            } else {
+                roleSelection.classList.remove("show");
+                roleSelect.disabled = true;
+
+                additionalFields.querySelectorAll(".optional-field").forEach(field => field.classList.remove("show"));
+                roleSelect.value = "";
+            }
         }
-    });
 
-    // Handle Availability Selection
-    function handleAvailabilityChange() {
-        submitBtn.disabled = false; // Enable submit button when availability is selected
+        availableRadio.addEventListener("change", handleAvailabilityChange);
+        notAvailableRadio.addEventListener("change", handleAvailabilityChange);
 
-        if (availableRadio.checked) {
-            roleSelection.classList.add("show"); // Show role selection
-            roleSelect.disabled = false;
-        } else {
-            roleSelection.classList.remove("show"); // Hide role selection
-            roleSelect.disabled = true;
-
-            // Hide all optional fields when "Not Available" is selected
+        // Handle Role Selection
+        roleSelect.addEventListener("change", function () {
             additionalFields.querySelectorAll(".optional-field").forEach(field => field.classList.remove("show"));
 
-            // Reset role selection
-            roleSelect.value = "";
-        }
-    }
+            let selectedRole = roleSelect.value;
+            if (fields[selectedRole]) {
+                document.getElementById(fields[selectedRole]).classList.add("show");
+            }
+        });
 
-    availableRadio.addEventListener("change", handleAvailabilityChange);
-    notAvailableRadio.addEventListener("change", handleAvailabilityChange);
+        document.getElementById('role-signup-form').addEventListener('submit', function(event) {
+            let availability = document.querySelector('input[name="availability"]:checked');
+            let role = document.getElementById('role').value;
 
-    // Handle Role Selection
-    roleSelect.addEventListener("change", function () {
-        // Hide all optional fields first
-        additionalFields.querySelectorAll(".optional-field").forEach(field => field.classList.remove("show"));
-
-        let selectedRole = roleSelect.value;
-        if (fields[selectedRole]) {
-            document.getElementById(fields[selectedRole]).classList.add("show");
-        }
+            if (!availability) {
+                alert("Please confirm your availability before selecting a role.");
+                event.preventDefault();
+            } else if (!role && availability.value === "yes") {
+                alert("Please select a role before submitting.");
+                event.preventDefault();
+            }
+        });
     });
-});
-
-
-
-
-
-  </script>
+</script>
 {% endblock %}

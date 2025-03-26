@@ -12,9 +12,13 @@ urlpatterns = [
 
     # Member Dashboard Pages   
     path('memb_dash/', views.memb_dash, name='memb_dash'),   
-    path('memb_roles/', views.memb_roles, name='memb_roles'), 
+    path('memb_roles/', views.memb_roles, name='memb_roles'),
+    path('get-available-roles/<str:meeting_number>/', views.get_available_roles, name='get_available_roles'), 
     path('logout/', views.logout_view, name='logout'),  # Logout route   
-    path('memb_membership/', views.memb_membership, name='memb_membership'),   
+    path('memb_membership/', views.memb_membership, name='memb_membership'),     
+    path('check_payment_status/', views.check_payment_status, name='check_payment_status'),   
+    path('update_payment_status/', views.update_payment_status, name='update_payment_status'),   
+    # path('mpesa_callback/', views.mpesa_callback, name='mpesa_callback'),   
     path('memb_resources/', views.memb_resources, name='memb_resources'),   
     path('memb_notifications/', views.memb_notifications, name='memb_notifications'),   
     path('memb_elections/', views.memb_elections, name='memb_elections'),   

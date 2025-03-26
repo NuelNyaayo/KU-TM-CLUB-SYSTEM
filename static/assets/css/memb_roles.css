@@ -18,7 +18,6 @@
 }
 
 
-
 .next-meeting {
   display: flex;
   flex-direction: column;
@@ -124,6 +123,98 @@ label input[type="radio"] {
 /* When elements should be visible */
 .show {
     display: flex !important;
+}
+
+#receipt-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#receipt-section .download-btn {
+    background: darkblue;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: 0.3s;
+    margin-left: 50rem;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+#receipt-section .download-btn:hover {
+    background: #04115a;
+}
+
+h4 {
+    text-align: center;
+}
+.receipt {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    margin: 2rem 5rem;
+    margin-top: 1rem;
+    background-color: whitesmoke;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.receipt .exit-btn {
+    
+    margin-left: 50rem;
+    border: none;
+    font-size: 1.5rem;
+}
+
+.receipt h3 {
+    background-color: whitesmoke;
+    margin-bottom: 2rem;
+}
+
+.receipt p {
+    margin-bottom: 1.5rem;
+}
+.receipt p strong {
+    color: darkblue;
+    /* margin-right: 2rem; */
+}
+
+.receipt p #receipt-transaction {
+    margin-left: 1.2rem;
+}
+
+.receipt p .fullname {
+    margin-left: 1.2rem;
+}
+.receipt p .reg_no{
+    margin-left: 0.5rem;
+}
+
+.receipt p .amount {
+    margin-left: 2.4rem;
+}
+
+.receipt p #receipt-date {
+    margin-left: 2rem;
+}
+
+.receipt p #receipt-time {
+    margin-left: 1.8rem;
+}
+
+.receipt p #receipt-plan {
+    margin-left: 2.2rem;
+}
+
+.receipt p .mpesa {
+    margin-left: 0.9rem;
 }
 
 

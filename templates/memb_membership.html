@@ -18,42 +18,70 @@
     <h3>📝 Sign-Up for Roles</h3> -->
 
     <div class="next-meeting">
+        {% for message in messages %}
+                <h5>{{ message }}</h5>
+        {% endfor %}
         
-      <form id="role-signup-form" method="post" >
-        <!-- {% csrf_token %} -->
-
-        <!-- Payment Plan Selection -->
-        <label for="payment_plan">Select Payment Plan:</label>
-        <select id="payment_plan" name="payment_plan" required>
-            <option value="">-- Choose Plan --</option>
-            <option value="semester">Semester (KES 300)</option>
-            <option value="academic_year">Academic Year (KES 550)</option>
-        </select>
-
-
-        <!-- Expiry Date Display -->
-        <p><strong>Membership Expiry Date:</strong> <span id="expiry_date_display">Select a Plan</span></p>
-
-        <!-- Payment Method Selection -->
-        <label for="payment_method">Select Payment Method:</label>
-        <select id="payment_method" name="payment_method" required>
-            <option value="">-- Choose Method --</option>
-            <option value="mpesa" data-date="12th Feb 2025">M-Pesa</option>
-            <option value="card" data-date="19th Feb 2025">Credit/Debit Card</option>
-        </select>
-
-        <!-- Phone Number (Auto-filled for M-Pesa) -->
-        <label for="phone_number">Phone Number:</label>
-        <input type="text" id="phone_number" name="phone_number" class="form-control" value="{{ user.phone_number }}">
-
-        <!-- Amount (Auto-filled based on selection) -->
-        <label for="amount">Amount (KES):</label>
-        <input type="text" id="amount" name="amount" class="form-control" readonly>
+        <div id="payment-section">
+            <form id="payment-form" action="{% url 'memb_membership' %}" method="post" >
+                {% csrf_token %} 
+                <!-- Payment Plan Selection -->
+                <label for="payment_plan">Select Payment Plan:</label>
+                <select id="payment_plan" name="payment_plan" required>
+                    <option value="">-- Choose Plan --</option>
+                    <option value="semester">Semester (KES 300)</option>
+                    <option value="academic_year">Academic Year (KES 550)</option>
+                    <option value="daily">Daily (KES 1)</option>
+                </select>
 
 
-        <!-- Submit Button -->
-        <button type="submit" id="submit-btn" class="btn btn-success w-100" >Make Payment</button>
-    </form>
+                <!-- Expiry Date Display -->
+                <p><strong>Membership Expiry Date:</strong> <span id="expiry_date_display">Select a Plan</span></p>
+
+                <!-- Payment Method Selection -->
+                <label for="payment_method">Select Payment Method:</label>
+                <select id="payment_method" name="payment_method" required>
+                    <option value="">-- Choose Method --</option>
+                    <option value="mpesa" data-date="12th Feb 2025">M-Pesa</option>
+                    <option value="card" data-date="19th Feb 2025">Other</option>
+                </select>
+
+                <!-- Phone Number (Auto-filled for M-Pesa) -->
+                <label for="phone_number">Phone Number:</label>
+                <input type="text" id="phone_number" name="phone_number" class="form-control" value="{{ user.phone_number }}">
+
+                <!-- Amount (Auto-filled based on selection) -->
+                <label for="amount">Amount (KES):</label>
+                <input type="text" id="amount" name="amount" class="form-control" readonly>
+
+
+                <!-- Submit Button -->
+                <button type="submit" id="submit-btn" class="btn btn-success w-100" >Make Payment</button>
+            </form>
+        </div>
+
+
+        <div id="receipt-section" style="display: none;">
+            
+            <h4>✅ Payment Successful</h4>
+            <button id="download-receipt" class="download-btn">📥 Download Receipt</button>
+
+            <div class="receipt" id="receipt-content">
+                <button id="close-receipt" class="exit-btn">❌</button> 
+                <img src="{% static 'assets/images/KU_TM_FavIcon_Logo.png' %}" alt="KU Toastmasters Logo" width="120" height="120">
+                <h3>📜 KU TOASTMASTERS RECEIPT</h3>
+                <div class="receipt-details">
+                    <p><strong>Transaction ID:</strong> <span id="receipt-transaction"></span></p>
+                    <p><strong>Member Name:</strong> <span class="fullname">{{ user.first_name }} {{ user.last_name }}</span></p>
+                    <p><strong>Member Number:</strong> <span class="reg_no">{{ user.id|stringformat:"03d" }}</span></p>
+                    <p><strong>Amount Paid:</strong> <span class="amount">KES <span id="receipt-amount"></span></span></p>
+                    <p><strong>Payment Date:</strong> <span id="receipt-date"></span></p>
+                    <p><strong>Payment Time:</strong> <span id="receipt-time"></span></p>
+                    <p><strong>Payment Plan:</strong> <span id="receipt-plan"></span></p>
+                    <p><strong>Payment Method:</strong> <span class="mpesa">M-Pesa</span></p>
+                <div>
+            <div>
+        </div>
     </div>
   </div>
 {% endblock %}
@@ -85,7 +113,11 @@
         } else if (selectedPlan === "academic_year") {
             today.setFullYear(today.getFullYear() + 1); // Academic Year (1 year)
             $("#amount").val("550");
+        }  else if (selectedPlan === "daily") {
+            today.setFullYear(today.getFullYear() + 1); // Academic Year (1 year)
+            $("#amount").val("1");
         }
+
 
         expiryDate = formatDate(today);
         $("#expiry_date_display").text(expiryDate);
@@ -101,5 +133,81 @@
     });
 });
 
+function checkPaymentStatus() {
+    const currentUser = "{{ user.email }}"; // Get logged-in user
+    const storedUser = localStorage.getItem("receipt_user");
+
+    // If user has already seen receipt, don't check again
+    if (storedUser === currentUser) {
+        return;
+    }
+
+    // Check payment every 5 seconds instead of only once
+    let paymentCheckInterval = setInterval(() => {
+        fetch("{% url 'check_payment_status' %}")
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === "Paid") {
+                document.getElementById("payment-section").style.display = "none";
+                document.getElementById("receipt-section").style.display = "block";
+
+                document.getElementById("receipt-transaction").innerText = data.transaction_id;
+                document.getElementById("receipt-amount").innerText = data.amount;
+                document.getElementById("receipt-date").innerText = data.date;
+                document.getElementById("receipt-time").innerText = data.time;
+                document.getElementById("receipt-plan").innerText = data.plan;
+
+                // Store the user in localStorage to persist across refreshes
+                localStorage.setItem("receipt_user", currentUser);
+
+                // Stop checking for payment updates
+                clearInterval(paymentCheckInterval);
+            }
+        });
+    }, 10000); // Check payment status every 5 seconds
+}
+
+// Run on page load to check if receipt should be shown
+document.addEventListener("DOMContentLoaded", function () {
+    const currentUser = "{{ user.email }}";
+    const storedUser = localStorage.getItem("receipt_user");
+
+    if (storedUser === currentUser) {
+        document.getElementById("payment-section").style.display = "none";
+        document.getElementById("receipt-section").style.display = "block";
+    } else {
+        checkPaymentStatus(); // Start checking for payments if no stored receipt
+    }
+});
+
+// Close receipt and show payment form again
+document.getElementById("close-receipt").addEventListener("click", function() {
+    localStorage.removeItem("receipt_user"); // Clear stored user to allow new payments
+    document.getElementById("receipt-section").style.display = "none";
+    document.getElementById("payment-section").style.display = "block";
+});
+
+document.getElementById("download-receipt").addEventListener("click", function () {
+    const element = document.getElementById("receipt-content"); // Select the receipt content
+
+    // Scroll to top to avoid content clipping
+    window.scrollTo(0, 0);
+
+    html2pdf()
+        .from(element)
+        .set({
+            margin: [10, 10, 10, 10], // Top: 5, Right: 10, Bottom: 15, Left: 10 (More space at the bottom)
+            filename: 'KU_Toastmasters_Receipt.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 3, useCORS: true },
+            jsPDF: { format: 'a4', orientation: 'portrait' },
+            pagebreak: { mode: ['avoid-all'] }
+        })
+        .save();
+});
+
+
   </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
 {% endblock %}

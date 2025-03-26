@@ -148,6 +148,7 @@ class Payment(models.Model):
     PLAN_CHOICES = [
         ('Semester', 'Ksh300 per semester'),
         ('Yearly', 'Ksh550 per academic year'),
+        ('Daily', 'Ksh1 per day'),
     ]
 
     STATUS_CHOICES = [
@@ -157,8 +158,8 @@ class Payment(models.Model):
     ]
 
     member = models.ForeignKey(User, on_delete=models.CASCADE, related_name='payments')
-    amount = models.DecimalField(max_digits=10, decimal_places=2)
-    payment_plan = models.CharField(max_length=10, choices=PLAN_CHOICES)
+    amount = models.DecimalField(max_digits=20, decimal_places=2)
+    payment_plan = models.CharField(max_length=20, choices=PLAN_CHOICES)
     mpesa_transaction_id = models.CharField(max_length=50, unique=True)
     payment_date = models.DateField(auto_now_add=True)  # Stores payment date
     payment_time = models.TimeField(auto_now_add=True, null=True)  # Stores payment time
@@ -186,6 +187,11 @@ class Meeting(models.Model):
     absentees = models.ManyToManyField(User, related_name='missed_meetings', blank=True)
     
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default="Upcoming")  # Status field
+
+    @staticmethod
+    def get_upcoming_meetings():
+        """Fetch only meetings that are in the future or today."""
+        return Meeting.objects.filter(date__gte=timezone.now().date()).order_by('date')
 
     def update_status(self):
         """Automatically updates the meeting status based on the current time."""
@@ -248,11 +254,14 @@ class MeetingRole(models.Model):
     # General Evaluator field (optional focus point)
     focus_point = models.CharField(max_length=255, blank=True, null=True, help_text="Optional evaluation focus (e.g., timing, filler words)")
 
+    # Absentee tracking
+    is_absent = models.BooleanField(default=False, help_text="Mark as absent if not attending")
+
     class Meta:
-        unique_together = ('meeting', 'member')
+        unique_together = ('meeting', 'member')  # Prevents duplicate roles for the same member in a meeting
 
     def get_available_cc_speech_projects(self):
-        """Fetches CC Speaker projects from the same meeting, marking already assigned ones as disabled."""
+        """Fetches CC Speaker projects from the same meeting, marking already assigned ones as unavailable."""
         available_projects = list(MeetingRole.objects.filter(
             meeting=self.meeting, role='CC_Speaker'
         ).exclude(speech_project__isnull=True).exclude(speech_project="")
@@ -285,6 +294,7 @@ class MeetingRole(models.Model):
 
     def __str__(self):
         return f"{self.meeting.meeting_number} - {self.member.email} - {self.role}"
+
 
 
 

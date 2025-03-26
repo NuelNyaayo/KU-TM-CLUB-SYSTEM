@@ -29,6 +29,14 @@ h1, h3 {
   color: #004085; /* Toastmasters Blue */
 }
   
+h5 {
+  background-color: darkblue; 
+  color: white;
+  padding: 1rem;
+  border-radius: 5px;
+  margin: 1rem 4rem;
+}
+
 /* .nav Section */
 .top-nav {
   position: fixed;

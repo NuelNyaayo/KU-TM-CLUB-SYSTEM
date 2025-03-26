@@ -21,7 +21,7 @@
             <h2 class="contact__h2">👤 Login</h2>
             {% for message in messages %}
                     <h5>{{ message }}</h5>
-                {% endfor %}
+            {% endfor %}
             <form action="{% url 'login' %}" method="POST" class="contact__form" onsubmit="showLoading()">
                 {% csrf_token %}
               <fieldset class="contact__fieldset">

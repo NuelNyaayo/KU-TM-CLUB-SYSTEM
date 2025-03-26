@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
@@ -16,6 +16,15 @@ from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 from django.conf import settings
 from .models import Membership
+from .models import Meeting, MeetingRole, Payment
+import requests 
+from django.utils import timezone
+import base64
+from datetime import datetime
+import json
+import threading
+import time
+from django.utils.timezone import now
 
 
 def index(request): 
@@ -100,13 +109,241 @@ def memb_dash(request):
     })
 
 
-def memb_roles(request): 
+@login_required
+def memb_roles(request):
+    upcoming_meetings = Meeting.get_upcoming_meetings()
+    
+    if request.method == "POST":
+        meeting_number = request.POST.get("meeting-number")
+        availability = request.POST.get("availability")
+        role = request.POST.get("role")
+        attire = request.POST.get("meeting-attire", "")
+        word_of_day = request.POST.get("word-of-day", "")
+        speech_project = request.POST.get("speech-project", "")
+        speech_title = request.POST.get("speech-title", "")
+        evaluated_speech_project = request.POST.get("evaluation-project", "")
+        focus_point = request.POST.get("focus-point", "")
 
-    return render(request, 'memb_roles.html', {"current_page": "Roles"})
+        if not meeting_number or not availability:
+            messages.error(request, "Please select a meeting and confirm your availability.")
+            return redirect("memb_roles")
 
-def memb_membership(request): 
+        meeting = Meeting.objects.filter(meeting_number=meeting_number).first()
+        if not meeting:
+            messages.error(request, "Invalid meeting selected.")
+            return redirect("memb_roles")
 
-    return render(request, 'memb_membership.html', {"current_page": "Membership"})
+        # If user is not available, mark as absent
+        if availability == "no":
+            MeetingRole.objects.create(meeting=meeting, member=request.user, role="Attendee", is_absent=True)
+            messages.success(request, "Your absence has been recorded.")
+            return redirect("memb_roles")
+
+        if not role:
+            messages.error(request, "Please select a role if you are available.")
+            return redirect("memb_roles")
+
+        # Check if role is already taken
+        if MeetingRole.objects.filter(meeting=meeting, role=role).exists():
+            messages.error(request, "This role is already taken for the selected meeting.")
+            return redirect("memb_roles")
+
+        # Create the MeetingRole entry
+        meeting_role = MeetingRole(
+            meeting=meeting,
+            member=request.user,
+            role=role,
+            meeting_attire=attire if role == "TMOD" else "",
+            word_of_the_day=word_of_day if role == "Grammarian" else "",
+            speech_project=speech_project if role == "CC_Speaker" else "",
+            speech_title=speech_title if role == "CC_Speaker" else "",
+            evaluated_speech_project=evaluated_speech_project if role == "Evaluator" else "",
+            focus_point=focus_point if role == "General_Evaluator" else "",
+            is_absent=False
+        )
+
+        try:
+            meeting_role.save()
+            messages.success(request, "Your role has been successfully assigned!")
+        except Exception as e:
+            messages.error(request, f"Error: {str(e)}")
+
+        return redirect("memb_roles")
+
+    return render(request, "memb_roles.html", {
+        "current_page": "Roles",
+        "meetings": upcoming_meetings,
+        "meeting_roles": MeetingRole.ROLE_CHOICES,  # Pass ROLE_CHOICES instead of QuerySet
+    })
+
+def get_available_roles(request, meeting_number):
+    meeting = get_object_or_404(Meeting, meeting_number=meeting_number)
+    taken_roles = MeetingRole.objects.filter(meeting=meeting).values_list('role', flat=True)
+    all_roles = dict(MeetingRole.ROLE_CHOICES).keys()
+    available_roles = [role for role in all_roles if role not in taken_roles]
+
+    return JsonResponse(available_roles, safe=False)
+
+
+def get_access_token():
+    """Obtain M-Pesa access token"""
+    url = "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials"
+    
+    # Encode credentials
+    credentials = f"{settings.MPESA_CONSUMER_KEY}:{settings.MPESA_CONSUMER_SECRET}"
+    encoded_credentials = base64.b64encode(credentials.encode()).decode()
+    
+    headers = {"Authorization": f"Basic {encoded_credentials}"}
+    
+    response = requests.get(url, headers=headers)
+
+    if response.status_code == 200:
+        return response.json().get("access_token")
+    
+    print("⚠️ ERROR: Could not obtain access token")
+    return None
+
+def format_phone_number(phone):
+    """Convert phone number from 07... format to 2547... format"""
+    if phone.startswith("07"):
+        return "254" + phone[1:]  # Replace '07' with '2547'
+    elif phone.startswith("+254"):
+        return phone[1:]  # Remove '+'
+    elif phone.startswith("254"):
+        return phone  # Already correct
+    else:
+        raise ValueError("Invalid phone number format. Use 07..., 254..., or +254...")
+
+def stk_push(phone, amount, transaction_id):
+    """Initiate STK push"""
+    try:
+        phone = format_phone_number(phone)  # Ensure correct format
+    except ValueError as e:
+        print("⚠️ ERROR:", str(e))
+        return {"error": str(e)}
+
+    access_token = get_access_token()
+    if not access_token:
+        print("⚠️ ERROR: Could not obtain access token")
+        return {"error": "Failed to obtain access token"}
+
+    timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+    password = base64.b64encode((settings.MPESA_SHORTCODE + settings.MPESA_PASSKEY + timestamp).encode()).decode()
+
+    url = "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest"
+    headers = {"Authorization": f"Bearer {access_token}"}
+    payload = {
+        "BusinessShortCode": settings.MPESA_SHORTCODE,
+        "Password": password,
+        "Timestamp": timestamp,
+        "TransactionType": "CustomerPayBillOnline",
+        "Amount": amount,
+        "PartyA": phone,
+        "PartyB": settings.MPESA_SHORTCODE,
+        "PhoneNumber": phone,
+        "CallBackURL": settings.CALLBACK_URL,
+        "AccountReference": "TMPayment",
+        "TransactionDesc": "Toastmasters Membership Fee"
+    }
+
+    response = requests.post(url, json=payload, headers=headers)
+    if response.status_code == 200:
+        # Start a background thread to update status after 15 seconds
+        threading.Thread(target=update_payment_status, args=(transaction_id,), daemon=True).start()
+
+    try:
+        return response.json()
+    except json.JSONDecodeError:
+        return {"error": "Invalid JSON response from M-Pesa API", "response_text": response.text}
+    
+    
+
+
+def memb_membership(request):
+    if request.method == "POST":
+        payment_plan = request.POST.get("payment_plan")
+        payment_method = request.POST.get("payment_method")
+        phone_number = request.POST.get("phone_number")
+        amount = request.POST.get("amount")
+
+        if not all([payment_plan, payment_method, phone_number, amount]):
+            messages.error(request, "All fields are required.")
+            return redirect("memb_membership")
+
+        try:
+            amount = int(amount)  # Convert amount to integer
+        except ValueError:
+            messages.error(request, "Invalid amount format.")
+            return redirect("memb_membership")
+
+        transaction_id = f"TXN{timezone.now().strftime('%Y%m%d%H%M%S')}"
+
+        if payment_method == "mpesa":
+            response = stk_push(phone_number, amount, transaction_id)
+
+            if response.get("ResponseCode") == "0":
+                Payment.objects.create(
+                    member=request.user,
+                    amount=amount,
+                    payment_plan=payment_plan,
+                    mpesa_transaction_id=transaction_id,
+                    payment_status="Pending"
+                )
+                messages.success(request, "Payment request sent to your phone. Please complete the payment.")
+            else:
+                error_message = response.get("error", "Failed to initiate M-Pesa payment. Try again.")
+                messages.error(request, error_message)
+
+        return redirect("memb_membership")
+
+    return render(request, "memb_membership.html", {"current_page": "Membership"})
+
+def check_payment_status(request):
+    payment = Payment.objects.filter(member=request.user, payment_status="Paid").order_by("-payment_date", "-payment_time").first()
+    
+    if payment:
+        return JsonResponse({
+            "status": payment.payment_status,
+            "transaction_id": payment.mpesa_transaction_id,
+            "amount": payment.amount,
+            "date": payment.payment_date.strftime("%d %b %Y"),
+            "time": payment.payment_time.strftime("%H:%M:%S"),
+            "plan": payment.get_payment_plan_display()
+        })
+    
+    return JsonResponse({"status": "Pending"})
+
+def update_payment_status(transaction_id):
+    """Simulate payment confirmation after 15 seconds"""
+    time.sleep(0)
+    payment = Payment.objects.filter(mpesa_transaction_id=transaction_id, payment_status="Pending").first()
+    if payment:
+        payment.payment_status = "Paid"
+        payment.save()
+        payment.member.membership.activate_membership()
+
+
+# @csrf_exempt
+# def mpesa_callback(request):
+#     try:
+#         data = json.loads(request.body.decode("utf-8"))
+
+#         print("🔍 CALLBACK DATA:", json.dumps(data, indent=4))  # Debugging
+
+#         if "Body" in data and "stkCallback" in data["Body"]:
+#             transaction_id = data["Body"]["stkCallback"].get("CheckoutRequestID")
+#             result_code = data["Body"]["stkCallback"].get("ResultCode", -1)
+
+#             payment = Payment.objects.filter(mpesa_transaction_id=transaction_id).first()
+
+#             if payment:
+#                 payment.payment_status = "Paid" if result_code == 0 else "Failed"
+#                 payment.save()
+
+#         return JsonResponse({"message": "Callback received"}, status=200)
+
+#     except json.JSONDecodeError:
+#         return JsonResponse({"error": "Invalid JSON received"}, status=400)
 
 def memb_resources(request): 
 

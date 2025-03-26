@@ -168,9 +168,9 @@
           </div>
           <div class="next-meeting">
             <p><span class="status-label">Next Meeting:</span>
-              <span class="meeting-label">Meeting 046</span></p>
+              <span class="meeting-label">Meeting 049</span></p>
             <p><span class="status-label">Meeting Date:</span>
-              <span class="meeting-label">12th Feb 2025</span></p>
+              <span class="meeting-label">27th March 2025</span></p>
             <p><span class="status-label">Meeting Time:</span>
               <span class="meeting-label">06:30pm - 8:30pm</span></p>
             <p><span class="status-label">Your Role:</span>
@@ -307,23 +307,23 @@
         <div class="quick-links">
           <h3> Quick Action Links</h3>
           <div class="action-links">
-            <div class="action-btn">
+            <div class="action-btn" onclick="window.location.href='/memb_roles/'">
               <i class="fa-solid fa-users"></i>
               <p>Sign Up For a Role</p>
             </div>
-            <div class="action-btn">
-              <i class="fa-solid fa-wallet"></i>
-              <p>Make a Payment</p>
+            <div class="action-btn" onclick="window.location.href='/memb_membership/'">
+                <i class="fa-solid fa-wallet"></i>
+                <p>Make a Payment</p>
             </div>
-            <div class="action-btn">
-              <i class="fa-solid fa-folder-open"></i>
-              <p>View Resources</p>
+            <div class="action-btn" onclick="window.location.href='/memb_resources/'">
+                <i class="fa-solid fa-folder-open"></i>
+                <p>View Resources</p>
             </div>
-            <div class="action-btn">
-              <i class="fa-solid fa-envelope"></i>
-              <p>View Notifications</p>
+            <div class="action-btn" onclick="window.location.href='/memb_notifications/'">
+                <i class="fa-solid fa-envelope"></i>
+                <p>View Notifications</p>
             </div>
-            
+              
             
           </div>
         </div>
@@ -346,13 +346,13 @@
               </li>
               <li class="notification unread">
                   <i class="fas fa-bell"></i>
-                  <span class="message">Your membership payment is due mid-April.</span>
+                  <span class="message">Sign up for roles in upto 3 upcoming meetings today.Click on "Roles"</span>
                   <span class="timestamp">2 hours ago</span>
                   <button class="mark-read">Mark as Read</button>
               </li>
               <li class="notification unread">
                   <i class="fas fa-user"></i>
-                  <span class="message">New resource "KU Gavel Constitution" uploaded. Check it out.</span>
+                  <span class="message">This academic year 2024/2025 Elections are on vote today!</span>
                   <span class="timestamp">5 hours ago</span>
                   <button class="mark-read">Mark as Read</button>
               </li>
@@ -441,21 +441,21 @@
               </div>
               <div class="election-countdown">
                 <h3>Nomination Countdown</h3>
-                <div class="countdown">
+                <div class="countdown2">
                   <div class="time-box">
-                      <span id="days">00</span>
+                      <span id="days2">00</span>
                       <p>Days</p>
                   </div>
                   <div class="time-box">
-                      <span id="hours">00</span>
+                      <span id="hours2">00</span>
                       <p>Hours</p>
                   </div>
                   <div class="time-box">
-                      <span id="minutes">00</span>
+                      <span id="minutes2">00</span>
                       <p>Minutes</p>
                   </div>
                   <div class="time-box">
-                      <span id="seconds">00</span>
+                      <span id="seconds2">00</span>
                       <p>Seconds</p>
                   </div>
                 </div>
@@ -598,7 +598,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const timeLeft = targetDate - now;
 
       if (timeLeft <= 0) {
-          document.querySelector(".countdown").innerHTML = "<h2>Event Started!</h2>";
+          document.querySelector(".countdown").innerHTML = "<h2>Election Started!</h2>";
           clearInterval(interval);
           return;
       }
@@ -628,6 +628,36 @@ document.addEventListener("DOMContentLoaded", function () {
       window.location.href = votingUrl; 
     });
 });
+
+const targetDate2 = new Date("March 15, 2026 00:00:00").getTime();
+
+    function updateCountdown2() {
+        const now2 = new Date().getTime();
+        const timeLeft2 = targetDate2 - now2;
+
+        if (timeLeft2 <= 0) {
+            document.querySelector(".countdown2").innerHTML = "<h2>Nomination Started!</h2>";
+            clearInterval(interval2); // Use interval2 instead of interval
+            return;
+        }
+
+        // Calculate time components
+        const days2 = Math.floor(timeLeft2 / (1000 * 60 * 60 * 24));
+        const hours2 = Math.floor((timeLeft2 % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes2 = Math.floor((timeLeft2 % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds2 = Math.floor((timeLeft2 % (1000 * 60)) / 1000);
+
+        // Update the DOM (Corrected variable names)
+        document.getElementById("days2").textContent = days2 < 10 ? "0" + days2 : days2;
+        document.getElementById("hours2").textContent = hours2 < 10 ? "0" + hours2 : hours2;
+        document.getElementById("minutes2").textContent = minutes2 < 10 ? "0" + minutes2 : minutes2;
+        document.getElementById("seconds2").textContent = seconds2 < 10 ? "0" + seconds2 : seconds2;
+    }
+
+    // Update the countdown every second
+    const interval2 = setInterval(updateCountdown2, 1000);
+    updateCountdown2(); // Initial call to prevent delay
+
 
   
 

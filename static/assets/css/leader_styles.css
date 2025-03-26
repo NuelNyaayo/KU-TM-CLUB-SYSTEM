@@ -28,6 +28,14 @@ body{
 h1, h3 {
   color: #004085; /* Toastmasters Blue */
 }
+
+h5 {
+  background-color: #333; 
+  color: gold;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+}
   
 /* .nav Section */
 .top-nav {

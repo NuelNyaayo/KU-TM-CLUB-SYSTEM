@@ -87,7 +87,7 @@
 .expiry-label {
   font-weight: bold;
   margin: 1rem 1rem;
-  margin-right: 8.2rem;
+  margin-right: 5rem;
 }
 
 .expiry-date, .date-label {
@@ -359,6 +359,11 @@ th, td {
   padding: 2rem;
   border-radius: 8px;
   cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+}
+.quick-links .action-links .action-btn:hover {
+  transform: translateY(-10px);
+  background-color: #04115a;
 }
 
 .quick-links .action-links .action-btn i {
@@ -493,17 +498,6 @@ th, td {
   font-weight: 600;
 }
 
-/* .payment-container tr:hover {
-  background-color: blue;
-  color: white;
-} */
-
-/* Status Labels */
-/* .payment-container .status {
-  font-weight: 600;
-  text-align: center;
-} */
-
 .payment-container .paid {
   background: #28a745;
   font-weight: bold;
@@ -577,7 +571,7 @@ th, td {
   display: flex;
   /* justify-content: space-between; */
   align-items: center;
-  gap: 5rem;
+  gap: 14rem;
   
 }
 
@@ -593,7 +587,7 @@ th, td {
   border-radius: 8px;
 }
 
-.countdown {
+.countdown, .countdown2 {
   display: flex;
   gap: 20px;
 }
