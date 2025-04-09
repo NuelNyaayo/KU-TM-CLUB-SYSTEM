@@ -323,27 +323,27 @@ def update_payment_status(transaction_id):
         payment.member.membership.activate_membership()
 
 
-# @csrf_exempt
-# def mpesa_callback(request):
-#     try:
-#         data = json.loads(request.body.decode("utf-8"))
+@csrf_exempt
+def mpesa_callback(request):
+    try:
+        data = json.loads(request.body.decode("utf-8"))
 
-#         print("🔍 CALLBACK DATA:", json.dumps(data, indent=4))  # Debugging
+        print("🔍 CALLBACK DATA:", json.dumps(data, indent=4))  # Debugging
 
-#         if "Body" in data and "stkCallback" in data["Body"]:
-#             transaction_id = data["Body"]["stkCallback"].get("CheckoutRequestID")
-#             result_code = data["Body"]["stkCallback"].get("ResultCode", -1)
+        if "Body" in data and "stkCallback" in data["Body"]:
+            transaction_id = data["Body"]["stkCallback"].get("CheckoutRequestID")
+            result_code = data["Body"]["stkCallback"].get("ResultCode", -1)
 
-#             payment = Payment.objects.filter(mpesa_transaction_id=transaction_id).first()
+            payment = Payment.objects.filter(mpesa_transaction_id=transaction_id).first()
 
-#             if payment:
-#                 payment.payment_status = "Paid" if result_code == 0 else "Failed"
-#                 payment.save()
+            if payment:
+                payment.payment_status = "Paid" if result_code == 0 else "Failed"
+                payment.save()
 
-#         return JsonResponse({"message": "Callback received"}, status=200)
+        return JsonResponse({"message": "Callback received"}, status=200)
 
-#     except json.JSONDecodeError:
-#         return JsonResponse({"error": "Invalid JSON received"}, status=400)
+    except json.JSONDecodeError:
+        return JsonResponse({"error": "Invalid JSON received"}, status=400)
 
 def memb_resources(request): 
 
